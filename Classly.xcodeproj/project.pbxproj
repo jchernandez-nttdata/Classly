@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E32DB98D93000C0361 /* ClasslyNetworking */; };
 		356F75E62DB98DD4000C0361 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = 356F75E52DB98DD4000C0361 /* .gitignore */; };
+		356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E92DB98FDB000C0361 /* Navigation */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +31,7 @@
 
 /* Begin PBXFileReference section */
 		356F75E52DB98DD4000C0361 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		356F75E72DB98F95000C0361 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		35893B8E2DA0504700EEFE40 /* Classly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Classly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893B9E2DA0504900EEFE40 /* ClasslyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893BA82DA0504A00EEFE40 /* ClasslyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -58,6 +60,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
 				356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -79,13 +82,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		356F75E82DB98FDB000C0361 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				356F75E72DB98F95000C0361 /* Navigation */,
 				356F75E52DB98DD4000C0361 /* .gitignore */,
 				35893B902DA0504700EEFE40 /* Classly */,
 				35893BA12DA0504900EEFE40 /* ClasslyTests */,
 				35893BAB2DA0504A00EEFE40 /* ClasslyUITests */,
+				356F75E82DB98FDB000C0361 /* Frameworks */,
 				35893B8F2DA0504700EEFE40 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -121,6 +133,7 @@
 			name = Classly;
 			packageProductDependencies = (
 				356F75E32DB98D93000C0361 /* ClasslyNetworking */,
+				356F75E92DB98FDB000C0361 /* Navigation */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -592,6 +605,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */;
 			productName = ClasslyNetworking;
+		};
+		356F75E92DB98FDB000C0361 /* Navigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Navigation;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

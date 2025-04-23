@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import Navigation
 
 @main
 struct ClasslyApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            NavigationRootView()
         }
     }
 }
