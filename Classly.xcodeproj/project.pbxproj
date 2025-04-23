@@ -6,6 +6,11 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E32DB98D93000C0361 /* ClasslyNetworking */; };
+		356F75E62DB98DD4000C0361 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = 356F75E52DB98DD4000C0361 /* .gitignore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		35893B9F2DA0504900EEFE40 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -24,6 +29,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		356F75E52DB98DD4000C0361 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		35893B8E2DA0504700EEFE40 /* Classly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Classly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893B9E2DA0504900EEFE40 /* ClasslyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893BA82DA0504A00EEFE40 /* ClasslyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -52,6 +58,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -75,6 +82,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				356F75E52DB98DD4000C0361 /* .gitignore */,
 				35893B902DA0504700EEFE40 /* Classly */,
 				35893BA12DA0504900EEFE40 /* ClasslyTests */,
 				35893BAB2DA0504A00EEFE40 /* ClasslyUITests */,
@@ -112,6 +120,7 @@
 			);
 			name = Classly;
 			packageProductDependencies = (
+				356F75E32DB98D93000C0361 /* ClasslyNetworking */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -195,6 +204,9 @@
 			);
 			mainGroup = 35893B852DA0504700EEFE40;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 35893B8F2DA0504700EEFE40 /* Products */;
 			projectDirPath = "";
@@ -236,6 +248,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				356F75E62DB98DD4000C0361 /* .gitignore in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,6 +575,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "git@github.com:jchernandez-nttdata/ClasslyNetworking.git";
+			requirement = {
+				kind = upToNextMinorVersion;
+				minimumVersion = 1.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		356F75E32DB98D93000C0361 /* ClasslyNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */;
+			productName = ClasslyNetworking;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 35893B862DA0504700EEFE40 /* Project object */;
 }
