@@ -10,6 +10,7 @@
 		356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E32DB98D93000C0361 /* ClasslyNetworking */; };
 		356F75E62DB98DD4000C0361 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = 356F75E52DB98DD4000C0361 /* .gitignore */; };
 		356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E92DB98FDB000C0361 /* Navigation */; };
+		356F76632DBC0C27000C0361 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76622DBC0C27000C0361 /* Authentication */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 			files = (
 				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
 				356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */,
+				356F76632DBC0C27000C0361 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -136,6 +138,7 @@
 			packageProductDependencies = (
 				356F75E32DB98D93000C0361 /* ClasslyNetworking */,
 				356F75E92DB98FDB000C0361 /* Navigation */,
+				356F76622DBC0C27000C0361 /* Authentication */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -611,6 +614,10 @@
 		356F75E92DB98FDB000C0361 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
+		};
+		356F76622DBC0C27000C0361 /* Authentication */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Authentication;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Authentication
 
 public struct NavigationRootView: View {
     @StateObject private var coordinator = AppCoordinator()
@@ -16,14 +17,8 @@ public struct NavigationRootView: View {
         Group {
             switch coordinator.state {
             case .authentication:
-                VStack {
-                    Button("Login as Admin") {
-                        coordinator.login(as: .admin)
-                    }
-                    
-                    Button("Login as Student") {
-                        coordinator.login(as: .student)
-                    }
+                if let authCoordinator = coordinator.authCoordinator {
+                    authCoordinator.start()
                 }
             case .admin:
                 AdminTabView()
