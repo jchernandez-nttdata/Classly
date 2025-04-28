@@ -7,49 +7,19 @@
 
 import SwiftUI
 
-public enum AppColor {
-    case brandPrimary
-    case brandAccent
-    case background
-    case secondaryBackground
-    case elevatedSurface
-    case primaryText
-    case secondaryText
-    case disabledText
-    case border
-    case shadowColor
-    case success
-    case error
-    case warning
-
-    public var color: Color {
-        switch self {
-        case .brandPrimary:
-            return Color(.brandPrimary)
-        case .brandAccent:
-            return Color(.brandAccent)
-        case .background:
-            return Color(.background)
-        case .secondaryBackground:
-            return Color(.secondaryBackground)
-        case .elevatedSurface:
-            return Color(.elevatedSurface)
-        case .primaryText:
-            return Color(.primaryText)
-        case .secondaryText:
-            return Color(.secondaryText)
-        case .disabledText:
-            return Color(.disabledText)
-        case .border:
-            return Color(.border)
-        case .shadowColor:
-            return Color(.shadow)
-        case .success:
-            return Color(.success)
-        case .error:
-            return Color(.error)
-        case .warning:
-            return Color(.warning)
-        }
-    }
+public struct AppColor {
+    public static let brandPrimary = Color(.brandPrimary)
+    public static let brandAccent = Color(.brandAccent)
+    public static let background = Color(.background)
+    public static let secondaryBackground = Color(.secondaryBackground)
+    public static let elevatedSurface = Color(.elevatedSurface)
+    public static let primaryText = Color(.primaryText)
+    public static let secondaryText = Color(.secondaryText)
+    public static let disabledText = Color(.disabledText)
+    public static let border = Color(.border)
+    public static let shadowColor = Color(.shadow)
+    public static let success = Color(.success)
+    public static let error = Color(.error)
+    public static let warning = Color(.warning)
 }
+
