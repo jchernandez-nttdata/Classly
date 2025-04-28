@@ -17,9 +17,13 @@ public struct LoginView: View {
 
     public var body: some View {
         VStack(spacing: 20) {
+            Image(uiImage: AssetImage.logoClassly)
+                .resizable()
+                .scaledToFit()
+
             Text("Classly")
                 .font(.largeTitle)
-                .foregroundColor(AppColor.brandPrimary.color)
+                .foregroundColor(AppColor.brandPrimary)
 
             TextField("Correo", text: $viewModel.email)
                 .textFieldStyle(.roundedBorder)
