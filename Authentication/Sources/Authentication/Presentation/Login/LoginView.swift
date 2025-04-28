@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Assets
 
 public struct LoginView: View {
     @ObservedObject var viewModel: LoginViewModel
@@ -18,6 +19,7 @@ public struct LoginView: View {
         VStack(spacing: 20) {
             Text("Classly")
                 .font(.largeTitle)
+                .foregroundColor(AppColor.brandPrimary.color)
 
             TextField("Correo", text: $viewModel.email)
                 .textFieldStyle(.roundedBorder)
