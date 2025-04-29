@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import ClasslyNetworking
 
 public enum AuthRoute: Hashable {
     case login
@@ -31,7 +32,10 @@ public final class AuthenticationCoordinator: CoordinatorProtocol {
     public func build(route: AuthRoute) -> AnyView {
         switch route {
         case .login:
-            let viewModel = LoginViewModel(coordinator: self)
+            let datasource = AuthRemoteDataSourceImpl(networkingManager: NetworkManager())
+            let repository = AuthRepositoryImpl(remoteDataSource: datasource)
+            let useCase = LoginUseCaseImpl(repository: repository)
+            let viewModel = LoginViewModel(coordinator: self, loginUseCase: useCase)
             return AnyView(LoginView(viewModel: viewModel))
         case .forgotPassword:
             return AnyView(Text("Forgot password"))
