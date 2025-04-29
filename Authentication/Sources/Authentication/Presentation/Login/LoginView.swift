@@ -8,6 +8,7 @@
 import SwiftUI
 import Assets
 import Core
+import UIComponents
 
 public struct LoginView: View {
     @ObservedObject var viewModel: LoginViewModel
