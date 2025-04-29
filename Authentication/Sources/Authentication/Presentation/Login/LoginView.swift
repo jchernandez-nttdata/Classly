@@ -24,19 +24,9 @@ public struct LoginView: View {
                 .scaledToFit()
                 .frame(height: 120)
 
-            TextField("Email", text: $viewModel.email)
-                .padding(top: 13, bottom: 13, left: 15, right: 15)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(AppColor.border, lineWidth: 1)
-                )
+            CustomTextField(placeholder: "Email", text: $viewModel.email)
 
-            SecureField("Password", text: $viewModel.password)
-                .padding(top: 13, bottom: 13, left: 15, right: 15)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 16)
-                        .stroke(AppColor.border, lineWidth: 1)
-                )
+            CustomTextField(placeholder: "Password", type: .secure, text: $viewModel.password)
 
             CustomButton(title: "Log in") {
                 viewModel.login()
@@ -44,13 +34,14 @@ public struct LoginView: View {
             .padding(.bottom, 30)
 
             Image(systemName: "faceid")
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(AppColor.primaryText)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 40, height: 40)
+                .foregroundColor(AppColor.secondaryText)
         }
         .padding()
         .background(AppColor.background)
+        .navigationBarHidden(true)
     }
 }
 
