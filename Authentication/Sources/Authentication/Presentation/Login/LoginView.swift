@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  LoginView.swift
 //  Authentication
 //
 //  Created by Juan Carlos Hernandez Castillo on 25/04/25.
@@ -20,25 +20,45 @@ public struct LoginView: View {
             Image(uiImage: AssetImage.logoClassly)
                 .resizable()
                 .scaledToFit()
+                .frame(height: 120)
 
-            Text("Classly")
-                .font(.largeTitle)
-                .foregroundColor(AppColor.brandPrimary)
+            TextField("Email", text: $viewModel.email)
+                .padding(top: 13, bottom: 13, left: 15, right: 15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(AppColor.border, lineWidth: 1)
+                )
 
-            TextField("Correo", text: $viewModel.email)
-                .textFieldStyle(.roundedBorder)
+            SecureField("Password", text: $viewModel.password)
+                .padding(top: 13, bottom: 13, left: 15, right: 15)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 16)
+                        .stroke(AppColor.border, lineWidth: 1)
+                )
 
-            SecureField("Contraseña", text: $viewModel.password)
-                .textFieldStyle(.roundedBorder)
-
-            Button("Entrar") {
+            CustomButton(title: "Log in") {
                 viewModel.login()
             }
         }
         .padding()
+        .background(AppColor.background)
     }
 }
 
 #Preview {
-    LoginView(viewModel: .init())
+    LoginView(viewModel: .preview)
+}
+
+extension View {
+    func padding(
+        top: CGFloat = 0,
+        bottom: CGFloat = 0,
+        left: CGFloat = 0,
+        right: CGFloat = 0
+    ) -> some View {
+        self.padding(.top, top)
+            .padding(.bottom, bottom)
+            .padding(.leading, left)
+            .padding(.trailing, right)
+    }
 }
