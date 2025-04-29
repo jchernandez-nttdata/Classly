@@ -5,7 +5,9 @@
 //  Created by Juan Carlos Hernandez Castillo on 29/04/25.
 //
 
-struct User {
+import Core
+
+struct User: Sendable {
     public let id: Int
     public let name: String
     public let email: String
@@ -14,7 +16,3 @@ struct User {
     public let role: UserRole
 }
 
-enum UserRole: String {
-    case student
-    case admin
-}

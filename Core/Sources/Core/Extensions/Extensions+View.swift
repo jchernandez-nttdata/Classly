@@ -19,4 +19,8 @@ public extension View {
             .padding(.leading, left)
             .padding(.trailing, right)
     }
+
+    func loadingIndicator(_ isShowing: Bool) -> some View {
+        self.modifier(LoadingIndicator(isShowing: isShowing))
+    }
 }

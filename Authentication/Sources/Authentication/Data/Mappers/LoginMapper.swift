@@ -5,6 +5,8 @@
 //  Created by Juan Carlos Hernandez Castillo on 29/04/25.
 //
 
+import Core
+
 class LoginResponseMapper {
     static func mapToUser(response: LoginResponse) -> User {
         return User(

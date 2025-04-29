@@ -42,6 +42,7 @@ struct LoginView: View {
         .padding()
         .background(AppColor.background)
         .navigationBarHidden(true)
+        .loadingIndicator(viewModel.isLoading)
     }
 }
 

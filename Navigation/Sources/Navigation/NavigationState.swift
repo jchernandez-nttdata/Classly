@@ -10,8 +10,3 @@ public enum NavigationState {
     case admin
     case student
 }
-
-public enum UserType {
-    case admin
-    case student
-}

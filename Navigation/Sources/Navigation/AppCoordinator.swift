@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Authentication
+import Core
 
 @MainActor
 public final class AppCoordinator: ObservableObject {
@@ -17,8 +18,8 @@ public final class AppCoordinator: ObservableObject {
         setupAuthenticationCoordinator()
     }
 
-    public func login(as userType: UserType) {
-        switch userType {
+    public func login(as role: UserRole) {
+        switch role {
         case .admin:
             state = .admin
         case .student:
