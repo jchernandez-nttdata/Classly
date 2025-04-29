@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Assets
+import Core
 
 public struct LoginView: View {
     @ObservedObject var viewModel: LoginViewModel
@@ -39,6 +40,13 @@ public struct LoginView: View {
             CustomButton(title: "Log in") {
                 viewModel.login()
             }
+            .padding(.bottom, 30)
+
+            Image(systemName: "faceid")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 40, height: 40)
+                    .foregroundColor(AppColor.primaryText)
         }
         .padding()
         .background(AppColor.background)
@@ -46,19 +54,5 @@ public struct LoginView: View {
 }
 
 #Preview {
-    LoginView(viewModel: .preview)
-}
-
-extension View {
-    func padding(
-        top: CGFloat = 0,
-        bottom: CGFloat = 0,
-        left: CGFloat = 0,
-        right: CGFloat = 0
-    ) -> some View {
-        self.padding(.top, top)
-            .padding(.bottom, bottom)
-            .padding(.leading, left)
-            .padding(.trailing, right)
-    }
+    LoginView(viewModel: .init())
 }

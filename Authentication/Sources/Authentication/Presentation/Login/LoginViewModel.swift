@@ -22,9 +22,3 @@ public final class LoginViewModel: ObservableObject {
         coordinator?.exitModule()
     }
 }
-
-extension LoginViewModel {
-    static var preview: LoginViewModel {
-        LoginViewModel(coordinator: nil)
-    }
-}
