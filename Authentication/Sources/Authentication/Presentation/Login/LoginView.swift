@@ -10,10 +10,10 @@ import Assets
 import Core
 import UIComponents
 
-struct LoginView<U: LoginUseCase>: View {
-    @StateObject private var viewModel: LoginViewModel<U>
+struct LoginView: View {
+    @StateObject private var viewModel: LoginViewModel
 
-    public init(viewModel: LoginViewModel<U>) {
+    public init(viewModel: LoginViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
@@ -43,4 +43,8 @@ struct LoginView<U: LoginUseCase>: View {
         .background(AppColor.background)
         .navigationBarHidden(true)
     }
+}
+
+#Preview {
+    LoginView(viewModel: LoginViewModel())
 }

@@ -7,6 +7,8 @@
 
 public enum LoginError: Error {
     case unauthorized
+    case invalidData
     case networkError
     case serverError
+    case requestError
 }

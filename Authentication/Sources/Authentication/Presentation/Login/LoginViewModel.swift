@@ -8,16 +8,16 @@
 import Foundation
 
 @MainActor
-final class LoginViewModel<U: LoginUseCase>: ObservableObject {
+final class LoginViewModel: ObservableObject {
     @Published public var email = ""
     @Published public var password = ""
 
     private let coordinator: (any CoordinatorProtocol)?
-    private let loginUseCase: U?
+    private let loginUseCase: LoginUseCase?
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
-        loginUseCase: U? = nil
+        loginUseCase: LoginUseCase? = nil
     ) {
         self.coordinator = coordinator
         self.loginUseCase = loginUseCase
@@ -26,8 +26,8 @@ final class LoginViewModel<U: LoginUseCase>: ObservableObject {
     func login() {
         guard let loginUseCase else { return }
         Task {
-            let request = LoginRequest(email: email, password: password)
-            let result = await loginUseCase.execute(request: request)
+            let params = LoginUseCaseImpl.Params(email: email, password: password)
+            let result = await loginUseCase.execute(params: params)
 
             switch result {
             case .success(let user):

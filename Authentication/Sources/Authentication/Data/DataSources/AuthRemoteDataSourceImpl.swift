@@ -20,7 +20,27 @@ final class AuthRemoteDataSourceImpl: AuthRemoteDataSource {
             let response = try await networkingManager.performRequest(request)
             return LoginResponseMapper.mapToUser(response: response)
         } catch {
-            throw LoginError.serverError
+            throw mapNetworkErrorToLoginError(error)
+        }
+    }
+
+    private func mapNetworkErrorToLoginError(_ error: Error) -> LoginError {
+        if let networkError = error as? NetworkError {
+            switch networkError {
+            case .invalidResponse(let statusCode):
+                switch statusCode {
+                case 400: return .invalidData
+                case 401: return .unauthorized
+                case 404: return .networkError
+                default: return .serverError
+                }
+            case .decodingFailed, .encodingFailed:
+                return .requestError
+            default:
+                return .serverError
+            }
+        } else {
+            return .serverError
         }
     }
 }

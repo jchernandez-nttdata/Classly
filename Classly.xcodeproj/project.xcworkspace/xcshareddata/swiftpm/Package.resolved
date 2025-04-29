@@ -1,13 +1,13 @@
 {
-  "originHash" : "0d66c5f1e7ebed11f1769579863822097cc883b4c7f07ca32c6b85cd5c2a9f7a",
+  "originHash" : "045c072811e008d34f035c9be2666ae6981d98f0f2aba8baf27e187ae1b60a7c",
   "pins" : [
     {
       "identity" : "classlynetworking",
       "kind" : "remoteSourceControl",
       "location" : "git@github.com:jchernandez-nttdata/ClasslyNetworking.git",
       "state" : {
-        "revision" : "51f54a7b3198d52bca99b3babdba3f93091fce33",
-        "version" : "1.0.1"
+        "revision" : "3e55e8be10f1489fbee564adc66ff9a2a4a8c1de",
+        "version" : "1.0.5"
       }
     }
   ],

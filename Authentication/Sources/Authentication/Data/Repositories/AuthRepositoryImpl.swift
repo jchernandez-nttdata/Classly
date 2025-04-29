@@ -16,8 +16,10 @@ class AuthRepositoryImpl: AuthRepository {
         do {
             let user = try await remoteDataSource.login(email: email, password: password)
             return .success(user)
+        } catch let error as LoginError {
+            return .failure(error)
         } catch {
-            return .failure(.unauthorized)
+            return .failure(.serverError)
         }
     }
 }

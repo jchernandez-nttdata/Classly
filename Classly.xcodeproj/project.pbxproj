@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E32DB98D93000C0361 /* ClasslyNetworking */; };
 		356F75E62DB98DD4000C0361 /* .gitignore in Sources */ = {isa = PBXBuildFile; fileRef = 356F75E52DB98DD4000C0361 /* .gitignore */; };
 		356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */ = {isa = PBXBuildFile; productRef = 356F75E92DB98FDB000C0361 /* Navigation */; };
 		356F76632DBC0C27000C0361 /* Authentication in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76622DBC0C27000C0361 /* Authentication */; };
 		356F76662DBFEE8E000C0361 /* Assets in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76652DBFEE8E000C0361 /* Assets */; };
 		356F76B22DC0856F000C0361 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76B12DC0856F000C0361 /* Core */; };
 		356F76B52DC086FA000C0361 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76B42DC086FA000C0361 /* UIComponents */; };
+		35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,8 +71,8 @@
 				356F76B52DC086FA000C0361 /* UIComponents in Frameworks */,
 				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
 				356F76662DBFEE8E000C0361 /* Assets in Frameworks */,
-				356F75E42DB98D93000C0361 /* ClasslyNetworking in Frameworks */,
 				356F76B22DC0856F000C0361 /* Core in Frameworks */,
+				35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */,
 				356F76632DBC0C27000C0361 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,12 +148,12 @@
 			);
 			name = Classly;
 			packageProductDependencies = (
-				356F75E32DB98D93000C0361 /* ClasslyNetworking */,
 				356F75E92DB98FDB000C0361 /* Navigation */,
 				356F76622DBC0C27000C0361 /* Authentication */,
 				356F76652DBFEE8E000C0361 /* Assets */,
 				356F76B12DC0856F000C0361 /* Core */,
 				356F76B42DC086FA000C0361 /* UIComponents */,
+				35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -238,7 +238,7 @@
 			mainGroup = 35893B852DA0504700EEFE40;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
-				356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */,
+				35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 35893B8F2DA0504700EEFE40 /* Products */;
@@ -610,22 +610,17 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */ = {
+		35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:jchernandez-nttdata/ClasslyNetworking.git";
 			requirement = {
 				kind = upToNextMinorVersion;
-				minimumVersion = 1.0.1;
+				minimumVersion = 1.0.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		356F75E32DB98D93000C0361 /* ClasslyNetworking */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 356F75E22DB98D93000C0361 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */;
-			productName = ClasslyNetworking;
-		};
 		356F75E92DB98FDB000C0361 /* Navigation */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = Navigation;
@@ -645,6 +640,11 @@
 		356F76B42DC086FA000C0361 /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */;
+			productName = ClasslyNetworking;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

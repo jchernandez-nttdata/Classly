@@ -10,13 +10,7 @@ struct LoginApiRequest: RequestWithBody {
     typealias Response = LoginResponse
 
     var urlMethod: HTTPMethod = .POST
-    var baseURL: String = "http://localhost:3000"
     var endpoint: String = "/auth/login"
-    var validStatusCodes: [Int] = [200, 201]
-    var headers: [String: String?] = [
-        "Content-Type": "application/json"
-    ]
-    var params: [String: String]? = nil
 
     var body: LoginRequestBody
 
