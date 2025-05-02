@@ -26,20 +26,24 @@ final class LoginViewModel: ObservableObject {
 
     func login() {
         guard let loginUseCase else { return }
+
         Task {
             isLoading = true
-            let params = LoginUseCaseImpl.Params(email: email, password: password)
+
             // simulates loading
             try await Task.sleep(nanoseconds: 1_500_000_000)
+
+            let params = LoginUseCaseImpl.Params(email: email, password: password)
             let result = await loginUseCase.execute(params: params)
+
             isLoading = false
-            await MainActor.run {
-                switch result {
-                case .success(let user):
-                    print("Logged in: \(user)")
-                case .failure(let error):
-                    print("Login failed: \(error)")
-                }
+
+            switch result {
+            case .success(let user):
+                guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
+                authCoordinator.exitModule(role: user.role)
+            case .failure(let error):
+                print("Login failed: \(error)")
             }
         }
     }

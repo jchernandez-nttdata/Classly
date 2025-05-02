@@ -32,8 +32,8 @@ public final class AppCoordinator: ObservableObject {
     }
 
     private func setupAuthenticationCoordinator() {
-        authCoordinator = AuthenticationCoordinator(onExit: { [weak self] in
-            self?.login(as: .admin)
+        authCoordinator = AuthenticationCoordinator(onExit: { [weak self] role in
+            self?.login(as: role)
         })
     }
 }

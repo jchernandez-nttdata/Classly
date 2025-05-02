@@ -7,10 +7,10 @@
 
 import SwiftUI
 import ClasslyNetworking
+import Core
 
 public enum AuthRoute: Hashable {
     case login
-    case forgotPassword
 }
 
 public final class AuthenticationCoordinator: CoordinatorProtocol {
@@ -19,10 +19,10 @@ public final class AuthenticationCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-    private let onExit: () -> Void
+    private let onExit: (UserRole) -> Void
 
     public init(
-        onExit: @escaping () -> Void
+        onExit: @escaping (UserRole) -> Void
     ) {
         self.onExit = onExit
         // initial route
@@ -37,8 +37,6 @@ public final class AuthenticationCoordinator: CoordinatorProtocol {
             let useCase = LoginUseCaseImpl(repository: repository)
             let viewModel = LoginViewModel(coordinator: self, loginUseCase: useCase)
             return AnyView(LoginView(viewModel: viewModel))
-        case .forgotPassword:
-            return AnyView(Text("Forgot password"))
         }
     }
 
@@ -46,7 +44,7 @@ public final class AuthenticationCoordinator: CoordinatorProtocol {
         AnyView(AuthenticationRootView(coordinator: self))
     }
 
-    public func exitModule() {
-        onExit()
+    public func exitModule(role: UserRole) {
+        onExit(role)
     }
 }
