@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 @MainActor
 final class LoginViewModel: ObservableObject {

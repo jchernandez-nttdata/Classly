@@ -1,8 +1,8 @@
 //
-//  File.swift
-//  Authentication
+//  CoordinatorProtocol.swift
+//  Core
 //
-//  Created by Juan Carlos Hernandez Castillo on 25/04/25.
+//  Created by Juan Carlos Hernandez Castillo on 6/05/25.
 //
 
 import SwiftUI
