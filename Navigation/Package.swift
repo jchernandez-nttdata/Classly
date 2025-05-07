@@ -17,6 +17,7 @@ let package = Package(
     dependencies: [
         .package(path: "../Authentication"),
         .package(path: "../Core"),
+        .package(path: "../StudentManagement")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -25,7 +26,8 @@ let package = Package(
             name: "Navigation",
             dependencies: [
                 "Authentication",
-                "Core"
+                "Core",
+                "StudentManagement"
             ]
         ),
         .testTarget(

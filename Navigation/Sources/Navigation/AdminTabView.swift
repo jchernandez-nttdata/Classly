@@ -8,12 +8,17 @@
 import SwiftUI
 
 public struct AdminTabView: View {
+
+    @EnvironmentObject private var appCoordinator: AppCoordinator
+
     public init() {}
 
     public var body: some View {
         TabView {
-            Text("Students")
-                .tabItem { Label("Students", systemImage: "person.3") }
+            if let studentCoordinator = appCoordinator.studentManagementCoordinator {
+                studentCoordinator.start()
+                    .tabItem { Label("Students", systemImage: "person.3") }
+            }
 
             Text("Classes")
                 .tabItem { Label("Classes", systemImage: "book") }
