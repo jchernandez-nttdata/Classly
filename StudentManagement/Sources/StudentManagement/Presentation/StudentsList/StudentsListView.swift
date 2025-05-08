@@ -10,22 +10,11 @@ import UIComponents
 import Assets
 
 struct StudentsListView: View {
-    let data = [
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 1, name: "Juanca", email: "email1@example.com", dni: "12345678", phone: "987654321", birthDate: Date.now),
-        Student(id: 2, name: "Ana", email: "email2@example.com", dni: "23456789", phone: "987654322", birthDate: Date.now)
-    ]
+    @StateObject private var viewModel: StudentsListViewModel
+
+    public init(viewModel: StudentsListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
@@ -41,7 +30,7 @@ struct StudentsListView: View {
                     fieldBackgroundColor: AppColor.secondaryBackground
                 )
 
-                List(data) { student in
+                List(viewModel.students) { student in
                     StudentTile(student: student) {
                         print("hola amigo")
                     }
@@ -50,6 +39,9 @@ struct StudentsListView: View {
                 }
                 .listStyle(.plain)
                 .scrollIndicators(.hidden)
+                .refreshable {
+                    viewModel.loadStudents()
+                }
             }
             .padding()
 
@@ -58,11 +50,15 @@ struct StudentsListView: View {
             }
         }
         .navigationBarHidden(true)
+        .loadingIndicator(viewModel.isLoading)
+        .onAppear {
+            viewModel.loadStudents()
+        }
 
 
     }
 }
 
 #Preview {
-    StudentsListView()
+    StudentsListView(viewModel: StudentsListViewModel())
 }

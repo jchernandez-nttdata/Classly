@@ -19,7 +19,7 @@ struct StudentTile: View {
                     .font(AppFont.body.bold())
                     .padding(.bottom, 1)
 
-                Text("DNI: \(student.dni) - \(student.phone)")
+                Text("DNI: \(student.dni) / \(student.phone)")
                     .font(AppFont.body)
             }
 

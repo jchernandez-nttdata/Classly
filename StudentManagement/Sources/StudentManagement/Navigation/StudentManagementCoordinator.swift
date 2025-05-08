@@ -27,7 +27,11 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
     public func build(route: StudentManagementRoute) -> AnyView {
         switch route {
         case .studentsList:
-            return AnyView(StudentsListView())
+            let datasource = StudentsDataSourceImpl(networkingManager: NetworkManager())
+            let repository = StudentsRepositoryImpl(remoteDataSource: datasource)
+            let useCase = LoadStudentsUseCaseImpl(repository: repository)
+            let viewModel = StudentsListViewModel(coordinator: self, loadStudentsUseCase: useCase)
+            return AnyView(StudentsListView(viewModel: viewModel))
         }
     }
 
