@@ -27,7 +27,7 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
     public func build(route: StudentManagementRoute) -> AnyView {
         switch route {
         case .studentsList:
-            return AnyView(Text("studentsList"))
+            return AnyView(StudentsListView())
         }
     }
 

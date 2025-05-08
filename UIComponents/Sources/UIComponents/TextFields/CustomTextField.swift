@@ -16,28 +16,43 @@ public enum InputFieldType {
 public struct CustomTextField: View {
     private let placeholder: String
     private let type: InputFieldType
+    private let leftIcon: Image?
+    private let fieldBackgroundColor: Color
     @Binding private var text: String
 
     public init(
         placeholder: String,
         type: InputFieldType = .normal,
-        text: Binding<String>
+        text: Binding<String>,
+        leftIcon: Image? = nil,
+        fieldBackgroundColor: Color = AppColor.background
     ) {
         self.placeholder = placeholder
         self.type = type
         self._text = text
+        self.leftIcon = leftIcon
+        self.fieldBackgroundColor = fieldBackgroundColor
     }
 
     public var body: some View {
-        Group {
-            if type == .secure {
-                SecureField(placeholder, text: $text)
-            } else {
-                TextField(placeholder, text: $text)
+        HStack {
+            if let icon = leftIcon {
+                icon
+                    .foregroundColor(AppColor.border)
+            }
+
+            Group {
+                if type == .secure {
+                    SecureField(placeholder, text: $text)
+                } else {
+                    TextField(placeholder, text: $text)
+                }
             }
         }
         .padding(.vertical, 13)
         .padding(.horizontal, 15)
+        .background(fieldBackgroundColor)
+        .cornerRadius(16)
         .overlay(
             RoundedRectangle(cornerRadius: 16)
                 .stroke(AppColor.border, lineWidth: 1)
