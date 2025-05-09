@@ -35,7 +35,13 @@ public final class AuthenticationCoordinator: CoordinatorProtocol {
             let datasource = AuthRemoteDataSourceImpl(networkingManager: NetworkManager())
             let repository = AuthRepositoryImpl(remoteDataSource: datasource)
             let useCase = LoginUseCaseImpl(repository: repository)
-            let viewModel = LoginViewModel(coordinator: self, loginUseCase: useCase)
+            let sessionManager = UserSessionManager.shared
+            let viewModel = LoginViewModel(
+                coordinator: self,
+                loginUseCase: useCase,
+                userSessionManager: sessionManager
+            )
+
             return AnyView(LoginView(viewModel: viewModel))
         }
     }

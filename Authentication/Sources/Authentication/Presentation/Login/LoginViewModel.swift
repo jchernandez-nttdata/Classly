@@ -16,13 +16,16 @@ final class LoginViewModel: ObservableObject {
 
     private let coordinator: (any CoordinatorProtocol)?
     private let loginUseCase: LoginUseCase?
+    private let userSessionManager: (any UserSessionProtocol)?
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
-        loginUseCase: LoginUseCase? = nil
+        loginUseCase: LoginUseCase? = nil,
+        userSessionManager: (any UserSessionProtocol)? = nil
     ) {
         self.coordinator = coordinator
         self.loginUseCase = loginUseCase
+        self.userSessionManager = userSessionManager
     }
 
     func login() {
@@ -41,6 +44,12 @@ final class LoginViewModel: ObservableObject {
 
             switch result {
             case .success(let user):
+                let session = UserSession(
+                    id: user.id,
+                    email: user.email,
+                    name: user.name
+                )
+                userSessionManager?.saveSession(session)
                 guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
                 authCoordinator.exitModule(role: user.role)
             case .failure(let error):
