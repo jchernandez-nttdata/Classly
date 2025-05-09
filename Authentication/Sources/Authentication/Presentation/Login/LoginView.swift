@@ -38,6 +38,9 @@ struct LoginView: View {
                 .scaledToFit()
                 .frame(width: 40, height: 40)
                 .foregroundColor(AppColor.secondaryText)
+                .onTapGesture {
+                    viewModel.authenticateWithBiometrics()
+                }
         }
         .padding()
         .background(AppColor.background)

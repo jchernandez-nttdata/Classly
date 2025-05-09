@@ -4,37 +4,24 @@
 import PackageDescription
 
 let package = Package(
-    name: "Authentication",
+    name: "DataPersistance",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Authentication",
-            targets: ["Authentication"]),
-    ],
-    dependencies: [
-        .package(path: "../Assets"),
-        .package(path: "../Core"),
-        .package(path: "../UIComponents"),
-        .package(path: "../DataPersistance")
+            name: "DataPersistance",
+            targets: ["DataPersistance"]),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Authentication",
-            dependencies: [
-                "Assets",
-                "Core",
-                "UIComponents",
-                "DataPersistance"
-            ]
-        ),
+            name: "DataPersistance"),
         .testTarget(
-            name: "AuthenticationTests",
-            dependencies: ["Authentication"]
+            name: "DataPersistanceTests",
+            dependencies: ["DataPersistance"]
         ),
     ]
 )
