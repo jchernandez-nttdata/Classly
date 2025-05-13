@@ -19,19 +19,22 @@ public struct CustomTextField: View {
     private let leftIcon: Image?
     private let fieldBackgroundColor: Color
     @Binding private var text: String
+    private let keyboardType: UIKeyboardType
 
     public init(
         placeholder: String,
         type: InputFieldType = .normal,
         text: Binding<String>,
         leftIcon: Image? = nil,
-        fieldBackgroundColor: Color = AppColor.background
+        fieldBackgroundColor: Color = AppColor.background,
+        keyboardType: UIKeyboardType = .default
     ) {
         self.placeholder = placeholder
         self.type = type
         self._text = text
         self.leftIcon = leftIcon
         self.fieldBackgroundColor = fieldBackgroundColor
+        self.keyboardType = keyboardType
     }
 
     public var body: some View {
@@ -46,6 +49,7 @@ public struct CustomTextField: View {
                     SecureField(placeholder, text: $text)
                 } else {
                     TextField(placeholder, text: $text)
+                        .keyboardType(keyboardType)
                 }
             }
         }

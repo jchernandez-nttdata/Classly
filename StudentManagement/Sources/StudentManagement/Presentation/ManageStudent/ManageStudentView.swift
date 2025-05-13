@@ -19,18 +19,56 @@ struct ManageStudentView: View {
     var body: some View {
         VStack {
             CustomAppBar(
-                title: viewModel.existingStudent == nil ? "Add Student" : "Edit Student"
-            ) {
-                viewModel.goBack()
-            }
+                title: viewModel.existingStudent == nil ? "Add Student" : "Edit Student",
+                backAction: viewModel.goBack
+            )
 
-            Spacer()
+            ScrollView {
+                VStack(spacing: 15) {
+                    CustomTextField(
+                        placeholder: "Name",
+                        text: $viewModel.name
+                    )
+                    .padding(.top, 30)
+
+                    CustomTextField(
+                        placeholder: "Email",
+                        text: $viewModel.email,
+                        keyboardType: .emailAddress
+                    )
+
+                    CustomTextField(
+                        placeholder: "DNI",
+                        text: $viewModel.dni,
+                        keyboardType: .numberPad
+                    )
+
+                    CustomTextField(
+                        placeholder: "Password",
+                        type: .secure,
+                        text: $viewModel.password
+                    )
+
+                    CustomTextField(
+                        placeholder: "Phone",
+                        text: $viewModel.phone,
+                        keyboardType: .phonePad
+                    )
+
+                    CustomDateField(date: $viewModel.birthDate)
+
+                    Spacer(minLength: 50)
+
+                    CustomButton(title: "Save") {
+                        print("Hola")
+                    }
+                }
+            }
         }
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
         .padding()
-
-
+        .removeFocusOnTap()
     }
 }
 

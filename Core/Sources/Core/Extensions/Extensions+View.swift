@@ -23,4 +23,8 @@ public extension View {
     func loadingIndicator(_ isShowing: Bool) -> some View {
         self.modifier(LoadingIndicator(isShowing: isShowing))
     }
+
+    func removeFocusOnTap() -> some View {
+        modifier(RemoveFocusOnTapModifier())
+    }
 }
