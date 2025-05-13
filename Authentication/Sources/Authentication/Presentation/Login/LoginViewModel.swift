@@ -53,7 +53,7 @@ final class LoginViewModel: ObservableObject {
                     email: user.email,
                     name: user.name
                 )
-                userSessionManager?.saveSession(session)
+                await userSessionManager?.saveSession(session)
 
                 // faceID logic
                 //TODO: Validate when to clear data

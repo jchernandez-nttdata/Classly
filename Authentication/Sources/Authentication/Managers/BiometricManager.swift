@@ -15,8 +15,8 @@ final class BiometricManager: BiometricManagerProtocol {
     private let context = LAContext()
 
     init(
-        keychain: KeychainProtocol = KeychainManager(),
-        defaults: UserDefaultsProtocol = UserDefaultsManager()
+        keychain: KeychainProtocol = KeychainManager.shared,
+        defaults: UserDefaultsProtocol = UserDefaultsManager.shared
     ) {
         self.keychain = keychain
         self.defaults = defaults

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-public class UserSession: ObservableObject {
+public final class UserSession: ObservableObject, Sendable {
 
     public init(id: Int, email: String, name: String) {
         self.id = id
@@ -15,7 +15,7 @@ public class UserSession: ObservableObject {
         self.name = name
     }
 
-    public var id: Int
-    public var email: String
-    public var name: String
+    public let id: Int
+    public let email: String
+    public let name: String
 }

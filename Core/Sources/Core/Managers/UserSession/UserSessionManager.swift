@@ -7,23 +7,30 @@
 
 import SwiftUI
 
-@MainActor
-public final class UserSessionManager: UserSessionProtocol {
+public actor UserSessionManager: UserSessionProtocol {
     public static let shared = UserSessionManager()
 
-    public var currentUser: UserSession? = nil
-    public var isAuthenticated: Bool = false
+    public var _currentUser: UserSession? = nil
+    public var _isAuthenticated: Bool = false
 
     private init() {}
 
+    public var currentUser: UserSession? {
+        _currentUser
+    }
+
+    public var isAuthenticated: Bool {
+        _isAuthenticated
+    }
+
     public func saveSession(_ session: UserSession) {
-        self.currentUser = session
-        self.isAuthenticated = true
+        self._currentUser = session
+        self._isAuthenticated = true
     }
 
     public func logout() {
-        self.currentUser = nil
-        self.isAuthenticated = false
+        self._currentUser = nil
+        self._isAuthenticated = false
     }
 }
 

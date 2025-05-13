@@ -7,8 +7,11 @@
 
 import Foundation
 
-public final class UserDefaultsManager: UserDefaultsProtocol {
+public final class UserDefaultsManager: UserDefaultsProtocol, @unchecked Sendable {
 
+    public static let shared = UserDefaultsManager()
+
+    //  https://developer.apple.com/documentation/foundation/userdefaults#Thread-Safety
     private let defaults: UserDefaults
 
     public init(defaults: UserDefaults = .standard) {

@@ -7,10 +7,9 @@
 
 import SwiftUI
 
-@MainActor
-public protocol UserSessionProtocol {
-    var currentUser: UserSession? { get }
-    var isAuthenticated: Bool { get }
-    func saveSession(_ session: UserSession)
-    func logout()
+public protocol UserSessionProtocol: Sendable {
+    var currentUser: UserSession? { get async }
+    var isAuthenticated: Bool { get async }
+    func saveSession(_ session: UserSession) async
+    func logout() async
 }

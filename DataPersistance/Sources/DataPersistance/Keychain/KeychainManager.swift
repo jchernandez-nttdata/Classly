@@ -7,7 +7,9 @@
 
 import Foundation
 
-public final class KeychainManager: KeychainProtocol {
+public final class KeychainManager: KeychainProtocol, Sendable {
+
+    public static let shared = KeychainManager()
 
     public init() {
         
