@@ -11,6 +11,7 @@ import Core
 
 public enum StudentManagementRoute: Hashable {
     case studentsList
+    case manageStudent(Student?)
 }
 
 public final class StudentManagementCoordinator: CoordinatorProtocol {
@@ -19,10 +20,7 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-    public init() {
-        // initial route
-        path.append(StudentManagementRoute.studentsList)
-    }
+    public init() {}
 
     public func build(route: StudentManagementRoute) -> AnyView {
         switch route {
@@ -32,6 +30,9 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
             let useCase = LoadStudentsUseCaseImpl(repository: repository)
             let viewModel = StudentsListViewModel(coordinator: self, loadStudentsUseCase: useCase)
             return AnyView(StudentsListView(viewModel: viewModel))
+        case .manageStudent(let student):
+            let viewModel = ManageStudentViewModel(coordinator: self, existingStudent: student)
+            return AnyView(ManageStudentView(viewModel: viewModel))
         }
     }
 

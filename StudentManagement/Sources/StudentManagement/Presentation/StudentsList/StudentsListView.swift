@@ -19,9 +19,7 @@ struct StudentsListView: View {
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading) {
-                Text("Students")
-                    .font(AppFont.largeTitle)
-                    .foregroundStyle(AppColor.primaryText)
+                CustomAppBar(title: "Students")
 
                 CustomTextField(
                     placeholder: "Search",
@@ -32,7 +30,7 @@ struct StudentsListView: View {
 
                 List(viewModel.students) { student in
                     StudentTile(student: student) {
-                        print("hola amigo")
+                        viewModel.toManageStudent(student)
                     }
                     .listRowInsets(EdgeInsets())
                     .padding(top: 10, bottom: 10)
@@ -46,7 +44,7 @@ struct StudentsListView: View {
             .padding()
 
             CircularButton {
-                print("add")
+                viewModel.toManageStudent(nil)
             }
         }
         .navigationBarHidden(true)
@@ -54,8 +52,6 @@ struct StudentsListView: View {
         .onAppear {
             viewModel.loadStudents()
         }
-
-
     }
 }
 

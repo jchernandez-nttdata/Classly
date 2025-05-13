@@ -16,7 +16,7 @@ public struct StudentManagementRootView: View {
 
     public var body: some View {
         NavigationStack(path: $coordinator.path) {
-            EmptyView()
+            coordinator.build(route: .studentsList)
                 .navigationDestination(for: StudentManagementRoute.self) { route in
                     coordinator.build(route: route)
                 }

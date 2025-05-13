@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Student: Sendable, Identifiable {
+public struct Student: Sendable, Identifiable, Hashable {
     public let id: Int
     public let name: String
     public let email: String

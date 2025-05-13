@@ -51,4 +51,9 @@ final class StudentsListViewModel: ObservableObject {
             isLoading = false
         }
     }
+
+    func toManageStudent(_ student: Student?) {
+        guard let coordinator = coordinator as? StudentManagementCoordinator else { return }
+        coordinator.push(.manageStudent(student))
+    }
 }

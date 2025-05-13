@@ -18,6 +18,7 @@ public final class AppCoordinator: ObservableObject {
 
     public init() {
         setupAuthenticationCoordinator()
+        login(as: .admin)
     }
 
     public func login(as role: UserRole) {
