@@ -11,6 +11,7 @@ import Assets
 
 struct StudentsListView: View {
     @StateObject private var viewModel: StudentsListViewModel
+    @State private var didLoadStudents = false
 
     public init(viewModel: StudentsListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -50,7 +51,10 @@ struct StudentsListView: View {
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
         .onAppear {
-            viewModel.loadStudents()
+            if !didLoadStudents {
+                viewModel.loadStudents()
+                didLoadStudents = true
+            }
         }
     }
 }

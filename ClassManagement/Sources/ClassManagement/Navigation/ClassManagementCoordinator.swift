@@ -19,13 +19,25 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
+    private let dataSource: LocationsDataSource
+    private let repository: LocationsRepository
+    private let loadLocationsUseCase: LoadLocationsUseCase
+
     public init() {
+        let networkManager = NetworkManager()
+        self.dataSource = LocationsDataSourceImpl(networkingManager: networkManager)
+        self.repository = LocationsRepositoryImpl(remoteDataSource: dataSource)
+        self.loadLocationsUseCase = LoadLocationsUseCaseImpl(repository: repository)
     }
 
     public func build(route: ClassManagementRoute) -> AnyView {
         switch route {
         case .classList:
-            return AnyView(ClassListView())
+            let viewModel = ClassListViewModel(
+                coordinator: self,
+                loadLocationsUseCase: loadLocationsUseCase
+            )
+            return AnyView(ClassListView(viewModel: viewModel))
         }
     }
 

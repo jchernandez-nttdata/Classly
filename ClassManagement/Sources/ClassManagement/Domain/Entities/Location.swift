@@ -9,6 +9,6 @@ import Foundation
 
 public struct Location: Sendable, Identifiable, Hashable {
     public let id: Int
-    public let locationName: String
+    public let name: String
     public let address: String
 }
