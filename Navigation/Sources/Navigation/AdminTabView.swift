@@ -20,8 +20,10 @@ public struct AdminTabView: View {
                     .tabItem { Label("Students", systemImage: "person.3") }
             }
 
-            Text("Classes")
-                .tabItem { Label("Classes", systemImage: "book") }
+            if let classCoordinator = appCoordinator.classManagementCoordinator {
+                classCoordinator.start()
+                    .tabItem { Label("Classes", systemImage: "book") }
+            }
 
             Text("Payments")
                 .tabItem { Label("Payments", systemImage: "creditcard") }

@@ -9,12 +9,14 @@ import SwiftUI
 import Authentication
 import Core
 import StudentManagement
+import ClassManagement
 
 @MainActor
 public final class AppCoordinator: ObservableObject {
     @Published public var state: NavigationState = .authentication
     public var authCoordinator: AuthenticationCoordinator?
     public var studentManagementCoordinator: StudentManagementCoordinator?
+    public var classManagementCoordinator: ClassManagementCoordinator?
 
     public init() {
         setupAuthenticationCoordinator()
@@ -25,6 +27,7 @@ public final class AppCoordinator: ObservableObject {
         switch role {
         case .admin:
             studentManagementCoordinator = StudentManagementCoordinator()
+            classManagementCoordinator = ClassManagementCoordinator()
             state = .admin
         case .student:
             state = .student

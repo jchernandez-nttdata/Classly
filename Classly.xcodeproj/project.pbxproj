@@ -45,6 +45,7 @@
 		35893B9E2DA0504900EEFE40 /* ClasslyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893BA82DA0504A00EEFE40 /* ClasslyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35C76FFE2DCDA8120022227A /* DataPersistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataPersistance; sourceTree = "<group>"; };
+		35CC73A12DD525AB007FE590 /* ClassManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassManagement; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -106,6 +107,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				35CC73A12DD525AB007FE590 /* ClassManagement */,
 				35C76FFE2DCDA8120022227A /* DataPersistance */,
 				3502491E2DCB065600C5A036 /* StudentManagement */,
 				356F76B32DC0867E000C0361 /* UIComponents */,
