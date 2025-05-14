@@ -22,15 +22,18 @@ final class ManageStudentViewModel: ObservableObject {
 
     private let coordinator: (any CoordinatorProtocol)?
     private let addStudentsUseCase: AddStudentUseCase?
+    private let toastManager: ToastManager
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
         addStudent: AddStudentUseCase? = nil,
-        existingStudent: Student? = nil
+        existingStudent: Student? = nil,
+        toastManager: ToastManager = .shared
     ) {
         self.coordinator = coordinator
         self.existingStudent = existingStudent
         self.addStudentsUseCase = addStudent
+        self.toastManager = toastManager
 
         if let existingStudent {
             initEditStudent(existingStudent)
@@ -82,16 +85,16 @@ final class ManageStudentViewModel: ObservableObject {
                     )
                 )
 
-                // TODO: show success toast
+                toastManager.showToast(message: "User added successfully", type: .success)
                 goBack()
             } catch {
                 switch error {
                 case .invalidData:
-                    print("invalidData")
+                    toastManager.showToast(message: "The data you entered is invalid", type: .error)
                 case .duplicateStudent:
-                    print("duplicate student")
+                    toastManager.showToast(message: "A student with this DNI or email already exists", type: .error)
                 default:
-                    print("error general")
+                    toastManager.showToast(message: "An unexpected error occurred", type: .error)
                 }
             }
 

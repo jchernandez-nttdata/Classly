@@ -18,17 +18,20 @@ final class LoginViewModel: ObservableObject {
     private let loginUseCase: LoginUseCase?
     private let userSessionManager: (any UserSessionProtocol)?
     private let biometricManager: BiometricManagerProtocol
+    private let toastManager: ToastManager
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
         loginUseCase: LoginUseCase? = nil,
         userSessionManager: (any UserSessionProtocol)? = nil,
-        biometricManagerProtocol: BiometricManagerProtocol = BiometricManager()
+        biometricManagerProtocol: BiometricManagerProtocol = BiometricManager(),
+        toastManager: ToastManager = .shared
     ) {
         self.coordinator = coordinator
         self.loginUseCase = loginUseCase
         self.userSessionManager = userSessionManager
         self.biometricManager = biometricManagerProtocol
+        self.toastManager = toastManager
     }
 
     func login() {
@@ -64,11 +67,17 @@ final class LoginViewModel: ObservableObject {
                     }
                 }
 
-
                 guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
                 authCoordinator.exitModule(role: user.role)
             case .failure(let error):
-                print("Login failed: \(error)")
+                switch error {
+                case .unauthorized:
+                    toastManager.showToast(message: "Invalid credentials", type: .error)
+                case .invalidData:
+                    toastManager.showToast(message: "Invalid data", type: .error)
+                default:
+                    toastManager.showToast(message: "Something went wrong. Please try again later", type: .error)
+                }
             }
         }
     }
