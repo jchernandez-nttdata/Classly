@@ -11,25 +11,23 @@ struct LoadingIndicator: ViewModifier {
     var isShowing: Bool
 
     func body(content: Content) -> some View {
-        ZStack {
-            content
-            if isShowing {
-                loadingView
-            }
-        }
-    }
-
-    private var loadingView: some View {
-        ZStack {
-            Color(white: 0.0, opacity: 0.5)
-                .frame(maxWidth: .infinity, maxHeight: .infinity)
-                .edgesIgnoringSafeArea(.all)
-            ProgressView()
-                .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                .scaleEffect(2)
-        }
-        .ignoresSafeArea()
-        .transition(AnyTransition.opacity.animation(.easeInOut(duration: 0.2)))
+        content
+            .overlay(
+                Group {
+                    if isShowing {
+                        ZStack {
+                            Color.black.opacity(0.5)
+                                .ignoresSafeArea()
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(2)
+                        }
+                        .transition(.opacity)
+                        .animation(.easeInOut(duration: 0.2), value: isShowing)
+                    }
+                }
+            )
     }
 }
+
 
