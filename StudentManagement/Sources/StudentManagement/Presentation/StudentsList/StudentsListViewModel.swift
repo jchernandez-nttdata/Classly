@@ -12,6 +12,19 @@ import Core
 final class StudentsListViewModel: ObservableObject {
     @Published public var students: [Student] = []
     @Published public var isLoading = false
+    @Published public var searchText: String = ""
+
+    var filteredStudents: [Student] {
+        guard !searchText.isEmpty else { return students }
+
+        let normalizedSearchText = searchText.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+
+        return students.filter { student in
+            let normalizedName = student.name.folding(options: .diacriticInsensitive, locale: .current).lowercased()
+            return normalizedName.contains(normalizedSearchText)
+        }
+    }
+
 
     private let coordinator: (any CoordinatorProtocol)?
     private let loadStudentsUseCase: LoadStudentsUseCase?

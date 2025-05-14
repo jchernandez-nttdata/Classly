@@ -23,12 +23,12 @@ struct StudentsListView: View {
 
                 CustomTextField(
                     placeholder: "Search",
-                    text: .constant(""),
+                    text: $viewModel.searchText,
                     leftIcon: Image(systemName: "magnifyingglass"),
                     fieldBackgroundColor: AppColor.secondaryBackground
                 )
 
-                List(viewModel.students) { student in
+                List(viewModel.filteredStudents) { student in
                     StudentTile(student: student) {
                         viewModel.toManageStudent(student)
                     }
