@@ -17,24 +17,24 @@ public struct NavigationRootView: View {
     public init() {}
 
     public var body: some View {
-        ZStack {
-            Group {
-                switch coordinator.state {
-                case .authentication:
-                    if let authCoordinator = coordinator.authCoordinator {
-                        authCoordinator.start()
-                    }
-                case .admin:
-                    AdminTabView()
-                case .student:
-                    StudentTabView()
+        Group {
+            switch coordinator.state {
+            case .authentication:
+                if let authCoordinator = coordinator.authCoordinator {
+                    authCoordinator.start()
                 }
+            case .admin:
+                AdminTabView()
+            case .student:
+                StudentTabView()
             }
-            .environmentObject(coordinator)
-
+        }
+        .environmentObject(coordinator)
+        .overlay(
             ToastView(message: $toastManager.message,
                       type: $toastManager.type,
                       isVisible: $toastManager.isVisible)
-        }
+        )
     }
 }
+

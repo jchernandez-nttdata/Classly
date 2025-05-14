@@ -25,32 +25,31 @@ public struct ToastView: View {
     }
 
     public var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                Spacer()
-                if isVisible, let message = message {
-                    HStack(alignment: .center, spacing: 15) {
-                        Image(systemName: type == .error ? "xmark.octagon.fill" : "checkmark.circle.fill")
-                            .foregroundColor(.white)
-                            .font(.title2)
+        VStack {
+            Spacer()
 
-                        Text(message)
-                            .font(.body)
-                            .foregroundColor(.white)
-                            .multilineTextAlignment(.leading)
-                            .lineLimit(nil)
-                    }
-                    .padding()
-                    .frame(width: geometry.size.width * 0.8)
-                    .background(type == .error ? AppColor.error : AppColor.success)
-                    .cornerRadius(12)
-                    .shadow(color: AppColor.shadowColor.opacity(0.3), radius: 10, x: 0, y: 4)
-                    .transition(.move(edge: .bottom).combined(with: .opacity))
-                    .animation(.easeInOut, value: isVisible)
+            if isVisible, let message = message {
+                HStack(alignment: .center, spacing: 15) {
+                    Image(systemName: type == .error ? "xmark.octagon.fill" : "checkmark.circle.fill")
+                        .foregroundColor(.white)
+                        .font(.title2)
+
+                    Text(message)
+                        .font(.body)
+                        .foregroundColor(.white)
+                        .multilineTextAlignment(.leading)
+                        .lineLimit(nil)
                 }
+                .padding()
+                .frame(maxWidth: UIScreen.main.bounds.width * 0.85)
+                .background(type == .error ? AppColor.error : AppColor.success)
+                .cornerRadius(12)
+                .shadow(color: AppColor.shadowColor.opacity(0.3), radius: 10, x: 0, y: 4)
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+                .animation(.easeInOut, value: isVisible)
             }
-            .frame(width: geometry.size.width, height: geometry.size.height)
-            .padding(.bottom, 30)
         }
+        .padding(.bottom, 30)
     }
 }
+
