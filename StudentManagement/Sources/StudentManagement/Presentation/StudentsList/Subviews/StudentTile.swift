@@ -39,7 +39,7 @@ struct StudentTile: View {
             email: "email1@example.com",
             dni: "12345678",
             phone: "987654321",
-            birthDate: Date.now
+            birthdate: Date.now
         ),
         onEdit: {}
     )

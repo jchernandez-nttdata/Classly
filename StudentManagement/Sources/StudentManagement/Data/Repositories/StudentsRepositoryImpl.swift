@@ -6,6 +6,7 @@
 //
 
 class StudentsRepositoryImpl: StudentsRepository {
+
     private let remoteDataSource: StudentsDataSource
 
     init(remoteDataSource: StudentsDataSource) {
@@ -16,6 +17,16 @@ class StudentsRepositoryImpl: StudentsRepository {
         do {
             return try await remoteDataSource.loadStudents()
         } catch let error as LoadStudentsError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
+
+    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(AddStudentError) {
+        do {
+            return try await remoteDataSource.addStudent(request: request)
+        } catch let error as AddStudentError {
             throw error
         } catch {
             throw .serverError

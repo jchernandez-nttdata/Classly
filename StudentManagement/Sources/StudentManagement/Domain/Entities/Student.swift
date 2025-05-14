@@ -13,5 +13,5 @@ public struct Student: Sendable, Identifiable, Hashable {
     public let email: String
     public let dni: String
     public let phone: String
-    public let birthDate: Date?
+    public let birthdate: Date?
 }

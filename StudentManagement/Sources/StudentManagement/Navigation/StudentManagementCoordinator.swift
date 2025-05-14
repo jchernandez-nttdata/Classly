@@ -20,18 +20,33 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-    public init() {}
+    private let dataSource: StudentsDataSource
+    private let repository: StudentsRepository
+    private let loadStudentsUseCase: LoadStudentsUseCase
+    private let addStudentUseCase: AddStudentUseCase
+
+    public init() {
+        let networkManager = NetworkManager()
+        self.dataSource = StudentsDataSourceImpl(networkingManager: networkManager)
+        self.repository = StudentsRepositoryImpl(remoteDataSource: dataSource)
+        self.loadStudentsUseCase = LoadStudentsUseCaseImpl(repository: repository)
+        self.addStudentUseCase = AddStudentUseCaseImpl(repository: repository)
+    }
 
     public func build(route: StudentManagementRoute) -> AnyView {
         switch route {
         case .studentsList:
-            let datasource = StudentsDataSourceImpl(networkingManager: NetworkManager())
-            let repository = StudentsRepositoryImpl(remoteDataSource: datasource)
-            let useCase = LoadStudentsUseCaseImpl(repository: repository)
-            let viewModel = StudentsListViewModel(coordinator: self, loadStudentsUseCase: useCase)
+            let viewModel = StudentsListViewModel(
+                coordinator: self,
+                loadStudentsUseCase: loadStudentsUseCase
+            )
             return AnyView(StudentsListView(viewModel: viewModel))
         case .manageStudent(let student):
-            let viewModel = ManageStudentViewModel(coordinator: self, existingStudent: student)
+            let viewModel = ManageStudentViewModel(
+                coordinator: self,
+                addStudent: addStudentUseCase,
+                existingStudent: student
+            )
             return AnyView(ManageStudentView(viewModel: viewModel))
         }
     }

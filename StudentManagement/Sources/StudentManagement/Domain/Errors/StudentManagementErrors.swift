@@ -11,3 +11,11 @@ public enum LoadStudentsError: Error, Sendable {
     case serverError
     case requestError
 }
+
+enum AddStudentError: Error, Sendable {
+    case invalidData
+    case duplicateStudent
+    case networkError
+    case serverError
+    case requestError
+}

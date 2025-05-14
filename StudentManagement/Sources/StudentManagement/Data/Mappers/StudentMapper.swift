@@ -15,7 +15,7 @@ class StudentMapper {
             email: response.email,
             dni: response.dni,
             phone: response.phone,
-            birthDate: response.birthdate.toDate()
+            birthdate: response.birthdate.toDate()
         )
     }
 

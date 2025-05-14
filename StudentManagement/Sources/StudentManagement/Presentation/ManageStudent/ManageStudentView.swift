@@ -59,15 +59,13 @@ struct ManageStudentView: View {
 
                     Spacer(minLength: 50)
 
-                    CustomButton(title: "Save") {
-                        print("Hola")
-                    }
+                    CustomButton(title: "Save", action: viewModel.save)
                 }
             }
         }
+        .padding()
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
-        .padding()
         .removeFocusOnTap()
     }
 }

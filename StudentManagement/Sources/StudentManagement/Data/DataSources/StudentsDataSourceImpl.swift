@@ -21,26 +21,17 @@ final class StudentsDataSourceImpl: StudentsDataSource {
             let response = try await networkingManager.performRequest(request)
             return StudentMapper.mapToStudents(responses: response)
         } catch {
-            throw mapNetworkErrorToLoadStudentsError(error)
+            throw StudentManagementNetworkErrorMapper.toLoadStudentsError(error)
         }
     }
 
-    private func mapNetworkErrorToLoadStudentsError(_ error: Error) -> LoadStudentsError {
-        if let networkError = error as? NetworkError {
-            switch networkError {
-            case .invalidResponse(let statusCode):
-                switch statusCode {
-                case 400: return .invalidData
-                case 404: return .networkError
-                default: return .serverError
-                }
-            case .decodingFailed, .encodingFailed:
-                return .requestError
-            default:
-                return .serverError
-            }
-        } else {
-            return .serverError
+    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws {
+        do {
+            let request = AddStudentApiRequest(from: request)
+            _ = try await networkingManager.performRequest(request)
+            return
+        } catch {
+            throw StudentManagementNetworkErrorMapper.toAddStudentError(error)
         }
     }
 }
