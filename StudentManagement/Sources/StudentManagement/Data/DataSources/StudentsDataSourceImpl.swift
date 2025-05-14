@@ -31,7 +31,17 @@ final class StudentsDataSourceImpl: StudentsDataSource {
             _ = try await networkingManager.performRequest(request)
             return
         } catch {
-            throw StudentManagementNetworkErrorMapper.toAddStudentError(error)
+            throw StudentManagementNetworkErrorMapper.toManageStudentError(error)
+        }
+    }
+
+    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws {
+        do {
+            let request = EditStudentApiRequest(from: request)
+            _ = try await networkingManager.performRequest(request)
+            return
+        } catch {
+            throw StudentManagementNetworkErrorMapper.toManageStudentError(error)
         }
     }
 }

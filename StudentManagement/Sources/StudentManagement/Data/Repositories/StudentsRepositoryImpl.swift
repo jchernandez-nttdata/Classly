@@ -23,10 +23,20 @@ class StudentsRepositoryImpl: StudentsRepository {
         }
     }
 
-    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(AddStudentError) {
+    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError) {
         do {
             return try await remoteDataSource.addStudent(request: request)
-        } catch let error as AddStudentError {
+        } catch let error as ManageStudentError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
+
+    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws(ManageStudentError) {
+        do {
+            return try await remoteDataSource.editStudent(request: request)
+        } catch let error as ManageStudentError {
             throw error
         } catch {
             throw .serverError

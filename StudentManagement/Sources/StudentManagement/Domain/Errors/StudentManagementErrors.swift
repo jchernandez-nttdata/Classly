@@ -12,7 +12,7 @@ public enum LoadStudentsError: Error, Sendable {
     case requestError
 }
 
-enum AddStudentError: Error, Sendable {
+enum ManageStudentError: Error, Sendable {
     case invalidData
     case duplicateStudent
     case networkError

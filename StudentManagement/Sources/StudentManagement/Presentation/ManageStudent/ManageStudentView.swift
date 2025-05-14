@@ -44,7 +44,7 @@ struct ManageStudentView: View {
                     )
 
                     CustomTextField(
-                        placeholder: "Password",
+                        placeholder: "Password (Leave empty to keep current)",
                         type: .secure,
                         text: $viewModel.password
                     )
@@ -56,8 +56,6 @@ struct ManageStudentView: View {
                     )
 
                     CustomDateField(date: $viewModel.birthDate)
-
-                    Spacer(minLength: 50)
 
                     CustomButton(title: "Save", action: viewModel.save)
                 }

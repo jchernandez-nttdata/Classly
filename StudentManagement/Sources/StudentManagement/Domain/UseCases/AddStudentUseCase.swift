@@ -9,7 +9,7 @@ import Core
 import Foundation
 
 protocol AddStudentUseCase {
-    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(AddStudentError)
+    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError)
 }
 
 final class AddStudentUseCaseImpl: AddStudentUseCase {
@@ -29,7 +29,7 @@ final class AddStudentUseCaseImpl: AddStudentUseCase {
         self.repository = repository
     }
 
-    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(AddStudentError) {
+    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError) {
         try await repository.addStudent(request: request)
     }
 }

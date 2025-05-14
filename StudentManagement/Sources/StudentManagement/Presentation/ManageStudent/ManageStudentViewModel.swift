@@ -22,17 +22,20 @@ final class ManageStudentViewModel: ObservableObject {
 
     private let coordinator: (any CoordinatorProtocol)?
     private let addStudentsUseCase: AddStudentUseCase?
+    private let editStudentsUseCase: EditStudentUseCase?
     private let toastManager: ToastManager
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
         addStudent: AddStudentUseCase? = nil,
+        editStudent: EditStudentUseCase? = nil,
         existingStudent: Student? = nil,
         toastManager: ToastManager = .shared
     ) {
         self.coordinator = coordinator
         self.existingStudent = existingStudent
         self.addStudentsUseCase = addStudent
+        self.editStudentsUseCase = editStudent
         self.toastManager = toastManager
 
         if let existingStudent {
@@ -58,9 +61,41 @@ final class ManageStudentViewModel: ObservableObject {
         let isEdit = existingStudent != nil
 
         if isEdit {
-
+            editStudent()
         } else {
             addStudent()
+        }
+    }
+
+    private func editStudent() {
+        guard let editStudentsUseCase else { return }
+
+        Task {
+            isLoading = true
+
+            // simulates loading
+            try await Task.sleep(nanoseconds: 1_500_000_000)
+
+            do throws(ManageStudentError) {
+                try await editStudentsUseCase.execute(
+                    request: EditStudentUseCaseImpl.EditStudentRequest(
+                        id: existingStudent!.id,
+                        name: name,
+                        email: email,
+                        dni: dni,
+                        phone: phone,
+                        password: password,
+                        birthdate: birthDate
+                    )
+                )
+
+                toastManager.showToast(message: "User edited successfully", type: .success)
+                goBack()
+            } catch {
+                showErrorToasts(error: error)
+            }
+
+            isLoading = false
         }
     }
 
@@ -73,7 +108,7 @@ final class ManageStudentViewModel: ObservableObject {
             // simulates loading
             try await Task.sleep(nanoseconds: 1_500_000_000)
 
-            do throws(AddStudentError) {
+            do throws(ManageStudentError) {
                 try await addStudentsUseCase.execute(
                     request: AddStudentUseCaseImpl.AddStudentRequest(
                         name: name,
@@ -84,21 +119,25 @@ final class ManageStudentViewModel: ObservableObject {
                         birthdate: birthDate
                     )
                 )
-
+                
                 toastManager.showToast(message: "User added successfully", type: .success)
                 goBack()
             } catch {
-                switch error {
-                case .invalidData:
-                    toastManager.showToast(message: "The data you entered is invalid", type: .error)
-                case .duplicateStudent:
-                    toastManager.showToast(message: "A student with this DNI or email already exists", type: .error)
-                default:
-                    toastManager.showToast(message: "An unexpected error occurred", type: .error)
-                }
+                showErrorToasts(error: error)
             }
 
             isLoading = false
+        }
+    }
+
+    private func showErrorToasts(error: ManageStudentError) {
+        switch error {
+        case .invalidData:
+            toastManager.showToast(message: "The data you entered is invalid", type: .error)
+        case .duplicateStudent:
+            toastManager.showToast(message: "A student with this DNI or email already exists", type: .error)
+        default:
+            toastManager.showToast(message: "An unexpected error occurred", type: .error)
         }
     }
 }

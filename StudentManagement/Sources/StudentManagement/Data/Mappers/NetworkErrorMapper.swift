@@ -25,7 +25,7 @@ enum StudentManagementNetworkErrorMapper {
         }
     }
 
-    static func toAddStudentError(_ error: Error) -> AddStudentError {
+    static func toManageStudentError(_ error: Error) -> ManageStudentError {
         guard let networkError = error as? NetworkError else {
             return .serverError
         }

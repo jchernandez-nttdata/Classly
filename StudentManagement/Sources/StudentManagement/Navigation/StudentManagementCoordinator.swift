@@ -24,6 +24,7 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
     private let repository: StudentsRepository
     private let loadStudentsUseCase: LoadStudentsUseCase
     private let addStudentUseCase: AddStudentUseCase
+    private let editStudentUseCase: EditStudentUseCase
 
     public init() {
         let networkManager = NetworkManager()
@@ -31,6 +32,7 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
         self.repository = StudentsRepositoryImpl(remoteDataSource: dataSource)
         self.loadStudentsUseCase = LoadStudentsUseCaseImpl(repository: repository)
         self.addStudentUseCase = AddStudentUseCaseImpl(repository: repository)
+        self.editStudentUseCase = EditStudentUseCaseImpl(repository: repository)
     }
 
     public func build(route: StudentManagementRoute) -> AnyView {
@@ -45,6 +47,7 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
             let viewModel = ManageStudentViewModel(
                 coordinator: self,
                 addStudent: addStudentUseCase,
+                editStudent: editStudentUseCase,
                 existingStudent: student
             )
             return AnyView(ManageStudentView(viewModel: viewModel))
