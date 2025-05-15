@@ -27,6 +27,8 @@ struct ClassTile: View {
 
             Image(systemName: "chevron.right")
         }
+        .frame(maxWidth: .infinity)
+        .contentShape(Rectangle())
         .onTapGesture(perform: onSelect)
     }
 }

@@ -93,4 +93,9 @@ final class ClassListViewModel: ObservableObject {
             isLoading = false
         }
     }
+
+    func toScheduleDetail(_ schedule: ClassSchedule) {
+        guard let coordinator = coordinator as? ClassManagementCoordinator else { return }
+        coordinator.push(.scheduleDetail(schedule))
+    }
 }

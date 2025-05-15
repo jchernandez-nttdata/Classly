@@ -11,6 +11,7 @@ import Core
 
 public enum ClassManagementRoute: Hashable {
     case classList
+    case scheduleDetail(ClassSchedule)
 }
 
 public final class ClassManagementCoordinator: CoordinatorProtocol {
@@ -46,6 +47,12 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
                 loadClassSchedulesByLocation: loadClassSchedulesByLocation
             )
             return AnyView(ClassListView(viewModel: viewModel))
+        case .scheduleDetail(let schedule):
+            let viewModel = ScheduleDetailViewModel(
+                coordinator: self,
+                schedule: schedule
+            )
+            return AnyView(ScheduleDetailView(viewModel: viewModel))
         }
     }
 

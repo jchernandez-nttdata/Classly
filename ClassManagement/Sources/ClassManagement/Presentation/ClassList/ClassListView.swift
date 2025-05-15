@@ -27,9 +27,9 @@ struct ClassListView: View {
             .padding(.bottom, 10)
 
             List(viewModel.classSchedules) { classSchedule in
-                ClassTile(classSchedule: classSchedule) {
-                    print("hola")
-                }
+                ClassTile(classSchedule: classSchedule, onSelect: {
+                    viewModel.toScheduleDetail(classSchedule)
+                })
                 .listRowInsets(EdgeInsets())
                 .padding(top: 10, bottom: 10)
             }

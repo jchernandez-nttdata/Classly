@@ -7,10 +7,10 @@
 
 import Foundation
 
-struct ClassSchedule: Sendable, Identifiable, Hashable {
-    let id: Int
-    let dayOfWeek: DayOfWeek
-    let startTime: String
-    let endTime: String
-    let className: String
+public struct ClassSchedule: Sendable, Identifiable, Hashable {
+    public let id: Int
+    public let dayOfWeek: DayOfWeek
+    public let startTime: String
+    public let endTime: String
+    public let className: String
 }
