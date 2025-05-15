@@ -14,6 +14,7 @@ public struct CustomSelectableField: View {
     private let placeholder: String
 
     @State private var showSheet = false
+    @State private var tempSelection: String?
 
     public init(
         selectedItem: Binding<String?>,
@@ -27,6 +28,7 @@ public struct CustomSelectableField: View {
 
     public var body: some View {
         Button(action: {
+            tempSelection = selectedItem ?? items.first
             showSheet.toggle()
         }) {
             HStack {
@@ -53,6 +55,7 @@ public struct CustomSelectableField: View {
                 HStack {
                     Spacer()
                     Button("Done") {
+                        selectedItem = tempSelection
                         showSheet = false
                     }
                     .padding(.all, 15)
@@ -62,7 +65,7 @@ public struct CustomSelectableField: View {
 
                 Spacer()
 
-                Picker("Select an option", selection: $selectedItem) {
+                Picker("Select an option", selection: $tempSelection) {
                     ForEach(items, id: \.self) { item in
                         Text(item).tag(item)
                     }
@@ -74,6 +77,7 @@ public struct CustomSelectableField: View {
                 Spacer()
             }
             .presentationDetents([.height(310)])
+            .interactiveDismissDisabled(true)
             .padding(.all, 0)
         }
 
