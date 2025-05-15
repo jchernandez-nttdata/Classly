@@ -10,4 +10,13 @@ public enum LoadLocationsError: Error, Sendable {
     case networkError
     case serverError
     case requestError
+    case noLocationsFound
+}
+
+public enum LoadClassSchedulesError: Error, Sendable {
+    case invalidData
+    case networkError
+    case serverError
+    case requestError
+    case noClassSchedulesFound
 }

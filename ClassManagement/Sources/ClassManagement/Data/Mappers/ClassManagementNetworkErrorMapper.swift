@@ -24,4 +24,21 @@ enum ClassManagementNetworkErrorMapper {
         default: return .serverError
         }
     }
+
+    static func toLoadClassScheduleError(_ error: Error) -> LoadClassSchedulesError {
+        guard let networkError = error as? NetworkError else {
+            return .serverError
+        }
+
+        switch networkError {
+        case .invalidResponse(let code):
+            switch code {
+            case 400: return .invalidData
+            case 404: return .networkError
+            default: return .serverError
+            }
+        case .decodingFailed: return .requestError
+        default: return .serverError
+        }
+    }
 }

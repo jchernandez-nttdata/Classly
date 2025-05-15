@@ -16,10 +16,6 @@ struct ClassListView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
-    let list2: [ClassSchedule] = [
-        ClassSchedule(id: 1, dayOfWeek: .monday, startTime: "10:00", endTime: "11:00", className: "Marinera norteña")
-    ]
-
     var body: some View {
         VStack(alignment: .leading) {
             CustomAppBar(title: "Classes")
@@ -30,7 +26,7 @@ struct ClassListView: View {
             )
             .padding(.bottom, 10)
 
-            List(list2) { classSchedule in
+            List(viewModel.classSchedules) { classSchedule in
                 ClassTile(classSchedule: classSchedule) {
                     print("hola")
                 }
@@ -39,6 +35,9 @@ struct ClassListView: View {
             }
             .listStyle(.plain)
             .scrollIndicators(.hidden)
+            .refreshable {
+                viewModel.loadLocations()
+            }
 
         }
         .padding()
