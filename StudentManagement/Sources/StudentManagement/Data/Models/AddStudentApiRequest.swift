@@ -16,7 +16,7 @@ struct AddStudentApiRequest: RequestWithBody {
 
     var body: AddStudentRequestBody
 
-    init(from request: AddStudentUseCaseImpl.AddStudentRequest) {
+    init(from request: AddStudentImpl.AddStudentRequest) {
         self.body = AddStudentRequestBody(
             name: request.name,
             email: request.email,

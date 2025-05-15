@@ -21,14 +21,14 @@ final class ManageStudentViewModel: ObservableObject {
     var existingStudent: Student?
 
     private let coordinator: (any CoordinatorProtocol)?
-    private let addStudentsUseCase: AddStudentUseCase?
-    private let editStudentsUseCase: EditStudentUseCase?
+    private let addStudentsUseCase: AddStudent?
+    private let editStudentsUseCase: EditStudent?
     private let toastManager: ToastManager
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
-        addStudent: AddStudentUseCase? = nil,
-        editStudent: EditStudentUseCase? = nil,
+        addStudent: AddStudent? = nil,
+        editStudent: EditStudent? = nil,
         existingStudent: Student? = nil,
         toastManager: ToastManager = .shared
     ) {
@@ -78,7 +78,7 @@ final class ManageStudentViewModel: ObservableObject {
 
             do throws(ManageStudentError) {
                 try await editStudentsUseCase.execute(
-                    request: EditStudentUseCaseImpl.EditStudentRequest(
+                    request: EditStudentImpl.EditStudentRequest(
                         id: existingStudent!.id,
                         name: name,
                         email: email,
@@ -110,7 +110,7 @@ final class ManageStudentViewModel: ObservableObject {
 
             do throws(ManageStudentError) {
                 try await addStudentsUseCase.execute(
-                    request: AddStudentUseCaseImpl.AddStudentRequest(
+                    request: AddStudentImpl.AddStudentRequest(
                         name: name,
                         email: email,
                         dni: dni,

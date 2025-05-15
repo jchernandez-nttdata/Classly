@@ -15,11 +15,11 @@ final class ClassListViewModel: ObservableObject {
     @Published public var isLoading = false
 
     private let coordinator: (any CoordinatorProtocol)?
-    private let loadLocationsUseCase: LoadLocationsUseCase?
+    private let loadLocationsUseCase: LoadLocations?
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
-        loadLocationsUseCase: LoadLocationsUseCase? = nil
+        loadLocationsUseCase: LoadLocations? = nil
     ) {
         self.coordinator = coordinator
         self.loadLocationsUseCase = loadLocationsUseCase

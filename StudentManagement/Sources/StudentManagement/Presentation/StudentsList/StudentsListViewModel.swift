@@ -27,11 +27,11 @@ final class StudentsListViewModel: ObservableObject {
 
 
     private let coordinator: (any CoordinatorProtocol)?
-    private let loadStudentsUseCase: LoadStudentsUseCase?
+    private let loadStudentsUseCase: LoadStudents?
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
-        loadStudentsUseCase: LoadStudentsUseCase? = nil
+        loadStudentsUseCase: LoadStudents? = nil
     ) {
         self.coordinator = coordinator
         self.loadStudentsUseCase = loadStudentsUseCase

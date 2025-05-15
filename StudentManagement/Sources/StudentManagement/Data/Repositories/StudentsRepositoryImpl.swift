@@ -23,7 +23,7 @@ class StudentsRepositoryImpl: StudentsRepository {
         }
     }
 
-    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError) {
+    func addStudent(request: AddStudentImpl.AddStudentRequest) async throws(ManageStudentError) {
         do {
             return try await remoteDataSource.addStudent(request: request)
         } catch let error as ManageStudentError {
@@ -33,7 +33,7 @@ class StudentsRepositoryImpl: StudentsRepository {
         }
     }
 
-    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws(ManageStudentError) {
+    func editStudent(request: EditStudentImpl.EditStudentRequest) async throws(ManageStudentError) {
         do {
             return try await remoteDataSource.editStudent(request: request)
         } catch let error as ManageStudentError {

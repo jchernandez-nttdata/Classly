@@ -7,6 +7,6 @@
 
 protocol StudentsDataSource {
     func loadStudents() async throws -> [Student]
-    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws
-    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws
+    func addStudent(request: AddStudentImpl.AddStudentRequest) async throws
+    func editStudent(request: EditStudentImpl.EditStudentRequest) async throws
 }

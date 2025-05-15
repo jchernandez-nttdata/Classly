@@ -25,7 +25,7 @@ final class StudentsDataSourceImpl: StudentsDataSource {
         }
     }
 
-    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws {
+    func addStudent(request: AddStudentImpl.AddStudentRequest) async throws {
         do {
             let request = AddStudentApiRequest(from: request)
             _ = try await networkingManager.performRequest(request)
@@ -35,7 +35,7 @@ final class StudentsDataSourceImpl: StudentsDataSource {
         }
     }
 
-    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws {
+    func editStudent(request: EditStudentImpl.EditStudentRequest) async throws {
         do {
             let request = EditStudentApiRequest(from: request)
             _ = try await networkingManager.performRequest(request)

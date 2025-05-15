@@ -9,6 +9,6 @@ import Foundation
 
 protocol StudentsRepository {
     func loadStudents() async throws(LoadStudentsError) -> [Student]
-    func addStudent(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError)
-    func editStudent(request: EditStudentUseCaseImpl.EditStudentRequest) async throws(ManageStudentError)
+    func addStudent(request: AddStudentImpl.AddStudentRequest) async throws(ManageStudentError)
+    func editStudent(request: EditStudentImpl.EditStudentRequest) async throws(ManageStudentError)
 }

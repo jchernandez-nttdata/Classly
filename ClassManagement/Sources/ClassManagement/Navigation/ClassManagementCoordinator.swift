@@ -21,13 +21,13 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
 
     private let dataSource: LocationsDataSource
     private let repository: LocationsRepository
-    private let loadLocationsUseCase: LoadLocationsUseCase
+    private let loadLocationsUseCase: LoadLocations
 
     public init() {
         let networkManager = NetworkManager()
         self.dataSource = LocationsDataSourceImpl(networkingManager: networkManager)
         self.repository = LocationsRepositoryImpl(remoteDataSource: dataSource)
-        self.loadLocationsUseCase = LoadLocationsUseCaseImpl(repository: repository)
+        self.loadLocationsUseCase = LoadLocationsImpl(repository: repository)
     }
 
     public func build(route: ClassManagementRoute) -> AnyView {

@@ -1,5 +1,5 @@
 //
-//  LoadLocationsUseCase.swift
+//  LoadLocations.swift
 //  ClassManagement
 //
 //  Created by Juan Carlos Hernandez Castillo on 14/05/25.
@@ -7,11 +7,11 @@
 
 import Core
 
-protocol LoadLocationsUseCase {
+protocol LoadLocations {
     func execute() async throws(LoadLocationsError) -> [Location]
 }
 
-final class LoadLocationsUseCaseImpl: LoadLocationsUseCase {
+final class LoadLocationsImpl: LoadLocations {
     private let repository: LocationsRepository
 
     init(repository: LocationsRepository) {

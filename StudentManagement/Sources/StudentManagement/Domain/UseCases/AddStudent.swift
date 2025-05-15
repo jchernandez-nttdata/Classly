@@ -1,5 +1,5 @@
 //
-//  AddStudentUseCase.swift
+//  AddStudent.swift
 //  StudentManagement
 //
 //  Created by Juan Carlos Hernandez Castillo on 13/05/25.
@@ -8,11 +8,11 @@
 import Core
 import Foundation
 
-protocol AddStudentUseCase {
-    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError)
+protocol AddStudent {
+    func execute(request: AddStudentImpl.AddStudentRequest) async throws(ManageStudentError)
 }
 
-final class AddStudentUseCaseImpl: AddStudentUseCase {
+final class AddStudentImpl: AddStudent {
     private let repository: StudentsRepository
 
     struct AddStudentRequest {
@@ -29,7 +29,7 @@ final class AddStudentUseCaseImpl: AddStudentUseCase {
         self.repository = repository
     }
 
-    func execute(request: AddStudentUseCaseImpl.AddStudentRequest) async throws(ManageStudentError) {
+    func execute(request: AddStudentImpl.AddStudentRequest) async throws(ManageStudentError) {
         try await repository.addStudent(request: request)
     }
 }

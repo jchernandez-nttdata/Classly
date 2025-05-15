@@ -1,5 +1,5 @@
 //
-//  EditStudentUseCase.swift
+//  EditStudent.swift
 //  StudentManagement
 //
 //  Created by Juan Carlos Hernandez Castillo on 13/05/25.
@@ -8,11 +8,11 @@
 import Core
 import Foundation
 
-protocol EditStudentUseCase {
-    func execute(request: EditStudentUseCaseImpl.EditStudentRequest) async throws(ManageStudentError)
+protocol EditStudent {
+    func execute(request: EditStudentImpl.EditStudentRequest) async throws(ManageStudentError)
 }
 
-final class EditStudentUseCaseImpl: EditStudentUseCase {
+final class EditStudentImpl: EditStudent {
     private let repository: StudentsRepository
 
     struct EditStudentRequest {
@@ -29,7 +29,7 @@ final class EditStudentUseCaseImpl: EditStudentUseCase {
         self.repository = repository
     }
 
-    func execute(request: EditStudentUseCaseImpl.EditStudentRequest) async throws(ManageStudentError) {
+    func execute(request: EditStudentImpl.EditStudentRequest) async throws(ManageStudentError) {
         try await repository.editStudent(request: request)
     }
 }

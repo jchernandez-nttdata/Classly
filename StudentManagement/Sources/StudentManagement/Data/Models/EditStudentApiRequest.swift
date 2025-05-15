@@ -17,7 +17,7 @@ struct EditStudentApiRequest: RequestWithBody {
     var body: EditStudentRequestBody
     var userId: Int
 
-    init(from request: EditStudentUseCaseImpl.EditStudentRequest) {
+    init(from request: EditStudentImpl.EditStudentRequest) {
         self.userId = request.id
         self.body = EditStudentRequestBody(
             name: request.name,

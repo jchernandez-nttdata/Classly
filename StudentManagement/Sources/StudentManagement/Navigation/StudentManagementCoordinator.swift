@@ -22,17 +22,17 @@ public final class StudentManagementCoordinator: CoordinatorProtocol {
 
     private let dataSource: StudentsDataSource
     private let repository: StudentsRepository
-    private let loadStudentsUseCase: LoadStudentsUseCase
-    private let addStudentUseCase: AddStudentUseCase
-    private let editStudentUseCase: EditStudentUseCase
+    private let loadStudentsUseCase: LoadStudents
+    private let addStudentUseCase: AddStudent
+    private let editStudentUseCase: EditStudent
 
     public init() {
         let networkManager = NetworkManager()
         self.dataSource = StudentsDataSourceImpl(networkingManager: networkManager)
         self.repository = StudentsRepositoryImpl(remoteDataSource: dataSource)
-        self.loadStudentsUseCase = LoadStudentsUseCaseImpl(repository: repository)
-        self.addStudentUseCase = AddStudentUseCaseImpl(repository: repository)
-        self.editStudentUseCase = EditStudentUseCaseImpl(repository: repository)
+        self.loadStudentsUseCase = LoadStudentsImpl(repository: repository)
+        self.addStudentUseCase = AddStudentImpl(repository: repository)
+        self.editStudentUseCase = EditStudentImpl(repository: repository)
     }
 
     public func build(route: StudentManagementRoute) -> AnyView {

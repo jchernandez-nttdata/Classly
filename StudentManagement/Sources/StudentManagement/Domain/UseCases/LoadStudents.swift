@@ -1,5 +1,5 @@
 //
-//  LoadStudentsUseCase.swift
+//  LoadStudents.swift
 //  StudentManagement
 //
 //  Created by Juan Carlos Hernandez Castillo on 7/05/25.
@@ -7,11 +7,11 @@
 
 import Core
 
-protocol LoadStudentsUseCase {
+protocol LoadStudents {
     func execute() async throws(LoadStudentsError) -> [Student]
 }
 
-final class LoadStudentsUseCaseImpl: LoadStudentsUseCase {
+final class LoadStudentsImpl: LoadStudents {
     private let repository: StudentsRepository
 
     init(repository: StudentsRepository) {
