@@ -33,10 +33,6 @@ final class ScheduleDetailViewModel: ObservableObject {
         self.toastManager = toastManager
     }
 
-    func goBack() {
-        coordinator?.pop()
-    }
-
     func loadEnrolledStudents() {
         guard let loadEnrolledStudentsBySchedule else { return }
 
@@ -61,5 +57,16 @@ final class ScheduleDetailViewModel: ObservableObject {
 
             isLoading = false
         }
+    }
+
+    // MARK: - Coordinator methods
+
+    func goBack() {
+        coordinator?.pop()
+    }
+
+    func goToEnrollStudent() {
+        guard let coordinator = coordinator as? ClassManagementCoordinator else { return }
+        coordinator.push(.enrollStudent(schedule))
     }
 }

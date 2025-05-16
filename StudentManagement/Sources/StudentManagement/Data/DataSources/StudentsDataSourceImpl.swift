@@ -6,6 +6,7 @@
 //
 
 import ClasslyNetworking
+import Core
 
 final class StudentsDataSourceImpl: StudentsDataSource {
 

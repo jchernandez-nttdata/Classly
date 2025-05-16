@@ -50,9 +50,7 @@ struct ScheduleDetailView: View {
             }
             .padding()
 
-            CircularButton {
-                print("to enroll")
-            }
+            CircularButton(onTap: viewModel.goToEnrollStudent)
         }
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)

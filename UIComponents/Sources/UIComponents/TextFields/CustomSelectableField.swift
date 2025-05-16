@@ -12,6 +12,7 @@ public struct CustomSelectableField: View {
     @Binding private var selectedItem: String?
     private let items: [String]
     private let placeholder: String
+    private let isEnabled: Bool
 
     @State private var showSheet = false
     @State private var tempSelection: String?
@@ -19,27 +20,30 @@ public struct CustomSelectableField: View {
     public init(
         selectedItem: Binding<String?>,
         items: [String],
-        placeholder: String = "Select an option"
+        placeholder: String = "Select an option",
+        isEnabled: Bool = true
     ) {
         self._selectedItem = selectedItem
         self.items = items
         self.placeholder = placeholder
+        self.isEnabled = isEnabled
     }
 
     public var body: some View {
         Button(action: {
+            guard isEnabled else { return }
             tempSelection = selectedItem ?? items.first
             showSheet.toggle()
         }) {
             HStack {
                 Text(selectedItem ?? placeholder)
-                    .foregroundColor(selectedItem == nil ? AppColor.disabledText : AppColor.primaryText)
+                    .foregroundColor(textColor())
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Spacer()
 
                 Image(systemName: "chevron.down")
-                    .foregroundColor(AppColor.primaryText)
+                    .foregroundColor(iconColor())
             }
             .padding(.vertical, 13)
             .padding(.horizontal, 15)
@@ -50,6 +54,7 @@ public struct CustomSelectableField: View {
                     .stroke(AppColor.border, lineWidth: 1)
             )
         }
+        .disabled(!isEnabled)
         .sheet(isPresented: $showSheet) {
             VStack(spacing: 0) {
                 HStack {
@@ -80,7 +85,19 @@ public struct CustomSelectableField: View {
             .interactiveDismissDisabled(true)
             .padding(.all, 0)
         }
+    }
 
+
+    private func textColor() -> Color {
+        if selectedItem == nil {
+            return AppColor.disabledText
+        } else {
+            return isEnabled ? AppColor.primaryText : AppColor.disabledText
+        }
+    }
+
+    private func iconColor() -> Color {
+        return isEnabled ? AppColor.primaryText : AppColor.disabledText
     }
 }
 

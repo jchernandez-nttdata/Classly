@@ -29,7 +29,7 @@ struct AddStudentApiRequest: RequestWithBody {
     }
 }
 
-struct AddStudentRequestBody: Codable {
+struct AddStudentRequestBody: Codable, Sendable {
     let name: String
     let email: String
     let dni: String

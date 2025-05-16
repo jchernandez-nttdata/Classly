@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Assets
+import Core
 
 struct StudentTile: View {
     let student: Student

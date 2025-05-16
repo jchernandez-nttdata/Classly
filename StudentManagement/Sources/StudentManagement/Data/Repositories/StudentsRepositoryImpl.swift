@@ -5,6 +5,8 @@
 //  Created by Juan Carlos Hernandez Castillo on 7/05/25.
 //
 
+import Core
+
 class StudentsRepositoryImpl: StudentsRepository {
 
     private let remoteDataSource: StudentsDataSource

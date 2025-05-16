@@ -12,6 +12,7 @@ import Core
 public enum ClassManagementRoute: Hashable {
     case classList
     case scheduleDetail(ClassSchedule)
+    case enrollStudent(ClassSchedule)
 }
 
 public final class ClassManagementCoordinator: CoordinatorProtocol {
@@ -24,9 +25,12 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
     private let repository: LocationsRepository
     private let schedulesDataSource: SchedulesDataSource
     private let schedulesRepository: SchedulesRepository
+    private let studentsDataSource: StudentsDataSource
+    private let studentsRepository: StudentsRepository
     private let loadLocationsUseCase: LoadLocations
     private let loadClassSchedulesByLocation: LoadClassSchedulesByLocation
     private let loadEnrolledStudentsBySchedule: LoadEnrolledStudentsBySchedule
+    private let loadStudentsQuery: LoadStudentsQuery
 
     public init() {
         let networkManager = NetworkManager()
@@ -38,6 +42,10 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
         self.schedulesRepository = SchedulesRepositoryImpl(remoteDataSource: schedulesDataSource)
         self.loadClassSchedulesByLocation = LoadClassSchedulesByLocationImpl(repository: schedulesRepository)
         self.loadEnrolledStudentsBySchedule = LoadEnrolledStudentsByScheduleImpl(repository: schedulesRepository)
+
+        self.studentsDataSource = StudentsDataSourceImpl(networkingManager: networkManager)
+        self.studentsRepository = StudentsRepositoryImpl(remoteDataSource: studentsDataSource)
+        self.loadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepository)
     }
 
     public func build(route: ClassManagementRoute) -> AnyView {
@@ -56,6 +64,13 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
                 loadEnrolledStudentsBySchedule: loadEnrolledStudentsBySchedule
             )
             return AnyView(ScheduleDetailView(viewModel: viewModel))
+        case .enrollStudent(let schedule):
+            let viewModel = EnrollStudentViewModel(
+                coordinator: self,
+                schedule: schedule,
+                loadStudentsQuery: loadStudentsQuery
+            )
+            return AnyView(EnrollStudentView(viewModel: viewModel))
         }
     }
 
