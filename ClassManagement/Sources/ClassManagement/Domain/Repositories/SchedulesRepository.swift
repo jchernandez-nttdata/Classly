@@ -8,5 +8,6 @@
 import Foundation
 
 protocol SchedulesRepository {
-    func loadClassScheduleByLocationId(locationId: Int) async throws(LoadClassSchedulesError) -> [ClassSchedule]
+    func loadClassScheduleByLocationId(locationId: Int) async throws(ClassManagementListError) -> [ClassSchedule]
+    func loadEnrolledStudentsByScheduleId(scheduleId: Int) async throws(ClassManagementListError) -> [EnrolledStudent]
 }

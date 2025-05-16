@@ -16,55 +16,47 @@ struct ScheduleDetailView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
-    let list = [
-        EnrolledStudent(id: 1, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 2, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 3, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 4, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 5, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 6, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        EnrolledStudent(id: 7, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3)
-    ]
-
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
-            CustomAppBar(
-                title: "Schedule",
-                backAction: viewModel.goBack
-            )
-
-            ClassScheduleCard(
-                classSchedule: viewModel.schedule,
-                studentsEnrolled: list.count
-            )
-
-            CustomButton(title: "See assistances", style: .outlined) {
-                print("to assistances")
-            }
-
-            List(list) { student in
-                EnrolledStudentTile(
-                    student: student,
-                    onDelete: {
-                        print("delete")
-                    }
+        ZStack(alignment: .bottomTrailing) {
+            VStack(alignment: .leading, spacing: 20) {
+                CustomAppBar(
+                    title: "Schedule",
+                    backAction: viewModel.goBack
                 )
-                .listRowInsets(EdgeInsets())
-                .padding(top: 10, bottom: 10)
-            }
-            .listStyle(.plain)
-            .scrollIndicators(.hidden)
-            .refreshable {
+
+                ClassScheduleCard(
+                    classSchedule: viewModel.schedule,
+                    studentsEnrolled: viewModel.enrolledStudents.count
+                )
+
+                CustomButton(title: "See assistances", style: .outlined) {
+                    print("to assistances")
+                }
+
+                List(viewModel.enrolledStudents) { student in
+                    EnrolledStudentTile(
+                        student: student,
+                        onDelete: {
+                            print("delete")
+                        }
+                    )
+                    .listRowInsets(EdgeInsets())
+                    .padding(top: 10, bottom: 10)
+                }
+                .listStyle(.plain)
+                .scrollIndicators(.hidden)
+                .refreshable(action: viewModel.loadEnrolledStudents)
 
             }
+            .padding()
 
+            CircularButton {
+                print("to enroll")
+            }
         }
-        .padding()
         .navigationBarHidden(true)
-        //        .loadingIndicator(viewModel.isLoading)
-        .onAppear {
-
-        }
+        .loadingIndicator(viewModel.isLoading)
+        .onAppear(perform: viewModel.loadEnrolledStudents)
     }
 }
 

@@ -26,6 +26,7 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
     private let schedulesRepository: SchedulesRepository
     private let loadLocationsUseCase: LoadLocations
     private let loadClassSchedulesByLocation: LoadClassSchedulesByLocation
+    private let loadEnrolledStudentsBySchedule: LoadEnrolledStudentsBySchedule
 
     public init() {
         let networkManager = NetworkManager()
@@ -36,6 +37,7 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
         self.schedulesDataSource = SchedulesDataSourceImpl(networkingManager: networkManager)
         self.schedulesRepository = SchedulesRepositoryImpl(remoteDataSource: schedulesDataSource)
         self.loadClassSchedulesByLocation = LoadClassSchedulesByLocationImpl(repository: schedulesRepository)
+        self.loadEnrolledStudentsBySchedule = LoadEnrolledStudentsByScheduleImpl(repository: schedulesRepository)
     }
 
     public func build(route: ClassManagementRoute) -> AnyView {
@@ -50,7 +52,8 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
         case .scheduleDetail(let schedule):
             let viewModel = ScheduleDetailViewModel(
                 coordinator: self,
-                schedule: schedule
+                schedule: schedule,
+                loadEnrolledStudentsBySchedule: loadEnrolledStudentsBySchedule
             )
             return AnyView(ScheduleDetailView(viewModel: viewModel))
         }

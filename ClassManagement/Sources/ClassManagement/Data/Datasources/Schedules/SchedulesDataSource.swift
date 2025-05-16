@@ -7,4 +7,5 @@
 
 protocol SchedulesDataSource {
     func loadClassScheduleByLocationId(locationId: Int) async throws -> [ClassSchedule]
+    func loadEnrolledStudentsByScheduleId(scheduleId: Int) async throws -> [EnrolledStudent]
 }

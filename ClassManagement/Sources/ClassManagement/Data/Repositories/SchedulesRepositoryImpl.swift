@@ -13,10 +13,20 @@ class SchedulesRepositoryImpl: SchedulesRepository {
         self.remoteDataSource = remoteDataSource
     }
 
-    func loadClassScheduleByLocationId(locationId: Int) async throws(LoadClassSchedulesError) -> [ClassSchedule] {
+    func loadClassScheduleByLocationId(locationId: Int) async throws(ClassManagementListError) -> [ClassSchedule] {
         do {
             return try await remoteDataSource.loadClassScheduleByLocationId(locationId: locationId)
-        } catch let error as LoadClassSchedulesError {
+        } catch let error as ClassManagementListError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
+
+    func loadEnrolledStudentsByScheduleId(scheduleId: Int) async throws(ClassManagementListError) -> [EnrolledStudent] {
+        do {
+            return try await remoteDataSource.loadEnrolledStudentsByScheduleId(scheduleId: scheduleId)
+        } catch let error as ClassManagementListError {
             throw error
         } catch {
             throw .serverError

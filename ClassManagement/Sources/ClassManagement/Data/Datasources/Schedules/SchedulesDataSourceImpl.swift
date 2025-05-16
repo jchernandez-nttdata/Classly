@@ -21,8 +21,17 @@ final class SchedulesDataSourceImpl: SchedulesDataSource {
             let response = try await networkingManager.performRequest(request)
             return SchedulesMapper.mapToClassSchedules(responses: response)
         } catch {
-            throw ClassManagementNetworkErrorMapper.toLoadClassScheduleError(error)
+            throw ClassManagementNetworkErrorMapper.toClassManagementListError(error)
         }
     }
 
+    func loadEnrolledStudentsByScheduleId(scheduleId: Int) async throws -> [EnrolledStudent] {
+        do {
+            let request = LoadEnrolledStudentsByScheduleApiRequest(scheduleId: scheduleId)
+            let response = try await networkingManager.performRequest(request)
+            return SchedulesMapper.mapToEnrolledStudents(responses: response)
+        } catch {
+            throw ClassManagementNetworkErrorMapper.toClassManagementListError(error)
+        }
+    }
 }

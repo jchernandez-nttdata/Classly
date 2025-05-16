@@ -20,4 +20,19 @@ class SchedulesMapper {
     static func mapToClassSchedules(responses: [LoadClassSchedulesByLocationResponse]) -> [ClassSchedule] {
         return responses.map(mapToClassSchedule)
     }
+
+    private static func mapToEnrolledStudent(response: LoadEnrolledStudentsByScheduleResponse) -> EnrolledStudent {
+        return EnrolledStudent(
+            id: response.id,
+            name: response.name,
+            email: response.email,
+            dni: response.dni,
+            phone: response.phone,
+            remainingClasses: response.remainingClasses
+        )
+    }
+
+    static func mapToEnrolledStudents(responses: [LoadEnrolledStudentsByScheduleResponse]) -> [EnrolledStudent] {
+        return responses.map(mapToEnrolledStudent)
+    }
 }
