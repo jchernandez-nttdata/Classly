@@ -17,13 +17,13 @@ struct ScheduleDetailView: View {
     }
 
     let list = [
-        ScheduleStudent(id: 1, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 2, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 3, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 4, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 5, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 6, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
-        ScheduleStudent(id: 7, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3)
+        EnrolledStudent(id: 1, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 2, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 3, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 4, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 5, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 6, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3),
+        EnrolledStudent(id: 7, name: "Juanca", email: "email@email.com", dni: "838838", phone: "982323", remainingClasses: 3)
     ]
 
     var body: some View {
@@ -43,7 +43,7 @@ struct ScheduleDetailView: View {
             }
 
             List(list) { student in
-                ScheduleStudentTile(
+                EnrolledStudentTile(
                     student: student,
                     onDelete: {
                         print("delete")

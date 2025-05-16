@@ -1,5 +1,5 @@
 //
-//  ScheduleStudentTile.swift
+//  EnrolledStudentTile.swift
 //  ClassManagement
 //
 //  Created by Juan Carlos Hernandez Castillo on 15/05/25.
@@ -8,8 +8,8 @@
 import SwiftUI
 import Assets
 
-struct ScheduleStudentTile: View {
-    let student: ScheduleStudent
+struct EnrolledStudentTile: View {
+    let student: EnrolledStudent
     let onDelete: () -> Void
 
     var body: some View {
@@ -35,8 +35,8 @@ struct ScheduleStudentTile: View {
 }
 
 #Preview {
-    ScheduleStudentTile(
-        student: ScheduleStudent(
+    EnrolledStudentTile(
+        student: EnrolledStudent(
             id: 1,
             name: "name",
             email: "email",
