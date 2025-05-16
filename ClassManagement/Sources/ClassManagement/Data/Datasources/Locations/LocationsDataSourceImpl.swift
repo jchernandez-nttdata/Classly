@@ -21,7 +21,7 @@ final class LocationsDataSourceImpl: LocationsDataSource {
             let response = try await networkingManager.performRequest(request)
             return LocationMapper.mapToLocations(responses: response)
         } catch {
-            throw ClassManagementNetworkErrorMapper.toLoadLocationsError(error)
+            throw ClassManagementNetworkErrorMapper.toClassManagementListError(error)
         }
     }
 }

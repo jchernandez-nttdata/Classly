@@ -5,18 +5,10 @@
 //  Created by Juan Carlos Hernandez Castillo on 14/05/25.
 //
 
-public enum LoadLocationsError: Error, Sendable {
+public enum ClassManagementListError: Error, Sendable {
     case invalidData
     case networkError
     case serverError
     case requestError
-    case noLocationsFound
-}
-
-public enum LoadClassSchedulesError: Error, Sendable {
-    case invalidData
-    case networkError
-    case serverError
-    case requestError
-    case noClassSchedulesFound
+    case noDataFound
 }

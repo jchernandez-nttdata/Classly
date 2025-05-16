@@ -13,10 +13,10 @@ class LocationsRepositoryImpl: LocationsRepository {
         self.remoteDataSource = remoteDataSource
     }
 
-    func loadLocations() async throws(LoadLocationsError) -> [Location] {
+    func loadLocations() async throws(ClassManagementListError) -> [Location] {
         do {
             return try await remoteDataSource.loadLocations()
-        } catch let error as LoadLocationsError {
+        } catch let error as ClassManagementListError {
             throw error
         } catch {
             throw .serverError

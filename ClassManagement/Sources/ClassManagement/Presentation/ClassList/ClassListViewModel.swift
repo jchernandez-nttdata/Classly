@@ -52,16 +52,11 @@ final class ClassListViewModel: ObservableObject {
             do {
                 locations = try await loadLocationsUseCase.execute()
 
-                guard let firstLocation = locations.first else { throw LoadLocationsError.noLocationsFound }
+                guard let firstLocation = locations.first else { throw ClassManagementListError.noDataFound }
                 selectedLocationString = firstLocation.name
 
-            } catch let error as LoadLocationsError {
-                switch error {
-                case .noLocationsFound:
-                    toastManager.showToast(message: "No locations found", type: .error)
-                default:
-                    toastManager.showToast(message: "An unexpected error occurred", type: .error)
-                }
+            } catch let error as ClassManagementListError {
+                mapErrorToToastMessage(error, notFoundErrorMessage: "No locations found")
             }
         }
     }
@@ -79,18 +74,22 @@ final class ClassListViewModel: ObservableObject {
 
             do {
                 classSchedules = try await loadClassSchedulesByLocation.execute(locationId: location.id)
-                guard !classSchedules.isEmpty else { throw LoadClassSchedulesError.noClassSchedulesFound }
+                guard !classSchedules.isEmpty else { throw ClassManagementListError.noDataFound }
 
-            } catch let error as LoadClassSchedulesError {
-                switch error {
-                case .noClassSchedulesFound:
-                    toastManager.showToast(message: "No classes found", type: .error)
-                default:
-                    toastManager.showToast(message: "An unexpected error occurred", type: .error)
-                }
+            } catch let error as ClassManagementListError {
+                mapErrorToToastMessage(error, notFoundErrorMessage: "No classes found")
             }
 
             isLoading = false
+        }
+    }
+
+    private func mapErrorToToastMessage(_ error: ClassManagementListError, notFoundErrorMessage: String = "") {
+        switch error {
+        case .noDataFound:
+            toastManager.showToast(message: notFoundErrorMessage, type: .error)
+        default:
+            toastManager.showToast(message: "An unexpected error occurred", type: .error)
         }
     }
 

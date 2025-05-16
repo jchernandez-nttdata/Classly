@@ -8,7 +8,7 @@
 import Core
 
 protocol LoadLocations {
-    func execute() async throws(LoadLocationsError) -> [Location]
+    func execute() async throws(ClassManagementListError) -> [Location]
 }
 
 final class LoadLocationsImpl: LoadLocations {
@@ -18,7 +18,7 @@ final class LoadLocationsImpl: LoadLocations {
         self.repository = repository
     }
 
-    func execute() async throws(LoadLocationsError) -> [Location] {
+    func execute() async throws(ClassManagementListError) -> [Location] {
         return try await repository.loadLocations()
     }
 }

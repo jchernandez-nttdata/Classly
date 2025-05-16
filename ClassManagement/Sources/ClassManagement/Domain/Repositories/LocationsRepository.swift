@@ -8,5 +8,5 @@
 import Foundation
 
 protocol LocationsRepository {
-    func loadLocations() async throws(LoadLocationsError) -> [Location]
+    func loadLocations() async throws(ClassManagementListError) -> [Location]
 }

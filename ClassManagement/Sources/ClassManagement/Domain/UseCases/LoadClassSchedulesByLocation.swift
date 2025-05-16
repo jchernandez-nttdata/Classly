@@ -9,7 +9,7 @@ import Core
 import Foundation
 
 protocol LoadClassSchedulesByLocation {
-    func execute(locationId: Int) async throws(LoadClassSchedulesError) -> [ClassSchedule]
+    func execute(locationId: Int) async throws(ClassManagementListError) -> [ClassSchedule]
 }
 
 final class LoadClassSchedulesByLocationImpl: LoadClassSchedulesByLocation {
@@ -23,7 +23,7 @@ final class LoadClassSchedulesByLocationImpl: LoadClassSchedulesByLocation {
         self.repository = repository
     }
 
-    func execute(locationId: Int) async throws(LoadClassSchedulesError) -> [ClassSchedule] {
+    func execute(locationId: Int) async throws(ClassManagementListError) -> [ClassSchedule] {
         return try await repository.loadClassScheduleByLocationId(locationId: locationId)
     }
 }
