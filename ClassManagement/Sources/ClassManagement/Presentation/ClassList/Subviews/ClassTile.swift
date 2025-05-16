@@ -40,7 +40,8 @@ struct ClassTile: View {
             dayOfWeek: .saturday,
             startTime: "10:00",
             endTime: "11:00",
-            className: "Marinera Norteña"
+            className: "Marinera Norteña",
+            locationName: "String"
         ),
         onSelect: {}
     )

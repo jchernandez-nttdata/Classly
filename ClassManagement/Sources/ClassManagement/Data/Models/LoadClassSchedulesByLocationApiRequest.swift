@@ -22,4 +22,5 @@ struct LoadClassSchedulesByLocationResponse: Decodable {
     let startTime: String
     let endTime: String
     let className: String
+    let locationName: String
 }

@@ -12,7 +12,8 @@ class SchedulesMapper {
             dayOfWeek: DayOfWeek(rawValue: response.dayOfWeek) ?? .sunday,
             startTime: response.startTime,
             endTime: response.endTime,
-            className: response.className
+            className: response.className,
+            locationName: response.locationName
         )
     }
 

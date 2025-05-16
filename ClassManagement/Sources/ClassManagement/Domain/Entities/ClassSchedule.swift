@@ -13,4 +13,5 @@ public struct ClassSchedule: Sendable, Identifiable, Hashable {
     public let startTime: String
     public let endTime: String
     public let className: String
+    public let locationName: String
 }
