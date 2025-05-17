@@ -32,4 +32,14 @@ class SchedulesRepositoryImpl: SchedulesRepository {
             throw .serverError
         }
     }
+
+    func unenrollStudent(studentId: Int, scheduleId: Int) async throws(UnenrollStudentError) {
+        do {
+            return try await remoteDataSource.unenrollStudent(studentId: studentId, scheduleId: scheduleId)
+        } catch let error as UnenrollStudentError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }

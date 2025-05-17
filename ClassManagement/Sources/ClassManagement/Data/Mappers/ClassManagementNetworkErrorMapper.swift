@@ -24,4 +24,21 @@ enum ClassManagementNetworkErrorMapper {
         default: return .serverError
         }
     }
+
+    static func toUnenrollStudentError(_ error: Error) -> UnenrollStudentError {
+        guard let networkError = error as? NetworkError else {
+            return .serverError
+        }
+
+        switch networkError {
+        case .invalidResponse(let code):
+            switch code {
+            case 400: return .stillHaveClasses
+            case 404: return .notFound
+            default: return .serverError
+            }
+        case .decodingFailed: return .requestError
+        default: return .serverError
+        }
+    }
 }

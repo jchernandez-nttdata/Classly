@@ -27,7 +27,8 @@ public final class AppCoordinator: ObservableObject {
         switch role {
         case .admin:
             studentManagementCoordinator = StudentManagementCoordinator()
-            classManagementCoordinator = ClassManagementCoordinator()
+            let di = ClassManagementDIContainer()
+            classManagementCoordinator = ClassManagementCoordinator(di: di)
             state = .admin
         case .student:
             state = .student

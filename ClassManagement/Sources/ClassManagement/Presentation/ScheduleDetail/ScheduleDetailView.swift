@@ -37,7 +37,7 @@ struct ScheduleDetailView: View {
                     EnrolledStudentTile(
                         student: student,
                         onDelete: {
-                            print("delete")
+                            viewModel.unenrollStudent(studentId: student.id)
                         }
                     )
                     .listRowInsets(EdgeInsets())

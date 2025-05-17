@@ -12,3 +12,11 @@ public enum ClassManagementListError: Error, Sendable {
     case requestError
     case noDataFound
 }
+
+enum UnenrollStudentError: Error, Sendable {
+    case networkError
+    case serverError
+    case requestError
+    case notFound
+    case stillHaveClasses
+}
