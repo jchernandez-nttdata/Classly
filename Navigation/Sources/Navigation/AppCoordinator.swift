@@ -26,9 +26,10 @@ public final class AppCoordinator: ObservableObject {
     public func login(as role: UserRole) {
         switch role {
         case .admin:
-            studentManagementCoordinator = StudentManagementCoordinator()
-            let di = ClassManagementDIContainer()
-            classManagementCoordinator = ClassManagementCoordinator(di: di)
+            let studentDI = StudentManagementDIContainer()
+            studentManagementCoordinator = StudentManagementCoordinator(di: studentDI)
+            let classDI = ClassManagementDIContainer()
+            classManagementCoordinator = ClassManagementCoordinator(di: classDI)
             state = .admin
         case .student:
             state = .student

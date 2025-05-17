@@ -21,31 +21,10 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-    private let dataSource: LocationsDataSource
-    private let repository: LocationsRepository
-    private let schedulesDataSource: SchedulesDataSource
-    private let schedulesRepository: SchedulesRepository
-    private let studentsDataSource: StudentsDataSource
-    private let studentsRepository: StudentsRepository
-    private let loadLocationsUseCase: LoadLocations
-    private let loadClassSchedulesByLocation: LoadClassSchedulesByLocation
-    private let loadEnrolledStudentsBySchedule: LoadEnrolledStudentsBySchedule
-    private let loadStudentsQuery: LoadStudentsQuery
+    private let di: ClassManagementDIContainer
 
-    public init() {
-        let networkManager = NetworkManager()
-        self.dataSource = LocationsDataSourceImpl(networkingManager: networkManager)
-        self.repository = LocationsRepositoryImpl(remoteDataSource: dataSource)
-        self.loadLocationsUseCase = LoadLocationsImpl(repository: repository)
-
-        self.schedulesDataSource = SchedulesDataSourceImpl(networkingManager: networkManager)
-        self.schedulesRepository = SchedulesRepositoryImpl(remoteDataSource: schedulesDataSource)
-        self.loadClassSchedulesByLocation = LoadClassSchedulesByLocationImpl(repository: schedulesRepository)
-        self.loadEnrolledStudentsBySchedule = LoadEnrolledStudentsByScheduleImpl(repository: schedulesRepository)
-
-        self.studentsDataSource = StudentsDataSourceImpl(networkingManager: networkManager)
-        self.studentsRepository = StudentsRepositoryImpl(remoteDataSource: studentsDataSource)
-        self.loadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepository)
+    public init(di: ClassManagementDIContainer) {
+        self.di = di
     }
 
     public func build(route: ClassManagementRoute) -> AnyView {
@@ -53,22 +32,23 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
         case .classList:
             let viewModel = ClassListViewModel(
                 coordinator: self,
-                loadLocationsUseCase: loadLocationsUseCase,
-                loadClassSchedulesByLocation: loadClassSchedulesByLocation
+                loadLocationsUseCase: di.loadLocations,
+                loadClassSchedulesByLocation: di.loadClassSchedulesByLocation
             )
             return AnyView(ClassListView(viewModel: viewModel))
         case .scheduleDetail(let schedule):
             let viewModel = ScheduleDetailViewModel(
                 coordinator: self,
                 schedule: schedule,
-                loadEnrolledStudentsBySchedule: loadEnrolledStudentsBySchedule
+                loadEnrolledStudentsBySchedule: di.loadEnrolledStudentsBySchedule,
+                unenrollStudent: di.unenrollStudent
             )
             return AnyView(ScheduleDetailView(viewModel: viewModel))
         case .enrollStudent(let schedule):
             let viewModel = EnrollStudentViewModel(
                 coordinator: self,
                 schedule: schedule,
-                loadStudentsQuery: loadStudentsQuery
+                loadStudentsQuery: di.loadStudentsQuery
             )
             return AnyView(EnrollStudentView(viewModel: viewModel))
         }
@@ -77,5 +57,4 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
     @ViewBuilder public func start() -> AnyView {
         AnyView(ClassManagementRootView(coordinator: self))
     }
-
 }
