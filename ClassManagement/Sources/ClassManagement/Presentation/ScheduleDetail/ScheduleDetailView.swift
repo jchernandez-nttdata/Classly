@@ -37,7 +37,8 @@ struct ScheduleDetailView: View {
                     EnrolledStudentTile(
                         student: student,
                         onDelete: {
-                            viewModel.unenrollStudent(studentId: student.id)
+                            viewModel.studentToDelete = student.id
+                            viewModel.showDeleteConfirmation = true
                         }
                     )
                     .listRowInsets(EdgeInsets())
@@ -55,6 +56,19 @@ struct ScheduleDetailView: View {
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
         .onAppear(perform: viewModel.loadEnrolledStudents)
+        .sheet(isPresented: $viewModel.showDeleteConfirmation, onDismiss: {
+            viewModel.studentToDelete = nil
+        }) {
+            if let studentId = viewModel.studentToDelete {
+                AlertSheet(
+                    title: "Unenroll student?",
+                    message: "This action cannot be undone. The student will be removed from the class",
+                    onConfirm: {
+                        viewModel.unenrollStudent(studentId: studentId)
+                    }
+                )
+            }
+        }
     }
 }
 

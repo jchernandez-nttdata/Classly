@@ -13,6 +13,8 @@ final class ScheduleDetailViewModel: ObservableObject {
     // MARK: - Published state
     @Published public var isLoading = false
     @Published public var enrolledStudents: [EnrolledStudent] = []
+    @Published public var showDeleteConfirmation = false
+    @Published var studentToDelete: Int? = nil
 
     // MARK: - Dependencies
     var schedule: ClassSchedule
@@ -83,6 +85,7 @@ final class ScheduleDetailViewModel: ObservableObject {
                 }
             }
 
+            studentToDelete = nil
             isLoading = false
         }
     }
