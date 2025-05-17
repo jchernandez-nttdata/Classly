@@ -100,4 +100,9 @@ final class ScheduleDetailViewModel: ObservableObject {
         guard let coordinator = coordinator as? ClassManagementCoordinator else { return }
         coordinator.push(.enrollStudent(schedule))
     }
+
+    func goToAssistances() {
+        guard let coordinator = coordinator as? ClassManagementCoordinator else { return }
+        coordinator.push(.assistances(schedule))
+    }
 }

@@ -26,8 +26,10 @@ struct ClassScheduleCard: View {
 
                 Text("\(classSchedule.startTime.toAmPmFormat) - \(classSchedule.endTime.toAmPmFormat)")
                     .font(AppFont.body)
-                Text("Students enrolled: \(studentsEnrolled)")
-                    .font(AppFont.body)
+                if studentsEnrolled > 0 {
+                    Text("Students enrolled: \(studentsEnrolled)")
+                        .font(AppFont.body)
+                }
             }
         }
     }

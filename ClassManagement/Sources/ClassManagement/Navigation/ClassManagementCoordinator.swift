@@ -13,6 +13,7 @@ public enum ClassManagementRoute: Hashable {
     case classList
     case scheduleDetail(ClassSchedule)
     case enrollStudent(ClassSchedule)
+    case assistances(ClassSchedule)
 }
 
 public final class ClassManagementCoordinator: CoordinatorProtocol {
@@ -51,6 +52,12 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
                 loadStudentsQuery: di.loadStudentsQuery
             )
             return AnyView(EnrollStudentView(viewModel: viewModel))
+        case .assistances(let schedule):
+            let viewModel = AssistancesViewModel(
+                coordinator: self,
+                schedule: schedule
+            )
+            return AnyView(AssistancesView(viewModel: viewModel))
         }
     }
 

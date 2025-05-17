@@ -30,7 +30,7 @@ struct ScheduleDetailView: View {
                 )
 
                 CustomButton(title: "See assistances", style: .outlined) {
-                    print("to assistances")
+                    viewModel.goToAssistances()
                 }
 
                 List(viewModel.enrolledStudents) { student in
