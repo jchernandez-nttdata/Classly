@@ -41,4 +41,21 @@ enum ClassManagementNetworkErrorMapper {
         default: return .serverError
         }
     }
+
+    static func toEnrollStudentError(_ error: Error) -> EnrollStudentError {
+        guard let networkError = error as? NetworkError else {
+            return .serverError
+        }
+
+        switch networkError {
+        case .invalidResponse(let code):
+            switch code {
+            case 400: return .requestError
+            case 404: return .notFound
+            default: return .serverError
+            }
+        case .decodingFailed: return .requestError
+        default: return .serverError
+        }
+    }
 }

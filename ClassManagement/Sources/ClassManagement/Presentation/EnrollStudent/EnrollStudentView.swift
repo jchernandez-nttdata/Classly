@@ -24,7 +24,7 @@ struct EnrollStudentView: View {
             )
 
             ScrollView {
-                VStack(spacing: 20) {
+                VStack(alignment: .leading, spacing: 20) {
                     CustomSearchableField(
                         placeholder: "Search student",
                         selectedItem: $viewModel.selectedStudentString,
@@ -33,6 +33,19 @@ struct EnrollStudentView: View {
                         }
                     )
                     .padding(.top, 30)
+
+                    HStack(alignment: .top) {
+                        Image(systemName: "info.circle")
+                            .foregroundColor(AppColor.secondaryText)
+                            .frame(width: 15, height: 15)
+                            .padding(top: 5, right: 5)
+
+                        Text("Already enrolled students will have new classes added.")
+                            .font(AppFont.caption)
+                            .foregroundStyle(AppColor.secondaryText)
+
+                    }
+                    .padding(top: -15, left: 5)
 
                     CustomSelectableField(
                         selectedItem: .constant(viewModel.schedule.locationName),
@@ -57,20 +70,20 @@ struct EnrollStudentView: View {
 
                     CustomTextField(
                         placeholder: "Number of classes",
-                        text: .constant(""),
+                        text: $viewModel.paidClassesString,
                         keyboardType: .numberPad
                     )
 
                     CustomTextField(
                         placeholder: "Amount",
-                        text: .constant(""),
+                        text: $viewModel.amountString,
                         leftIcon: Image(systemName: "dollarsign"),
                         keyboardType: .decimalPad
                     )
 
                     Spacer(minLength: 30)
 
-                    CustomButton(title: "Confirm", action: {})
+                    CustomButton(title: "Confirm", action: viewModel.enrollStudent)
                 }
             }
         }

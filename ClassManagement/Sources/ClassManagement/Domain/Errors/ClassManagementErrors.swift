@@ -20,3 +20,11 @@ enum UnenrollStudentError: Error, Sendable {
     case notFound
     case stillHaveClasses
 }
+
+enum EnrollStudentError: Error, Sendable {
+    case networkError
+    case serverError
+    case requestError
+    case notFound
+    case parseError
+}

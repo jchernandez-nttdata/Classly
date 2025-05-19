@@ -11,4 +11,5 @@ protocol SchedulesRepository {
     func loadClassScheduleByLocationId(locationId: Int) async throws(ClassManagementListError) -> [ClassSchedule]
     func loadEnrolledStudentsByScheduleId(scheduleId: Int) async throws(ClassManagementListError) -> [EnrolledStudent]
     func unenrollStudent(studentId: Int, scheduleId: Int) async throws(UnenrollStudentError)
+    func enrollStudent(params: EnrollStudentImpl.Params) async throws(EnrollStudentError)
 }

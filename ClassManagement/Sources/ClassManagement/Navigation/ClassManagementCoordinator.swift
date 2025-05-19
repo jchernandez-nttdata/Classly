@@ -49,7 +49,8 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
             let viewModel = EnrollStudentViewModel(
                 coordinator: self,
                 schedule: schedule,
-                loadStudentsQuery: di.loadStudentsQuery
+                loadStudentsQuery: di.loadStudentsQuery,
+                enrollStudent: di.enrollStudent
             )
             return AnyView(EnrollStudentView(viewModel: viewModel))
         case .assistances(let schedule):

@@ -44,4 +44,14 @@ final class SchedulesDataSourceImpl: SchedulesDataSource {
             throw ClassManagementNetworkErrorMapper.toUnenrollStudentError(error)
         }
     }
+    
+    func enrollStudent(params: EnrollStudentImpl.Params) async throws {
+        do {
+            let request = EnrollStudentApiRequest(from: params)
+            let response = try await networkingManager.performRequest(request)
+            return
+        } catch {
+            throw ClassManagementNetworkErrorMapper.toEnrollStudentError(error)
+        }
+    }
 }

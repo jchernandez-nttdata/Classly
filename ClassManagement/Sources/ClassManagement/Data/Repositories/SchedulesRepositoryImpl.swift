@@ -42,4 +42,14 @@ class SchedulesRepositoryImpl: SchedulesRepository {
             throw .serverError
         }
     }
+
+    func enrollStudent(params: EnrollStudentImpl.Params) async throws(EnrollStudentError) {
+        do {
+            return try await remoteDataSource.enrollStudent(params: params)
+        } catch let error as EnrollStudentError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }
