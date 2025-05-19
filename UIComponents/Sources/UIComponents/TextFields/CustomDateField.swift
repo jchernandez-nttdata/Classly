@@ -22,7 +22,7 @@ public struct CustomDateField: View {
 
     public var body: some View {
         HStack {
-            Image(systemName: "calendar")
+            Image(systemName: "birthday.cake")
                 .resizable()
                 .frame(width: 18, height: 18)
                 .scaledToFit()

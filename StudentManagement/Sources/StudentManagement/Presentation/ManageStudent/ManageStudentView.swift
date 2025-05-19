@@ -44,7 +44,7 @@ struct ManageStudentView: View {
                     )
 
                     CustomTextField(
-                        placeholder: "Password (Leave empty to keep current)",
+                        placeholder: "Password \(viewModel.existingStudent == nil ? "" : "(Leave empty to keep current)")",
                         type: .secure,
                         text: $viewModel.password
                     )

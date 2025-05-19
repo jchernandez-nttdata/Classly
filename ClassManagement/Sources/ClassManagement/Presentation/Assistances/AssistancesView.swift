@@ -17,8 +17,6 @@ struct AssistancesView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
-    let list = ["2025-05-16", "2025-12-17", "2025-05-18", "2025-05-19", "2025-05-20"]
-
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack(alignment: .leading, spacing: 20) {
@@ -32,7 +30,7 @@ struct AssistancesView: View {
                     studentsEnrolled: 0
                 )
 
-                List(list, id: \.self) { date in
+                List(viewModel.attendancesDates, id: \.self) { date in
                     AssistanceDateTile(
                         date: DateUtils.formatDate(date.toDate() ?? .now),
                         onSelect: {
@@ -53,7 +51,7 @@ struct AssistancesView: View {
         }
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
-        //        .onAppear(perform: viewModel.loadEnrolledStudents)
+        .onAppear(perform: viewModel.loadAttendancesDates)
     }
 }
 
