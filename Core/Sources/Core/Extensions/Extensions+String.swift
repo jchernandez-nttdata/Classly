@@ -7,11 +7,17 @@
 
 import Foundation
 
+public enum DateFormat: String {
+    case iso8601 = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
+    case onlyDate = "yyyy-MM-dd"
+}
+
 public extension String {
-    func toDate(format: String = "yyyy-MM-dd") -> Date? {
+    func toDate(format: DateFormat = .onlyDate) -> Date? {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.dateFormat = format
+        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        formatter.dateFormat = format.rawValue
         return formatter.date(from: self)
     }
 

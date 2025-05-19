@@ -57,7 +57,8 @@ public final class ClassManagementCoordinator: CoordinatorProtocol {
             let viewModel = AssistancesViewModel(
                 coordinator: self,
                 schedule: schedule,
-                loadAttendancesDatesUseCase: di.loadAttendancesDates
+                loadAttendancesDatesUseCase: di.loadAttendancesDates,
+                loadStudentAttendancesUseCase: di.loadStudentAttendances
             )
             return AnyView(AssistancesView(viewModel: viewModel))
         }

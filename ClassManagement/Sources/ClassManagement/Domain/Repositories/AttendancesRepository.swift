@@ -9,4 +9,5 @@ import Foundation
 
 protocol AttendancesRepository {
     func loadAttendancesDates(scheduleId: Int) async throws(ClassManagementListError) -> [String]
+    func loadStudentAttendances(scheduleId: Int, date: String) async throws(ClassManagementListError) -> [StudentAttendance]
 }

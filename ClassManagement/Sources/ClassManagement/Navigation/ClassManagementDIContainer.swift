@@ -34,4 +34,5 @@ public final class ClassManagementDIContainer {
     lazy var loadStudentsQuery: LoadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepo)
     lazy var enrollStudent: EnrollStudent = EnrollStudentImpl(repository: schedulesRepo)
     lazy var loadAttendancesDates: LoadAttendancesDates = LoadAttendancesDatesImpl(repository: attendancesRepo)
+    lazy var loadStudentAttendances: LoadStudentAttendances = LoadStudentAttendancesImpl(repository: attendancesRepo)
 }

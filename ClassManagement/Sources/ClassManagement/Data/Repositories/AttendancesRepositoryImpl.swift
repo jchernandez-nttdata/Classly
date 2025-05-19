@@ -22,4 +22,14 @@ class AttendancesRepositoryImpl: AttendancesRepository {
             throw .serverError
         }
     }
+
+    func loadStudentAttendances(scheduleId: Int, date: String) async throws(ClassManagementListError) -> [StudentAttendance] {
+        do {
+            return try await remoteDataSource.loadStudentAttendances(scheduleId: scheduleId, date: date)
+        } catch let error as ClassManagementListError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }

@@ -7,4 +7,5 @@
 
 protocol AttendancesDataSource {
     func loadAttendancesDates(scheduleId: Int) async throws -> [String]
+    func loadStudentAttendances(scheduleId: Int, date: String) async throws -> [StudentAttendance]
 }

@@ -23,18 +23,21 @@ final class AssistancesViewModel: ObservableObject {
     private let coordinator: (any CoordinatorProtocol)?
     private let toastManager: ToastManager
     private let loadAttendancesDatesUseCase: LoadAttendancesDates?
+    private let loadStudentAttendancesUseCase: LoadStudentAttendances?
 
     // MARK: - Init
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
         schedule: ClassSchedule,
         toastManager: ToastManager = .shared,
-        loadAttendancesDatesUseCase: LoadAttendancesDates? = nil
+        loadAttendancesDatesUseCase: LoadAttendancesDates? = nil,
+        loadStudentAttendancesUseCase: LoadStudentAttendances? = nil
     ) {
         self.coordinator = coordinator
         self.schedule = schedule
         self.toastManager = toastManager
         self.loadAttendancesDatesUseCase = loadAttendancesDatesUseCase
+        self.loadStudentAttendancesUseCase = loadStudentAttendancesUseCase
     }
 
     func loadAttendancesDates() {
@@ -61,6 +64,7 @@ final class AssistancesViewModel: ObservableObject {
     }
 
     func loadStudentAttendances(for date: Date) {
+        guard let loadStudentAttendancesUseCase else { return }
         studentAttendances = []
         selectedDate = DateUtils.formatDate(date)
 
@@ -69,14 +73,23 @@ final class AssistancesViewModel: ObservableObject {
 
         Task {
             // simulates loading
-            try await Task.sleep(nanoseconds: 2_500_000_000)
-            studentAttendances = [
-                StudentAttendance(studentId: 1, name: "Juan Pérez", registrationDate: .now),
-                StudentAttendance(studentId: 2, name: "wefwef wefwefw fwefwefwef", registrationDate: .now),
-                StudentAttendance(studentId: 3, name: "AAAAAA", registrationDate: .now),
-                StudentAttendance(studentId: 4, name: "efwefw", registrationDate: .now),
-                StudentAttendance(studentId: 5, name: "wefwefw wefwef", registrationDate: .now)
-            ]
+            try await Task.sleep(nanoseconds: 1_500_000_000)
+
+            do throws(ClassManagementListError) {
+                studentAttendances = try await loadStudentAttendancesUseCase.execute(scheduleId: schedule.id, date: date.toString())
+                if studentAttendances.isEmpty {
+                    throw .noDataFound
+                }
+            } catch {
+                switch error {
+                case .noDataFound:
+                    toastManager.showToast(message: "No data found", type: .error)
+                default:
+                    toastManager.showToast(message: "Something went wrong", type: .error)
+                }
+
+                showAttendancesSheet = false
+            }
 
             isAttendancesLoading = false
         }
