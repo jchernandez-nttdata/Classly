@@ -17,41 +17,49 @@ struct AssistancesView: View {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
 
+    let students = ["Juan", "Pedro", "María", "Sofía", "Pablo", "Laura"]
+
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            VStack(alignment: .leading, spacing: 20) {
-                CustomAppBar(
-                    title: "Assistances",
-                    backAction: viewModel.goBack
+        VStack(alignment: .leading, spacing: 20) {
+            CustomAppBar(
+                title: "Assistances",
+                backAction: viewModel.goBack
+            )
+
+            ClassScheduleCard(
+                classSchedule: viewModel.schedule,
+                studentsEnrolled: 0
+            )
+
+            List(viewModel.attendancesDates, id: \.self) { date in
+                AssistanceDateTile(
+                    date: DateUtils.formatDate(date.toDate() ?? .now),
+                    onSelect: {
+                        viewModel.loadStudentAttendances(for: date.toDate() ?? .now)
+                    }
                 )
-
-                ClassScheduleCard(
-                    classSchedule: viewModel.schedule,
-                    studentsEnrolled: 0
-                )
-
-                List(viewModel.attendancesDates, id: \.self) { date in
-                    AssistanceDateTile(
-                        date: DateUtils.formatDate(date.toDate() ?? .now),
-                        onSelect: {
-                            print("show assistances")
-                        }
-                    )
-                    .listRowInsets(EdgeInsets())
-                    .padding(.vertical, 10)
-                }
-                .listStyle(.plain)
-                .scrollIndicators(.hidden)
-                .refreshable(action: {})
-
+                .listRowInsets(EdgeInsets())
+                .padding(.vertical, 10)
             }
-            .padding()
+            .listStyle(.plain)
+            .scrollIndicators(.hidden)
+            .refreshable(action: {})
 
-            CircularButton(onTap: {})
         }
+        .padding()
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
         .onAppear(perform: viewModel.loadAttendancesDates)
+        .sheet(isPresented: $viewModel.showAttendancesSheet, onDismiss: {
+
+        }) {
+            StudentAttendanceSheet(
+                isLoading: $viewModel.isAttendancesLoading,
+                students: $viewModel.studentAttendances,
+                title: viewModel.selectedDate
+            )
+
+        }
     }
 }
 

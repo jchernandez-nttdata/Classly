@@ -13,6 +13,10 @@ final class AssistancesViewModel: ObservableObject {
     // MARK: - Published state
     @Published public var isLoading = false
     @Published public var attendancesDates: [String] = []
+    @Published public var showAttendancesSheet: Bool = false
+    @Published public var isAttendancesLoading: Bool = false
+    @Published public var studentAttendances: [StudentAttendance] = []
+    @Published public var selectedDate: String = ""
 
     // MARK: - Dependencies
     var schedule: ClassSchedule
@@ -53,6 +57,28 @@ final class AssistancesViewModel: ObservableObject {
             }
 
             isLoading = false
+        }
+    }
+
+    func loadStudentAttendances(for date: Date) {
+        studentAttendances = []
+        selectedDate = DateUtils.formatDate(date)
+
+        showAttendancesSheet = true
+        isAttendancesLoading = true
+
+        Task {
+            // simulates loading
+            try await Task.sleep(nanoseconds: 2_500_000_000)
+            studentAttendances = [
+                StudentAttendance(studentId: 1, name: "Juan Pérez", registrationDate: .now),
+                StudentAttendance(studentId: 2, name: "wefwef wefwefw fwefwefwef", registrationDate: .now),
+                StudentAttendance(studentId: 3, name: "AAAAAA", registrationDate: .now),
+                StudentAttendance(studentId: 4, name: "efwefw", registrationDate: .now),
+                StudentAttendance(studentId: 5, name: "wefwefw wefwef", registrationDate: .now)
+            ]
+
+            isAttendancesLoading = false
         }
     }
 
