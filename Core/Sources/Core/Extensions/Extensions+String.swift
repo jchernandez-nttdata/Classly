@@ -16,7 +16,9 @@ public extension String {
     func toDate(format: DateFormat = .onlyDate) -> Date? {
         let formatter = DateFormatter()
         formatter.locale = Locale(identifier: "en_US_POSIX")
-        formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        if format == .iso8601 {
+            formatter.timeZone = TimeZone(secondsFromGMT: 0)
+        }
         formatter.dateFormat = format.rawValue
         return formatter.date(from: self)
     }

@@ -31,7 +31,8 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
     public func build(route: PaymentManagementRoute) -> AnyView {
         switch route {
         case .paymentsList:
-            return AnyView(PaymentsListView())
+            let viewModel = PaymentsListViewModel(coordinator: self)
+            return AnyView(PaymentsListView(viewModel: viewModel))
         }
     }
 

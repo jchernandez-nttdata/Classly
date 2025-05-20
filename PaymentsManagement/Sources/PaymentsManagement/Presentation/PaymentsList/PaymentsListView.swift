@@ -10,44 +10,12 @@ import UIComponents
 import Assets
 
 struct PaymentsListView: View {
-    let payments = [
-        Payment(
-            id: 1,
-            studentName: "tesxto wrgjoi wegoiwj gwoij g goiejrg ergoij gre",
-            amount: 100,
-            paidClasses: 8,
-            paymentDate: .now,
-            classInfo: ClassInfo(
-                locationName: "San Borja",
-                className: "Marinera norteña",
-                schedule: Schedule(
-                    dayOfWeek: .monday,
-                    startTime: "9:00",
-                    endTime: "10:00"
-                )
-            )
-        ),
-        Payment(
-            id: 2,
-            studentName: "test amigo",
-            amount: 100.3,
-            paidClasses: 4,
-            paymentDate: .now,
-            classInfo: ClassInfo(
-                locationName: "San Borja",
-                className: "Marinera norteña",
-                schedule: Schedule(
-                    dayOfWeek: .monday,
-                    startTime: "9:00",
-                    endTime: "10:00"
-                )
-            )
-        )
-    ]
+    @StateObject private var viewModel: PaymentsListViewModel
+    @State private var didLoadStudents = false
 
-    @State private var initialDate: Date = Calendar.current.date(from: DateComponents(year: 1990, month: 1, day: 1))!
-    @State private var endDate: Date = .now
-    @State private var selectedPayment: Payment?
+    public init(viewModel: PaymentsListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -55,23 +23,23 @@ struct PaymentsListView: View {
 
             CustomTextField(
                 placeholder: "Search",
-                text: .constant(""),
+                text: $viewModel.searchText,
                 leftIcon: Image(systemName: "magnifyingglass"),
                 fieldBackgroundColor: AppColor.secondaryBackground
             )
 
             CustomDateRangeField(
-                startDate: $initialDate,
-                endDate: $endDate
+                startDate: $viewModel.initialDateFilter,
+                endDate: $viewModel.endDateFilter
             )
 
             CustomButton(title: "Register payment") {
                 print("to register payment")
             }
 
-            List(payments) { payment in
+            List(viewModel.filteredPayments) { payment in
                 PaymentTile(payment: payment) {
-                    selectedPayment = payment
+                    viewModel.selectedPayment = payment
                 }
                 .listRowInsets(EdgeInsets())
                 .padding(top: 10, bottom: 10)
@@ -91,12 +59,12 @@ struct PaymentsListView: View {
             //                didLoadStudents = true
             //            }
         }
-        .sheet(item: $selectedPayment) { payment in
+        .sheet(item: $viewModel.selectedPayment) { payment in
             PaymentDetailSheet(payment: payment)
         }
     }
 }
 
 #Preview {
-    PaymentsListView()
+    PaymentsListView(viewModel: PaymentsListViewModel())
 }
