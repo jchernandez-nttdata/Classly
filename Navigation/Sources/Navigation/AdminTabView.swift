@@ -25,8 +25,11 @@ public struct AdminTabView: View {
                     .tabItem { Label("Classes", systemImage: "book") }
             }
 
-            Text("Payments")
-                .tabItem { Label("Payments", systemImage: "creditcard") }
+            if let paymentsCoordinator = appCoordinator.paymentsManagementCoordinator {
+                paymentsCoordinator.start()
+                    .tabItem { Label("Payments", systemImage: "creditcard") }
+            }
+
         }
     }
 }

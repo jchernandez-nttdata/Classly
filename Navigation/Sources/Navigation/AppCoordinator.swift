@@ -10,6 +10,7 @@ import Authentication
 import Core
 import StudentManagement
 import ClassManagement
+import PaymentsManagement
 
 @MainActor
 public final class AppCoordinator: ObservableObject {
@@ -17,6 +18,7 @@ public final class AppCoordinator: ObservableObject {
     public var authCoordinator: AuthenticationCoordinator?
     public var studentManagementCoordinator: StudentManagementCoordinator?
     public var classManagementCoordinator: ClassManagementCoordinator?
+    public var paymentsManagementCoordinator: PaymentsManagementCoordinator?
 
     public init() {
         setupAuthenticationCoordinator()
@@ -30,6 +32,7 @@ public final class AppCoordinator: ObservableObject {
             studentManagementCoordinator = StudentManagementCoordinator(di: studentDI)
             let classDI = ClassManagementDIContainer()
             classManagementCoordinator = ClassManagementCoordinator(di: classDI)
+            paymentsManagementCoordinator = PaymentsManagementCoordinator()
             state = .admin
         case .student:
             state = .student
