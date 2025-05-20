@@ -54,7 +54,16 @@ struct PaymentTile: View {
             studentName: "Test name",
             amount: 20.0,
             paidClasses: 4,
-            paymentDate: .now
+            paymentDate: .now,
+            classInfo: ClassInfo(
+                locationName: "San Borja",
+                className: "Marinera norteña",
+                schedule: Schedule(
+                    dayOfWeek: .monday,
+                    startTime: "9:00",
+                    endTime: "10:00"
+                )
+            )
         ),
         onSelect: {
         }

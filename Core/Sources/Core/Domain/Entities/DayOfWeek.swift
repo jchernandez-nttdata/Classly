@@ -1,8 +1,8 @@
 //
 //  DayOfWeek.swift
-//  ClassManagement
+//  Core
 //
-//  Created by Juan Carlos Hernandez Castillo on 14/05/25.
+//  Created by Juan Carlos Hernandez Castillo on 20/05/25.
 //
 
 import Foundation
@@ -15,8 +15,8 @@ public enum DayOfWeek: Int, CaseIterable, Sendable {
     case friday = 5
     case saturday = 6
     case sunday = 7
-    
-    var description: String {
+
+    public var description: String {
         switch self {
         case .monday:
             return "Monday"

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Core
 
 public struct ClassSchedule: Sendable, Identifiable, Hashable {
     public let id: Int

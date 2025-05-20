@@ -5,6 +5,8 @@
 //  Created by Juan Carlos Hernandez Castillo on 15/05/25.
 //
 
+import Core
+
 class SchedulesMapper {
     private static func mapToClassSchedule(response: LoadClassSchedulesByLocationResponse) -> ClassSchedule {
         return ClassSchedule(

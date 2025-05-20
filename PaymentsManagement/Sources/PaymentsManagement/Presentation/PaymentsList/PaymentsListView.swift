@@ -11,12 +11,43 @@ import Assets
 
 struct PaymentsListView: View {
     let payments = [
-        Payment(id: 1, studentName: "tesxto wrgjoi wegoiwj gwoij g goiejrg ergoij gre", amount: 100, paidClasses: 8, paymentDate: .now),
-        Payment(id: 2, studentName: "test amigo", amount: 100.3, paidClasses: 4, paymentDate: .now)
+        Payment(
+            id: 1,
+            studentName: "tesxto wrgjoi wegoiwj gwoij g goiejrg ergoij gre",
+            amount: 100,
+            paidClasses: 8,
+            paymentDate: .now,
+            classInfo: ClassInfo(
+                locationName: "San Borja",
+                className: "Marinera norteña",
+                schedule: Schedule(
+                    dayOfWeek: .monday,
+                    startTime: "9:00",
+                    endTime: "10:00"
+                )
+            )
+        ),
+        Payment(
+            id: 2,
+            studentName: "test amigo",
+            amount: 100.3,
+            paidClasses: 4,
+            paymentDate: .now,
+            classInfo: ClassInfo(
+                locationName: "San Borja",
+                className: "Marinera norteña",
+                schedule: Schedule(
+                    dayOfWeek: .monday,
+                    startTime: "9:00",
+                    endTime: "10:00"
+                )
+            )
+        )
     ]
 
     @State private var initialDate: Date = Calendar.current.date(from: DateComponents(year: 1990, month: 1, day: 1))!
     @State private var endDate: Date = .now
+    @State private var selectedPayment: Payment?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
@@ -40,7 +71,7 @@ struct PaymentsListView: View {
 
             List(payments) { payment in
                 PaymentTile(payment: payment) {
-                    print("show payment")
+                    selectedPayment = payment
                 }
                 .listRowInsets(EdgeInsets())
                 .padding(top: 10, bottom: 10)
@@ -53,12 +84,15 @@ struct PaymentsListView: View {
         }
         .padding()
         .navigationBarHidden(true)
-//        .loadingIndicator(viewModel.isLoading)
+        //        .loadingIndicator(viewModel.isLoading)
         .onAppear {
-//            if !didLoadStudents {
-//                viewModel.loadStudents()
-//                didLoadStudents = true
-//            }
+            //            if !didLoadStudents {
+            //                viewModel.loadStudents()
+            //                didLoadStudents = true
+            //            }
+        }
+        .sheet(item: $selectedPayment) { payment in
+            PaymentDetailSheet(payment: payment)
         }
     }
 }
