@@ -33,9 +33,9 @@ struct AssistancesView: View {
 
             List(viewModel.attendancesDates, id: \.self) { date in
                 AssistanceDateTile(
-                    date: DateUtils.formatDate(date.toDate() ?? .now),
+                    date: DateUtils.formatDate(date),
                     onSelect: {
-                        viewModel.loadStudentAttendances(for: date.toDate() ?? .now)
+                        viewModel.loadStudentAttendances(for: date)
                     }
                 )
                 .listRowInsets(EdgeInsets())

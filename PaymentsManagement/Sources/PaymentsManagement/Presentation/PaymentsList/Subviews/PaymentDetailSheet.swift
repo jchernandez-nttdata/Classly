@@ -40,6 +40,7 @@ struct PaymentDetailSheet: View {
             Text("Payment detail")
                 .font(AppFont.subheadline.weight(.semibold))
             Text("Payment date: \(DateUtils.formatDate(payment.paymentDate ?? .now))")
+            Text("Payment time: \(DateUtils.formatTime(payment.paymentDate ?? .now))" )
             Text("Paid classes: \(payment.paidClasses)")
             Text("Amount: $ \(payment.amount.formattedAsCurrency)")
 

@@ -12,11 +12,15 @@ import Core
 final class AssistancesViewModel: ObservableObject {
     // MARK: - Published state
     @Published public var isLoading = false
-    @Published public var attendancesDates: [String] = []
+    @Published public var attendancesDateStrings: [String] = []
     @Published public var showAttendancesSheet: Bool = false
     @Published public var isAttendancesLoading: Bool = false
     @Published public var studentAttendances: [StudentAttendance] = []
     @Published public var selectedDate: String = ""
+
+    var attendancesDates: [Date] {
+        attendancesDateStrings.map { $0.toDate(format: .iso8601) ?? .now}
+    }
 
     // MARK: - Dependencies
     var schedule: ClassSchedule
@@ -46,8 +50,8 @@ final class AssistancesViewModel: ObservableObject {
             isLoading = true
 
             do throws (ClassManagementListError) {
-                attendancesDates = try await loadAttendancesDatesUseCase.execute(scheduleId: schedule.id)
-                if attendancesDates.isEmpty {
+                attendancesDateStrings = try await loadAttendancesDatesUseCase.execute(scheduleId: schedule.id)
+                if attendancesDateStrings.isEmpty {
                     throw .noDataFound
                 }
             } catch {

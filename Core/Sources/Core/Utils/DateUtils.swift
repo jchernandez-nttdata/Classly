@@ -16,4 +16,14 @@ public final class DateUtils {
         let formatted = formatter.string(from: date)
         return formatted
     }
+
+    public static func formatTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US")
+        formatter.dateFormat = "h:mm a"
+        formatter.amSymbol = "am"
+        formatter.pmSymbol = "pm"
+        let formatted = formatter.string(from: date)
+        return formatted
+    }
 }

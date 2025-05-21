@@ -52,6 +52,7 @@ struct PaymentsListView: View {
         }
         .padding()
         .navigationBarHidden(true)
+        .removeFocusOnTap()
         .loadingIndicator(viewModel.isLoading)
         .onAppear {
             if !didLoadPayments {

@@ -68,7 +68,7 @@ public struct CustomDateRangeField: View {
                 displayedComponents: .date
             )
             .labelsHidden()
-            .scaleEffect(x: 2.5, y: 1)
+            .scaleEffect(x: 1.3, y: 1)
             .colorMultiply(.clear)
         )
     }
