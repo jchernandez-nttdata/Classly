@@ -6,6 +6,7 @@
 //
 
 import ClasslyNetworking
+import Core
 
 public final class ClassManagementDIContainer {
 

@@ -6,6 +6,7 @@
 //
 
 import ClasslyNetworking
+import Core
 
 public final class PaymentsManagementDIContainer {
 
@@ -16,10 +17,13 @@ public final class PaymentsManagementDIContainer {
 
     // MARK: - Datasources
     private lazy var paymentsDS = PaymentsDataSourceImpl(networkingManager: networkManager)
+    private lazy var studentsDS = StudentsDataSourceImpl(networkingManager: networkManager)
 
     // MARK: - Repositories
     private lazy var paymentsRepo = PaymentsRepositoryImpl(remoteDataSource: paymentsDS)
+    private lazy var studentsRepo = StudentsRepositoryImpl(remoteDataSource: studentsDS)
 
     // MARK: - Use cases
     lazy var loadPayments: LoadPayments = LoadPaymentsImpl(repository: paymentsRepo)
+    lazy var loadStudentsQuery: LoadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepo)
 }

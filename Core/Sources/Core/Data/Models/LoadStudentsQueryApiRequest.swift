@@ -1,8 +1,8 @@
 //
 //  LoadStudentsQueryApiRequest.swift
-//  ClassManagement
+//  Core
 //
-//  Created by Juan Carlos Hernandez Castillo on 16/05/25.
+//  Created by Juan Carlos Hernandez Castillo on 21/05/25.
 //
 
 import ClasslyNetworking

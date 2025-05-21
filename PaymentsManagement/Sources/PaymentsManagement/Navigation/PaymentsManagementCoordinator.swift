@@ -11,6 +11,7 @@ import Core
 
 public enum PaymentManagementRoute: Hashable {
     case paymentsList
+    case addPayment
 }
 
 public final class PaymentsManagementCoordinator: CoordinatorProtocol {
@@ -33,6 +34,12 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
                 loadPaymentsUseCase: di.loadPayments
             )
             return AnyView(PaymentsListView(viewModel: viewModel))
+        case .addPayment:
+            let viewModel = AddPaymentViewModel(
+                coordinator: self,
+                loadStudentsQuery: di.loadStudentsQuery
+            )
+            return AnyView(AddPaymentView(viewModel: viewModel))
         }
     }
 

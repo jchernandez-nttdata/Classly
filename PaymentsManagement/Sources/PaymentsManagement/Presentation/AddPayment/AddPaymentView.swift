@@ -10,11 +10,11 @@ import Assets
 import UIComponents
 
 struct AddPaymentView: View {
-//    @StateObject private var viewModel: EnrollStudentViewModel
+    @StateObject private var viewModel: AddPaymentViewModel
 
-//    public init(viewModel: EnrollStudentViewModel) {
-//        _viewModel = StateObject(wrappedValue: viewModel)
-//    }
+    public init(viewModel: AddPaymentViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+    }
 
     var body: some View {
         VStack {
@@ -27,10 +27,9 @@ struct AddPaymentView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     CustomSearchableField(
                         placeholder: "Search student",
-                        selectedItem: .constant(""),
+                        selectedItem: $viewModel.selectedStudentString,
                         onQueryChanged: { query in
-//                            await viewModel.searchStudentNames(query: query)
-                            return []
+                            return await viewModel.searchStudentNames(query: query)
                         }
                     )
                     .padding(.top, 30)
@@ -77,11 +76,11 @@ struct AddPaymentView: View {
         }
         .padding()
         .navigationBarHidden(true)
-//        .loadingIndicator(viewModel.isLoading)
+        .loadingIndicator(viewModel.isLoading)
         .removeFocusOnTap()
     }
 }
 
 #Preview {
-    AddPaymentView()
+    AddPaymentView(viewModel: AddPaymentViewModel())
 }

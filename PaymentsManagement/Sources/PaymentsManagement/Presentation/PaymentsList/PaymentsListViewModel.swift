@@ -85,4 +85,11 @@ final class PaymentsListViewModel: ObservableObject {
 
         return paymentDay >= startDay && paymentDay <= endDay
     }
+
+    // MARK: - Coordinator methods
+
+    func toAddPayment() {
+        guard let coordinator = coordinator as? PaymentsManagementCoordinator else { return }
+        coordinator.push(.addPayment)
+    }
 }
