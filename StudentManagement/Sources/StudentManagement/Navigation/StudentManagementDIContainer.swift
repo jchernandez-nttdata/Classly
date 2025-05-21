@@ -11,6 +11,7 @@ public final class StudentManagementDIContainer {
 
     public init() { }
 
+    // MARK: - Network
     private lazy var networkManager = NetworkManager()
 
     // MARK: - Datasources
@@ -19,7 +20,7 @@ public final class StudentManagementDIContainer {
     // MARK: - Repositories
     private lazy var studentsRepo  = StudentsRepositoryImpl(remoteDataSource: studentDS)
 
-    // MARK: - Use cases (public)
+    // MARK: - Use cases
     lazy var loadStudentsUseCase: LoadStudents = LoadStudentsImpl(repository: studentsRepo)
     lazy var addStudentUseCase: AddStudent = AddStudentImpl(repository: studentsRepo)
     lazy var editStudentUseCase: EditStudent = EditStudentImpl(repository: studentsRepo)

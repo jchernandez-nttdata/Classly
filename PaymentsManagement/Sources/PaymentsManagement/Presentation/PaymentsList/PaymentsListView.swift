@@ -11,7 +11,7 @@ import Assets
 
 struct PaymentsListView: View {
     @StateObject private var viewModel: PaymentsListViewModel
-    @State private var didLoadStudents = false
+    @State private var didLoadPayments = false
 
     public init(viewModel: PaymentsListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -47,17 +47,17 @@ struct PaymentsListView: View {
             .listStyle(.plain)
             .scrollIndicators(.hidden)
             .refreshable {
-//                viewModel.loadStudents()
+                viewModel.loadPayments()
             }
         }
         .padding()
         .navigationBarHidden(true)
-        //        .loadingIndicator(viewModel.isLoading)
+        .loadingIndicator(viewModel.isLoading)
         .onAppear {
-            //            if !didLoadStudents {
-            //                viewModel.loadStudents()
-            //                didLoadStudents = true
-            //            }
+            if !didLoadPayments {
+                viewModel.loadPayments()
+                didLoadPayments = true
+            }
         }
         .sheet(item: $viewModel.selectedPayment) { payment in
             PaymentDetailSheet(payment: payment)

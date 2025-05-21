@@ -11,7 +11,7 @@ public final class ClassManagementDIContainer {
 
     public init() { }
 
-    // MARK: - Singletons compartidos en el módulo
+    // MARK: - Network
     private lazy var networkManager = NetworkManager()
 
     // MARK: - Datasources

@@ -32,7 +32,8 @@ public final class AppCoordinator: ObservableObject {
             studentManagementCoordinator = StudentManagementCoordinator(di: studentDI)
             let classDI = ClassManagementDIContainer()
             classManagementCoordinator = ClassManagementCoordinator(di: classDI)
-            paymentsManagementCoordinator = PaymentsManagementCoordinator()
+            let paymentsDI = PaymentsManagementDIContainer()
+            paymentsManagementCoordinator = PaymentsManagementCoordinator(di: paymentsDI)
             state = .admin
         case .student:
             state = .student

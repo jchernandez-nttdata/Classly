@@ -10,40 +10,8 @@ import Core
 
 @MainActor
 final class PaymentsListViewModel: ObservableObject {
-    @Published public var payments: [Payment] = [
-        Payment(
-            id: 1,
-            studentName: "tesxto wrgjoi wegoiwj gwoij g goiejrg ergoij gre",
-            amount: 100,
-            paidClasses: 8,
-            paymentDate: "2024-06-01".toDate(),
-            classInfo: ClassInfo(
-                locationName: "San Borja",
-                className: "Marinera norteña",
-                schedule: Schedule(
-                    dayOfWeek: .monday,
-                    startTime: "9:00",
-                    endTime: "10:00"
-                )
-            )
-        ),
-        Payment(
-            id: 2,
-            studentName: "test amigo",
-            amount: 100.3,
-            paidClasses: 4,
-            paymentDate: "2024-05-01".toDate(),
-            classInfo: ClassInfo(
-                locationName: "San Borja",
-                className: "Marinera norteña",
-                schedule: Schedule(
-                    dayOfWeek: .monday,
-                    startTime: "9:00",
-                    endTime: "10:00"
-                )
-            )
-        )
-    ]
+    // MARK: - Published state
+    @Published public var payments: [Payment] = []
     @Published public var isLoading = false
     @Published public var searchText: String = ""
     @Published public var initialDateFilter: Date = Calendar.current.date(from: DateComponents(year: 1990, month: 1, day: 1))!
@@ -54,13 +22,45 @@ final class PaymentsListViewModel: ObservableObject {
         filterPayments()
     }
 
+    // MARK: - Dependencies
     private let coordinator: (any CoordinatorProtocol)?
+    private let toastManager: ToastManager
+    private let loadPaymentsUseCase: LoadPayments?
 
+    // MARK: - Init
     init(
-        coordinator: (any CoordinatorProtocol)? = nil
+        coordinator: (any CoordinatorProtocol)? = nil,
+        toastManager: ToastManager = .shared,
+        loadPaymentsUseCase: LoadPayments? = nil
     ) {
         self.coordinator = coordinator
+        self.toastManager = toastManager
+        self.loadPaymentsUseCase = loadPaymentsUseCase
     }
+
+    // MARK: - Use case calls
+    func loadPayments() {
+        guard let loadPaymentsUseCase else { return }
+        Task {
+            isLoading = true
+
+            do throws(PaymentsManagementListError) {
+                payments = try await loadPaymentsUseCase.execute()
+                guard !payments.isEmpty else { throw .noDataFound }
+            } catch {
+                switch error {
+                case .noDataFound:
+                    toastManager.showToast(message: "No payments found", type: .error)
+                default:
+                    toastManager.showToast(message: "Something went wrong", type: .error)
+                }
+            }
+
+            isLoading = false
+        }
+    }
+
+    // MARK: - Private methods
 
     private func filterPayments() -> [Payment] {
         return payments.filter { payment in

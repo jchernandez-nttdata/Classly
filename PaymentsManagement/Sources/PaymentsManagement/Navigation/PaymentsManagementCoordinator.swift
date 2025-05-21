@@ -19,19 +19,19 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-//    private let di: ClassManagementDIContainer
+    private let di: PaymentsManagementDIContainer
 
-//    public init(di: ClassManagementDIContainer) {
-//        self.di = di
-//    }
-
-    public init() {
+    public init(di: PaymentsManagementDIContainer) {
+        self.di = di
     }
 
     public func build(route: PaymentManagementRoute) -> AnyView {
         switch route {
         case .paymentsList:
-            let viewModel = PaymentsListViewModel(coordinator: self)
+            let viewModel = PaymentsListViewModel(
+                coordinator: self,
+                loadPaymentsUseCase: di.loadPayments
+            )
             return AnyView(PaymentsListView(viewModel: viewModel))
         }
     }
