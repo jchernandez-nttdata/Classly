@@ -19,6 +19,8 @@ final class AddPaymentViewModel: ObservableObject {
     @Published var selectedLocation: SelectableLocation?
     @Published var classes: [SelectableClass] = []
     @Published var selectedClass: SelectableClass?
+    @Published var schedules: [SelectableSchedule] = []
+    @Published var selectedSchedule: SelectableSchedule?
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -28,6 +30,7 @@ final class AddPaymentViewModel: ObservableObject {
     private let loadStudentsQuery: LoadStudentsQuery?
     private let loadSelectableLocationsUseCase: LoadSelectableLocations?
     private let loadSelectableClassesUseCase: LoadSelectableClasses?
+    private let loadSelectableSchedulesUseCase: LoadSelectableSchedules?
 
     // MARK: - Init
     init(
@@ -35,15 +38,17 @@ final class AddPaymentViewModel: ObservableObject {
         toastManager: ToastManager = .shared,
         loadStudentsQuery: LoadStudentsQuery? = nil,
         loadSelectableLocations: LoadSelectableLocations? = nil,
-        loadSelectableClasses: LoadSelectableClasses? = nil
+        loadSelectableClasses: LoadSelectableClasses? = nil,
+        loadSelectableSchedules: LoadSelectableSchedules? = nil
     ) {
         self.coordinator = coordinator
         self.toastManager = toastManager
         self.loadStudentsQuery = loadStudentsQuery
         self.loadSelectableLocationsUseCase = loadSelectableLocations
         self.loadSelectableClassesUseCase = loadSelectableClasses
+        self.loadSelectableSchedulesUseCase = loadSelectableSchedules
 
-        observeLocationChanges()
+        observeStateChanges()
     }
 
     // MARK: - Use cases
@@ -66,9 +71,11 @@ final class AddPaymentViewModel: ObservableObject {
 
             do throws(PaymentsManagementListError) {
                 locations = try await loadSelectableLocationsUseCase.execute()
+                guard !locations.isEmpty else { throw .noDataFound }
             } catch {
                 switch error {
-
+                case .noDataFound:
+                    toastManager.showToast(message: "No Locations Found", type: .error)
                 default:
                     print("error \(error)")
                 }
@@ -82,16 +89,45 @@ final class AddPaymentViewModel: ObservableObject {
         guard let loadSelectableClassesUseCase else { return }
 
         selectedClass = nil
+        selectedSchedule = nil
         classes = []
+        schedules = []
 
         Task {
             isLoading = true
 
             do throws(PaymentsManagementListError) {
                 classes = try await loadSelectableClassesUseCase.execute(locationId: location.id)
+                guard !classes.isEmpty else { throw .noDataFound }
             } catch {
                 switch error {
+                case .noDataFound:
+                    toastManager.showToast(message: "No Classes Found", type: .error)
+                default:
+                    print("error \(error)")
+                }
+            }
 
+            isLoading = false
+        }
+    }
+
+    private func loadSchedules(for selectedClass: SelectableClass) {
+        guard let loadSelectableSchedulesUseCase else { return }
+
+        selectedSchedule = nil
+        schedules = []
+
+        Task {
+            isLoading = true
+
+            do throws(PaymentsManagementListError) {
+                schedules = try await loadSelectableSchedulesUseCase.execute(classId: selectedClass.id)
+                guard !schedules.isEmpty else { throw .noDataFound }
+            } catch {
+                switch error {
+                case .noDataFound:
+                    toastManager.showToast(message: "No Schedules Found", type: .error)
                 default:
                     print("error \(error)")
                 }
@@ -103,12 +139,20 @@ final class AddPaymentViewModel: ObservableObject {
 
     // MARK: - Private methods
 
-    private func observeLocationChanges() {
+    private func observeStateChanges() {
         $selectedLocation
             .dropFirst()
             .sink { [weak self] newLocation in
                 guard let self, let location = newLocation else { return }
                 self.loadClasses(for: location)
+            }
+            .store(in: &cancellables)
+
+        $selectedClass
+            .dropFirst()
+            .sink { [weak self] newClass in
+                guard let self, let selectedClass = newClass else { return }
+                self.loadSchedules(for: selectedClass)
             }
             .store(in: &cancellables)
     }

@@ -44,4 +44,14 @@ final class PaymentsDataSourceImpl: PaymentsDataSource {
             throw PaymentsManagementErrorMapper.toPaymentsManagementListError(error)
         }
     }
+
+    func loadSchedules(classId: Int) async throws -> [SelectableSchedule] {
+        do {
+            let request = LoadSelectableSchedulesApiRequest(classId: classId)
+            let response = try await networkingManager.performRequest(request)
+            return PaymentsMapper.mapToSelectableSchedules(responses: response)
+        } catch {
+            throw PaymentsManagementErrorMapper.toPaymentsManagementListError(error)
+        }
+    }
 }

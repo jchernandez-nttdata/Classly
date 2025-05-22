@@ -21,7 +21,7 @@ struct AddPaymentView: View {
         VStack {
             CustomAppBar(
                 title: "Add payment",
-                backAction: {}
+                backAction: viewModel.goBack
             )
 
             ScrollView {
@@ -49,10 +49,10 @@ struct AddPaymentView: View {
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant(nil as EmptySelectableItem?),
-                        items: [],
+                        selectedItem: $viewModel.selectedSchedule,
+                        items: viewModel.schedules,
                         placeholder: "Schedule",
-                        isEnabled: false
+                        isEnabled: !viewModel.schedules.isEmpty
                     )
 
                     CustomTextField(

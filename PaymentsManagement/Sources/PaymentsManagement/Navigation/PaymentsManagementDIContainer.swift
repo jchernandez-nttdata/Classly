@@ -28,4 +28,5 @@ public final class PaymentsManagementDIContainer {
     lazy var loadStudentsQuery: LoadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepo)
     lazy var loadLocations: LoadSelectableLocations = LoadSelectableLocationsImpl(repository: paymentsRepo)
     lazy var loadClasses: LoadSelectableClasses = LoadSelectableClassesImpl(repository: paymentsRepo)
+    lazy var loadSchedules: LoadSelectableSchedules = LoadSelectableSchedulesImpl(repository: paymentsRepo)
 }

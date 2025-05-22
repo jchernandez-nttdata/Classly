@@ -53,4 +53,16 @@ enum PaymentsMapper {
     static func mapToSelectableClasses(responses: [SelectableClassResponse]) -> [SelectableClass] {
         return responses.map(mapToSelectableClass)
     }
+
+    private static func mapToSelectableSchedule(response: SelectableScheduleResponse) -> SelectableSchedule {
+        let dayOfWeek = DayOfWeek(rawValue: response.dayOfWeek) ?? .sunday
+        return SelectableSchedule(
+            id: response.id,
+            displayName: "\(dayOfWeek.description) \(response.startTime.toAmPmFormat) - \(response.endTime.toAmPmFormat)"
+        )
+    }
+
+    static func mapToSelectableSchedules(responses: [SelectableScheduleResponse]) -> [SelectableSchedule] {
+        return responses.map(mapToSelectableSchedule)
+    }
 }
