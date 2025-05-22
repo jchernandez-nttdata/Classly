@@ -8,6 +8,7 @@
 import SwiftUI
 import Assets
 import UIComponents
+import Core
 
 struct EnrollStudentView: View {
     @StateObject private var viewModel: EnrollStudentViewModel
@@ -27,7 +28,7 @@ struct EnrollStudentView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     CustomSearchableField(
                         placeholder: "Search student",
-                        selectedItem: $viewModel.selectedStudentString,
+                        selectedItem: $viewModel.selectedStudent,
                         onQueryChanged: { query in
                             await viewModel.searchStudentNames(query: query)
                         }
@@ -48,22 +49,22 @@ struct EnrollStudentView: View {
                     .padding(top: -15, left: 5)
 
                     CustomSelectableField(
-                        selectedItem: .constant(viewModel.schedule.locationName),
+                        selectedItem: .constant(EmptySelectableItem(name: viewModel.schedule.locationName)),
                         items: [],
                         placeholder: "Location",
                         isEnabled: false
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant(viewModel.schedule.className),
+                        selectedItem: .constant(EmptySelectableItem(name: viewModel.schedule.className)),
                         items: [],
                         placeholder: "Class",
                         isEnabled: false
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant("\(viewModel.schedule.dayOfWeek.description) | \(viewModel.schedule.startTime.toAmPmFormat) - \(viewModel.schedule.endTime.toAmPmFormat)"),
-                        items: ["Schedule 1", "Schedule 2"],
+                        selectedItem: .constant(EmptySelectableItem(name: "\(viewModel.schedule.dayOfWeek.description) | \(viewModel.schedule.startTime.toAmPmFormat) - \(viewModel.schedule.endTime.toAmPmFormat)")),
+                        items: [],
                         placeholder: "Schedule",
                         isEnabled: false
                     )

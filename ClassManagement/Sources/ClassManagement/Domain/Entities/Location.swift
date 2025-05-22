@@ -6,9 +6,14 @@
 //
 
 import Foundation
+import Core
 
-public struct Location: Sendable, Identifiable, Hashable {
+public struct Location: Sendable, Hashable {
     public let id: Int
     public let name: String
     public let address: String
+}
+
+extension Location: SelectableItem {
+    public var displayName: String { name }
 }

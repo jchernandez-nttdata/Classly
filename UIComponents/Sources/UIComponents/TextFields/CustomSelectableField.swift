@@ -7,19 +7,20 @@
 
 import SwiftUI
 import Assets
+import Core
 
-public struct CustomSelectableField: View {
-    @Binding private var selectedItem: String?
-    private let items: [String]
+public struct CustomSelectableField<T: SelectableItem>: View {
+    @Binding private var selectedItem: T?
+    private let items: [T]
     private let placeholder: String
     private let isEnabled: Bool
 
     @State private var showSheet = false
-    @State private var tempSelection: String?
+    @State private var tempSelection: T?
 
     public init(
-        selectedItem: Binding<String?>,
-        items: [String],
+        selectedItem: Binding<T?>,
+        items: [T],
         placeholder: String = "Select an option",
         isEnabled: Bool = true
     ) {
@@ -36,7 +37,7 @@ public struct CustomSelectableField: View {
             showSheet.toggle()
         }) {
             HStack {
-                Text(selectedItem ?? placeholder)
+                Text(selectedItem?.displayName ?? placeholder)
                     .foregroundColor(textColor())
                     .frame(maxWidth: .infinity, alignment: .leading)
 
@@ -71,8 +72,8 @@ public struct CustomSelectableField: View {
                 Spacer()
 
                 Picker("Select an option", selection: $tempSelection) {
-                    ForEach(items, id: \.self) { item in
-                        Text(item).tag(item)
+                    ForEach(items) { item in
+                        Text(item.displayName).tag(Optional(item))
                     }
                 }
                 .pickerStyle(.wheel)
@@ -87,7 +88,6 @@ public struct CustomSelectableField: View {
         }
     }
 
-
     private func textColor() -> Color {
         if selectedItem == nil {
             return AppColor.disabledText
@@ -101,12 +101,17 @@ public struct CustomSelectableField: View {
     }
 }
 
+struct TestItem: SelectableItem {
+    let id: Int
+    let name: String
+    var displayName: String { name }
+}
 
 #Preview {
     VStack {
         CustomSelectableField(
-            selectedItem: .constant(nil),
-            items: (1...20).map { "Option \($0)" }
+            selectedItem: .constant(TestItem(id: 1, name: "amigo")),
+            items: (1...20).map { TestItem(id: $0, name:  "Option \($0)") }
         )
         .padding()
     }

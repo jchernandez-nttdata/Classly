@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Student: Sendable, Identifiable, Hashable {
+public struct Student: Sendable, Hashable {
     public let id: Int
     public let name: String
     public let email: String
@@ -30,4 +30,8 @@ public struct Student: Sendable, Identifiable, Hashable {
         self.phone = phone
         self.birthdate = birthdate
     }
+}
+
+extension Student: SelectableItem {
+    public var displayName: String { name }
 }

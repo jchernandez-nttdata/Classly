@@ -13,7 +13,7 @@ final class AddPaymentViewModel: ObservableObject {
     // MARK: - Published state
     @Published public var isLoading = false
     @Published var searchResults: [Student] = []
-    @Published var selectedStudentString: String = ""
+    @Published var selectedStudent: Student?
 
     // MARK: - Dependencies
     private let coordinator: (any CoordinatorProtocol)?
@@ -33,11 +33,11 @@ final class AddPaymentViewModel: ObservableObject {
 
     // MARK: - Use cases
 
-    func searchStudentNames(query: String) async -> [String] {
+    func searchStudentNames(query: String) async -> [Student] {
         guard let safeUseCase = loadStudentsQuery else { return [] }
         do {
             searchResults = try await safeUseCase.execute(query: query)
-            return searchResults.map { $0.name }
+            return searchResults
         } catch {
             return []
         }

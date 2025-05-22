@@ -14,7 +14,7 @@ final class ClassListViewModel: ObservableObject {
     // MARK: - Published state
     @Published public var locations: [Location] = []
     @Published public var classSchedules: [ClassSchedule] = []
-    @Published public var selectedLocationString: String? = nil {
+    @Published public var selectedLocation: Location? = nil {
         didSet {
             loadClasses()
         }
@@ -53,7 +53,7 @@ final class ClassListViewModel: ObservableObject {
                 locations = try await loadLocationsUseCase.execute()
 
                 guard let firstLocation = locations.first else { throw ClassManagementListError.noDataFound }
-                selectedLocationString = firstLocation.name
+                selectedLocation = firstLocation
 
             } catch let error as ClassManagementListError {
                 mapErrorToToastMessage(error, notFoundErrorMessage: "No locations found")
@@ -63,8 +63,8 @@ final class ClassListViewModel: ObservableObject {
 
     func loadClasses() {
         guard let loadClassSchedulesByLocation else { return }
-        guard let locationName = selectedLocationString,
-              let location = locations.first(where: { $0.name == locationName }) else { return }
+        guard let selectedLocation,
+              let location = locations.first(where: { $0.id == selectedLocation.id }) else { return }
 
         Task {
             isLoading = true

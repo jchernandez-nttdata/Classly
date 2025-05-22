@@ -21,8 +21,8 @@ struct ClassListView: View {
             CustomAppBar(title: "Classes")
 
             CustomSelectableField(
-                selectedItem: $viewModel.selectedLocationString,
-                items: viewModel.locations.map( \.self.name )
+                selectedItem: $viewModel.selectedLocation,
+                items: viewModel.locations
             )
             .padding(.bottom, 10)
 

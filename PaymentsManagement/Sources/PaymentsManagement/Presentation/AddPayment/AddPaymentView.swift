@@ -8,6 +8,7 @@
 import SwiftUI
 import Assets
 import UIComponents
+import Core
 
 struct AddPaymentView: View {
     @StateObject private var viewModel: AddPaymentViewModel
@@ -27,7 +28,7 @@ struct AddPaymentView: View {
                 VStack(alignment: .leading, spacing: 20) {
                     CustomSearchableField(
                         placeholder: "Search student",
-                        selectedItem: $viewModel.selectedStudentString,
+                        selectedItem: $viewModel.selectedStudent,
                         onQueryChanged: { query in
                             return await viewModel.searchStudentNames(query: query)
                         }
@@ -35,21 +36,21 @@ struct AddPaymentView: View {
                     .padding(.top, 30)
 
                     CustomSelectableField(
-                        selectedItem: .constant(""),
+                        selectedItem: .constant(nil as EmptySelectableItem?),
                         items: [],
                         placeholder: "Location",
                         isEnabled: false
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant(""),
+                        selectedItem: .constant(nil as EmptySelectableItem?),
                         items: [],
                         placeholder: "Class",
                         isEnabled: false
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant(""),
+                        selectedItem: .constant(nil as EmptySelectableItem?),
                         items: [],
                         placeholder: "Schedule",
                         isEnabled: false

@@ -12,7 +12,7 @@ import Core
 final class EnrollStudentViewModel: ObservableObject {
     @Published public var isLoading = false
     @Published var searchResults: [Student] = []
-    @Published var selectedStudentString: String = ""
+    @Published var selectedStudent: Student?
     @Published var amountString: String = ""
     @Published var paidClassesString: String = ""
 
@@ -41,11 +41,11 @@ final class EnrollStudentViewModel: ObservableObject {
         coordinator?.pop()
     }
 
-    func searchStudentNames(query: String) async -> [String] {
+    func searchStudentNames(query: String) async -> [Student] {
         guard let safeUseCase = loadStudentsQuery else { return [] }
         do {
             searchResults = try await safeUseCase.execute(query: query)
-            return searchResults.map { $0.name }
+            return searchResults
         } catch {
             return []
         }
@@ -58,7 +58,7 @@ final class EnrollStudentViewModel: ObservableObject {
             isLoading = true
 
             do throws(EnrollStudentError) {
-                guard let studentId = searchResults.filter({ $0.name == selectedStudentString }).first?.id else {
+                guard let studentId = searchResults.filter({ $0.id == selectedStudent?.id }).first?.id else {
                     print("Student not found")
                     throw .parseError
                 }
