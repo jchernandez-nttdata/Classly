@@ -24,4 +24,14 @@ final class PaymentsDataSourceImpl: PaymentsDataSource {
             throw PaymentsManagementErrorMapper.toPaymentsManagementListError(error)
         }
     }
+
+    func loadLocations() async throws -> [SelectableLocation] {
+        do {
+            let request = LoadSelectableLocationsApiRequest()
+            let response = try await networkingManager.performRequest(request)
+            return PaymentsMapper.mapToSelectableLocations(responses: response)
+        } catch {
+            throw PaymentsManagementErrorMapper.toPaymentsManagementListError(error)
+        }
+    }
 }

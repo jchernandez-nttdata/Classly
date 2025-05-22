@@ -7,4 +7,5 @@
 
 protocol PaymentsDataSource {
     func loadPayments() async throws -> [Payment]
+    func loadLocations() async throws -> [SelectableLocation]
 }

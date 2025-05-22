@@ -37,7 +37,8 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
         case .addPayment:
             let viewModel = AddPaymentViewModel(
                 coordinator: self,
-                loadStudentsQuery: di.loadStudentsQuery
+                loadStudentsQuery: di.loadStudentsQuery,
+                loadSelectableLocations: di.loadLocations
             )
             return AnyView(AddPaymentView(viewModel: viewModel))
         }

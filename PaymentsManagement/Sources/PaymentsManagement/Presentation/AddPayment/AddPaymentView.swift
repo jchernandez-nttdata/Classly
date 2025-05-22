@@ -36,10 +36,9 @@ struct AddPaymentView: View {
                     .padding(.top, 30)
 
                     CustomSelectableField(
-                        selectedItem: .constant(nil as EmptySelectableItem?),
-                        items: [],
-                        placeholder: "Location",
-                        isEnabled: false
+                        selectedItem: $viewModel.selectedLocation,
+                        items: viewModel.locations,
+                        placeholder: "Location"
                     )
 
                     CustomSelectableField(
@@ -78,6 +77,9 @@ struct AddPaymentView: View {
         .padding()
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
+        .onAppear {
+            viewModel.loadSelectableLocations()
+        }
         .removeFocusOnTap()
     }
 }

@@ -7,7 +7,7 @@
 
 import Core
 
-class PaymentsMapper {
+enum PaymentsMapper {
     private static func mapToPayment(response: PaymentResponse) -> Payment {
         return Payment(
             id: response.id,
@@ -30,5 +30,16 @@ class PaymentsMapper {
     
     static func mapToPayments(responses: [PaymentResponse]) -> [Payment] {
         return responses.map(mapToPayment)
+    }
+
+    private static func mapToSelectableLocation(response: SelectableLocationResponse) -> SelectableLocation {
+        return SelectableLocation(
+            id: response.id,
+            displayName: response.locationName
+        )
+    }
+
+    static func mapToSelectableLocations(responses: [SelectableLocationResponse]) -> [SelectableLocation] {
+        return responses.map(mapToSelectableLocation)
     }
 }

@@ -22,4 +22,14 @@ class PaymentsRepositoryImpl: PaymentsRepository {
             throw .serverError
         }
     }
+
+    func loadLocations() async throws(PaymentsManagementListError) -> [SelectableLocation] {
+        do {
+            return try await remoteDataSource.loadLocations()
+        } catch let error as PaymentsManagementListError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }

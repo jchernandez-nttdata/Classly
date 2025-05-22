@@ -26,4 +26,5 @@ public final class PaymentsManagementDIContainer {
     // MARK: - Use cases
     lazy var loadPayments: LoadPayments = LoadPaymentsImpl(repository: paymentsRepo)
     lazy var loadStudentsQuery: LoadStudentsQuery = LoadStudentsQueryImpl(repository: studentsRepo)
+    lazy var loadLocations: LoadSelectableLocations = LoadSelectableLocationsImpl(repository: paymentsRepo)
 }
