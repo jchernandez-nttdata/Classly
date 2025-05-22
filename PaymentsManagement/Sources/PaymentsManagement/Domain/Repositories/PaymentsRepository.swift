@@ -8,4 +8,5 @@
 protocol PaymentsRepository {
     func loadPayments() async throws(PaymentsManagementListError) -> [Payment]
     func loadLocations() async throws(PaymentsManagementListError) -> [SelectableLocation]
+    func loadClasses(locationId: Int) async throws(PaymentsManagementListError) -> [SelectableClass]
 }

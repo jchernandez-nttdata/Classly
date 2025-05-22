@@ -42,4 +42,15 @@ enum PaymentsMapper {
     static func mapToSelectableLocations(responses: [SelectableLocationResponse]) -> [SelectableLocation] {
         return responses.map(mapToSelectableLocation)
     }
+
+    private static func mapToSelectableClass(response: SelectableClassResponse) -> SelectableClass {
+        return SelectableClass(
+            id: response.id,
+            displayName: response.className
+        )
+    }
+
+    static func mapToSelectableClasses(responses: [SelectableClassResponse]) -> [SelectableClass] {
+        return responses.map(mapToSelectableClass)
+    }
 }

@@ -42,10 +42,10 @@ struct AddPaymentView: View {
                     )
 
                     CustomSelectableField(
-                        selectedItem: .constant(nil as EmptySelectableItem?),
-                        items: [],
+                        selectedItem: $viewModel.selectedClass,
+                        items: viewModel.classes,
                         placeholder: "Class",
-                        isEnabled: false
+                        isEnabled: !viewModel.classes.isEmpty
                     )
 
                     CustomSelectableField(

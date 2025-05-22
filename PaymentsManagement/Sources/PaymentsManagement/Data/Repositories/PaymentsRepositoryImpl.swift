@@ -32,4 +32,14 @@ class PaymentsRepositoryImpl: PaymentsRepository {
             throw .serverError
         }
     }
+
+    func loadClasses(locationId: Int) async throws(PaymentsManagementListError) -> [SelectableClass] {
+        do {
+            return try await remoteDataSource.loadClasses(locationId: locationId)
+        } catch let error as PaymentsManagementListError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }

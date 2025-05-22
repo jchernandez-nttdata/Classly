@@ -38,7 +38,8 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
             let viewModel = AddPaymentViewModel(
                 coordinator: self,
                 loadStudentsQuery: di.loadStudentsQuery,
-                loadSelectableLocations: di.loadLocations
+                loadSelectableLocations: di.loadLocations,
+                loadSelectableClasses: di.loadClasses
             )
             return AnyView(AddPaymentView(viewModel: viewModel))
         }
