@@ -54,4 +54,14 @@ final class PaymentsDataSourceImpl: PaymentsDataSource {
             throw PaymentsManagementErrorMapper.toPaymentsManagementListError(error)
         }
     }
+
+    func addPayment(params: AddPaymentImpl.Params) async throws {
+        do {
+            let request = AddPaymentApiRequest(from: params)
+            let _ = try await networkingManager.performRequest(request)
+            return
+        } catch {
+            throw PaymentsManagementErrorMapper.toAddPaymentError(error)
+        }
+    }
 }

@@ -57,20 +57,20 @@ struct AddPaymentView: View {
 
                     CustomTextField(
                         placeholder: "Number of classes",
-                        text: .constant(""),
+                        text: $viewModel.paidClassesString,
                         keyboardType: .numberPad
                     )
 
                     CustomTextField(
                         placeholder: "Amount",
-                        text: .constant(""),
+                        text: $viewModel.amountString,
                         leftIcon: Image(systemName: "dollarsign"),
                         keyboardType: .decimalPad
                     )
 
                     Spacer(minLength: 30)
 
-                    CustomButton(title: "Confirm", action: {})
+                    CustomButton(title: "Confirm", action: viewModel.addPayment)
                 }
             }
         }

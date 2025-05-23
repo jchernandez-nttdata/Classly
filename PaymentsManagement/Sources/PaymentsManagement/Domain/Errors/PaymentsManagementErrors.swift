@@ -12,3 +12,11 @@ public enum PaymentsManagementListError: Error, Sendable {
     case requestError
     case noDataFound
 }
+
+enum AddPaymentError: Error, Sendable {
+    case networkError
+    case serverError
+    case requestError
+    case notFound
+    case invalidInput
+}

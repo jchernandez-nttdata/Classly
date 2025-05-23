@@ -10,4 +10,5 @@ protocol PaymentsDataSource {
     func loadLocations() async throws -> [SelectableLocation]
     func loadClasses(locationId: Int) async throws -> [SelectableClass]
     func loadSchedules(classId: Int) async throws -> [SelectableSchedule]
+    func addPayment(params: AddPaymentImpl.Params) async throws
 }

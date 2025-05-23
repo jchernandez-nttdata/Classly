@@ -40,7 +40,8 @@ public final class PaymentsManagementCoordinator: CoordinatorProtocol {
                 loadStudentsQuery: di.loadStudentsQuery,
                 loadSelectableLocations: di.loadLocations,
                 loadSelectableClasses: di.loadClasses,
-                loadSelectableSchedules: di.loadSchedules
+                loadSelectableSchedules: di.loadSchedules,
+                addPayment: di.addPayment
             )
             return AnyView(AddPaymentView(viewModel: viewModel))
         }

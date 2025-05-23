@@ -52,4 +52,14 @@ class PaymentsRepositoryImpl: PaymentsRepository {
             throw .serverError
         }
     }
+
+    func addPayment(params: AddPaymentImpl.Params) async throws(AddPaymentError) {
+        do {
+            return try await remoteDataSource.addPayment(params: params)
+        } catch let error as AddPaymentError {
+            throw error
+        } catch {
+            throw .serverError
+        }
+    }
 }

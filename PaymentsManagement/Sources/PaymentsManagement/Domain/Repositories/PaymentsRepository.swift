@@ -10,4 +10,5 @@ protocol PaymentsRepository {
     func loadLocations() async throws(PaymentsManagementListError) -> [SelectableLocation]
     func loadClasses(locationId: Int) async throws(PaymentsManagementListError) -> [SelectableClass]
     func loadSchedules(classId: Int) async throws(PaymentsManagementListError) -> [SelectableSchedule]
+    func addPayment(params: AddPaymentImpl.Params) async throws(AddPaymentError)
 }

@@ -33,7 +33,7 @@ struct PaymentsListView: View {
                 endDate: $viewModel.endDateFilter
             )
 
-            CustomButton(title: "Register payment", action: viewModel.toAddPayment)
+            CustomButton(title: "Add payment", action: viewModel.toAddPayment)
 
             List(viewModel.filteredPayments) { payment in
                 PaymentTile(payment: payment) {

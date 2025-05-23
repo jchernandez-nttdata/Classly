@@ -21,6 +21,8 @@ final class AddPaymentViewModel: ObservableObject {
     @Published var selectedClass: SelectableClass?
     @Published var schedules: [SelectableSchedule] = []
     @Published var selectedSchedule: SelectableSchedule?
+    @Published var amountString: String = ""
+    @Published var paidClassesString: String = ""
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -31,6 +33,7 @@ final class AddPaymentViewModel: ObservableObject {
     private let loadSelectableLocationsUseCase: LoadSelectableLocations?
     private let loadSelectableClassesUseCase: LoadSelectableClasses?
     private let loadSelectableSchedulesUseCase: LoadSelectableSchedules?
+    private let addPaymentUseCase: AddPayment?
 
     // MARK: - Init
     init(
@@ -39,7 +42,8 @@ final class AddPaymentViewModel: ObservableObject {
         loadStudentsQuery: LoadStudentsQuery? = nil,
         loadSelectableLocations: LoadSelectableLocations? = nil,
         loadSelectableClasses: LoadSelectableClasses? = nil,
-        loadSelectableSchedules: LoadSelectableSchedules? = nil
+        loadSelectableSchedules: LoadSelectableSchedules? = nil,
+        addPayment: AddPayment? = nil
     ) {
         self.coordinator = coordinator
         self.toastManager = toastManager
@@ -47,6 +51,7 @@ final class AddPaymentViewModel: ObservableObject {
         self.loadSelectableLocationsUseCase = loadSelectableLocations
         self.loadSelectableClassesUseCase = loadSelectableClasses
         self.loadSelectableSchedulesUseCase = loadSelectableSchedules
+        self.addPaymentUseCase = addPayment
 
         observeStateChanges()
     }
@@ -76,6 +81,49 @@ final class AddPaymentViewModel: ObservableObject {
                 switch error {
                 case .noDataFound:
                     toastManager.showToast(message: "No Locations Found", type: .error)
+                default:
+                    print("error \(error)")
+                }
+            }
+
+            isLoading = false
+        }
+    }
+
+    func addPayment() {
+        guard let addPaymentUseCase else { return }
+
+        Task {
+            isLoading = true
+
+            do throws(AddPaymentError) {
+                guard let selectedStudent, let selectedSchedule else {
+                    throw .invalidInput
+                }
+                guard let amount = Double(amountString) else {
+                    print("Cannot convert amount")
+                    throw .invalidInput
+                }
+                guard let paidClasses = Int(paidClassesString) else {
+                    print("cannot convert paid classes")
+                    throw .invalidInput
+                }
+
+                let params = AddPaymentImpl.Params(
+                    studentId: selectedStudent.id,
+                    scheduleId: selectedSchedule.id,
+                    amount: amount,
+                    paidClasses: paidClasses
+                )
+                try await addPaymentUseCase.execute(params: params)
+                toastManager.showToast(message: "Successfully add payment", type: .success)
+                goBack()
+            } catch {
+                switch error {
+                case .notFound:
+                    toastManager.showToast(message: "Student or Schedule not found", type: .error)
+                case .invalidInput:
+                    toastManager.showToast(message: "There was an error parsing the data", type: .error)
                 default:
                     print("error \(error)")
                 }
