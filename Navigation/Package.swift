@@ -20,7 +20,8 @@ let package = Package(
         .package(path: "../StudentManagement"),
         .package(path: "../UIComponents"),
         .package(path: "../ClassManagement"),
-        .package(path: "../PaymentsManagement")
+        .package(path: "../PaymentsManagement"),
+        .package(path: "../RemoteConfigClient")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -33,7 +34,8 @@ let package = Package(
                 "StudentManagement",
                 "UIComponents",
                 "ClassManagement",
-                "PaymentsManagement"
+                "PaymentsManagement",
+                "RemoteConfigClient"
             ]
         ),
         .testTarget(

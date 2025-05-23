@@ -20,6 +20,7 @@
 		358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BC2DE0263000D90C51 /* FirebaseCore */; };
 		358320BF2DE0263000D90C51 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BE2DE0263000D90C51 /* FirebaseCrashlytics */; };
 		358320C12DE0263000D90C51 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 358320C02DE0263000D90C51 /* FirebaseRemoteConfig */; };
+		358320DA2DE0310700D90C51 /* RemoteConfigClient in Frameworks */ = {isa = PBXBuildFile; productRef = 358320D92DE0310700D90C51 /* RemoteConfigClient */; };
 		35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */; };
 /* End PBXBuildFile section */
 
@@ -49,6 +50,7 @@
 		356F76642DBFEA38000C0361 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Assets; sourceTree = "<group>"; };
 		356F76B02DC084CC000C0361 /* Core */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Core; sourceTree = "<group>"; };
 		356F76B32DC0867E000C0361 /* UIComponents */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = UIComponents; sourceTree = "<group>"; };
+		358320D82DE02AFD00D90C51 /* RemoteConfigClient */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = RemoteConfigClient; sourceTree = "<group>"; };
 		35893B8E2DA0504700EEFE40 /* Classly.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Classly.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893B9E2DA0504900EEFE40 /* ClasslyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35893BA82DA0504A00EEFE40 /* ClasslyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -84,6 +86,7 @@
 				358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */,
 				352FA1B12DDCEFA100853EAB /* ClassManagement in Frameworks */,
 				352FA1B32DDCEFAA00853EAB /* StudentManagement in Frameworks */,
+				358320DA2DE0310700D90C51 /* RemoteConfigClient in Frameworks */,
 				356F76662DBFEE8E000C0361 /* Assets in Frameworks */,
 				356F76B22DC0856F000C0361 /* Core in Frameworks */,
 				35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */,
@@ -122,6 +125,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				358320D82DE02AFD00D90C51 /* RemoteConfigClient */,
 				352FA1AD2DDCEE4F00853EAB /* PaymentsManagement */,
 				35CC73A12DD525AB007FE590 /* ClassManagement */,
 				35C76FFE2DCDA8120022227A /* DataPersistance */,
@@ -183,6 +187,7 @@
 				358320BC2DE0263000D90C51 /* FirebaseCore */,
 				358320BE2DE0263000D90C51 /* FirebaseCrashlytics */,
 				358320C02DE0263000D90C51 /* FirebaseRemoteConfig */,
+				358320D92DE0310700D90C51 /* RemoteConfigClient */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -486,7 +491,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jchernandez.Classly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -521,7 +526,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.jchernandez.Classly;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -714,6 +719,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
+		};
+		358320D92DE0310700D90C51 /* RemoteConfigClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = RemoteConfigClient;
 		};
 		35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
