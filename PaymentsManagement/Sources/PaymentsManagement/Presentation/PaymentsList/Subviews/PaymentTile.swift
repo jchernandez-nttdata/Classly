@@ -43,6 +43,7 @@ struct PaymentTile: View {
         }
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
+        .background(Color.clear)
         .onTapGesture(perform: onSelect)
     }
 }

@@ -16,6 +16,10 @@
 		356F76662DBFEE8E000C0361 /* Assets in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76652DBFEE8E000C0361 /* Assets */; };
 		356F76B22DC0856F000C0361 /* Core in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76B12DC0856F000C0361 /* Core */; };
 		356F76B52DC086FA000C0361 /* UIComponents in Frameworks */ = {isa = PBXBuildFile; productRef = 356F76B42DC086FA000C0361 /* UIComponents */; };
+		358320BB2DE0263000D90C51 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BA2DE0263000D90C51 /* FirebaseAnalytics */; };
+		358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BC2DE0263000D90C51 /* FirebaseCore */; };
+		358320BF2DE0263000D90C51 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BE2DE0263000D90C51 /* FirebaseCrashlytics */; };
+		358320C12DE0263000D90C51 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 358320C02DE0263000D90C51 /* FirebaseRemoteConfig */; };
 		35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */; };
 /* End PBXBuildFile section */
 
@@ -77,12 +81,16 @@
 			files = (
 				356F76B52DC086FA000C0361 /* UIComponents in Frameworks */,
 				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
+				358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */,
 				352FA1B12DDCEFA100853EAB /* ClassManagement in Frameworks */,
 				352FA1B32DDCEFAA00853EAB /* StudentManagement in Frameworks */,
 				356F76662DBFEE8E000C0361 /* Assets in Frameworks */,
 				356F76B22DC0856F000C0361 /* Core in Frameworks */,
 				35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */,
 				352FA1AF2DDCEF9900853EAB /* PaymentsManagement in Frameworks */,
+				358320BF2DE0263000D90C51 /* FirebaseCrashlytics in Frameworks */,
+				358320C12DE0263000D90C51 /* FirebaseRemoteConfig in Frameworks */,
+				358320BB2DE0263000D90C51 /* FirebaseAnalytics in Frameworks */,
 				356F76632DBC0C27000C0361 /* Authentication in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -171,6 +179,10 @@
 				352FA1AE2DDCEF9900853EAB /* PaymentsManagement */,
 				352FA1B02DDCEFA100853EAB /* ClassManagement */,
 				352FA1B22DDCEFAA00853EAB /* StudentManagement */,
+				358320BA2DE0263000D90C51 /* FirebaseAnalytics */,
+				358320BC2DE0263000D90C51 /* FirebaseCore */,
+				358320BE2DE0263000D90C51 /* FirebaseCrashlytics */,
+				358320C02DE0263000D90C51 /* FirebaseRemoteConfig */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -256,6 +268,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */,
+				358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 35893B8F2DA0504700EEFE40 /* Products */;
@@ -631,6 +644,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 11.13.0;
+			};
+		};
 		35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "git@github.com:jchernandez-nttdata/ClasslyNetworking.git";
@@ -673,6 +694,26 @@
 		356F76B42DC086FA000C0361 /* UIComponents */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = UIComponents;
+		};
+		358320BA2DE0263000D90C51 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		358320BC2DE0263000D90C51 /* FirebaseCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCore;
+		};
+		358320BE2DE0263000D90C51 /* FirebaseCrashlytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseCrashlytics;
+		};
+		358320C02DE0263000D90C51 /* FirebaseRemoteConfig */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 358320B92DE0263000D90C51 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseRemoteConfig;
 		};
 		35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */ = {
 			isa = XCSwiftPackageProductDependency;

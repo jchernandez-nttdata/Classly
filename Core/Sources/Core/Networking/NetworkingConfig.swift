@@ -8,7 +8,7 @@ import ClasslyNetworking
 
 public extension Request {
     var baseURL: String {
-        "http://localhost:3000"
+        "http://192.168.1.5:3000"
     }
 
     var headers: [String: String?] {
