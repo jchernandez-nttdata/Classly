@@ -22,9 +22,9 @@ struct PaymentTile: View {
         VStack {
             HStack {
                 Text(payment.studentName)
-                    .lineLimit(1)           
+                    .lineLimit(1)
                     .truncationMode(.tail)
-                
+
                 Spacer()
 
                 Text("$ \(payment.amount.formattedAsCurrency)")
@@ -43,8 +43,11 @@ struct PaymentTile: View {
         }
         .frame(maxWidth: .infinity)
         .contentShape(Rectangle())
-        .background(Color.clear)
-        .onTapGesture(perform: onSelect)
+        .highPriorityGesture(
+            TapGesture().onEnded {
+                onSelect()
+            }
+        )
     }
 }
 

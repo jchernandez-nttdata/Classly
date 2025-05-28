@@ -21,6 +21,7 @@
 		358320BF2DE0263000D90C51 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 358320BE2DE0263000D90C51 /* FirebaseCrashlytics */; };
 		358320C12DE0263000D90C51 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 358320C02DE0263000D90C51 /* FirebaseRemoteConfig */; };
 		358320DA2DE0310700D90C51 /* RemoteConfigClient in Frameworks */ = {isa = PBXBuildFile; productRef = 358320D92DE0310700D90C51 /* RemoteConfigClient */; };
+		358358B82DE0E23200AA06FA /* DataPersistance in Frameworks */ = {isa = PBXBuildFile; productRef = 358358B72DE0E23200AA06FA /* DataPersistance */; };
 		35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */; };
 /* End PBXBuildFile section */
 
@@ -81,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				358358B82DE0E23200AA06FA /* DataPersistance in Frameworks */,
 				356F76B52DC086FA000C0361 /* UIComponents in Frameworks */,
 				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
 				358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */,
@@ -188,6 +190,7 @@
 				358320BE2DE0263000D90C51 /* FirebaseCrashlytics */,
 				358320C02DE0263000D90C51 /* FirebaseRemoteConfig */,
 				358320D92DE0310700D90C51 /* RemoteConfigClient */,
+				358358B72DE0E23200AA06FA /* DataPersistance */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -725,6 +728,10 @@
 		358320D92DE0310700D90C51 /* RemoteConfigClient */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = RemoteConfigClient;
+		};
+		358358B72DE0E23200AA06FA /* DataPersistance */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DataPersistance;
 		};
 		35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */ = {
 			isa = XCSwiftPackageProductDependency;
