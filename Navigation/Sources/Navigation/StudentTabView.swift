@@ -8,12 +8,17 @@
 import SwiftUI
 
 public struct StudentTabView: View {
-    public init() {}
 
+    @EnvironmentObject private var appCoordinator: AppCoordinator
+
+    public init() {}
+    
     public var body: some View {
         TabView {
-            Text("Classes")
-                .tabItem { Label("Classes", systemImage: "calendar") }
+            if let classesStudentCoordinator = appCoordinator.classesStudentCoordinator {
+                classesStudentCoordinator.start()
+                    .tabItem { Label("Classes", systemImage: "calendar") }
+            }
 
             Text("History")
                 .tabItem { Label("History", systemImage: "clock.arrow.circlepath") }

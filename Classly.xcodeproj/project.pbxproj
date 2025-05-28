@@ -23,6 +23,7 @@
 		358320DA2DE0310700D90C51 /* RemoteConfigClient in Frameworks */ = {isa = PBXBuildFile; productRef = 358320D92DE0310700D90C51 /* RemoteConfigClient */; };
 		358358B82DE0E23200AA06FA /* DataPersistance in Frameworks */ = {isa = PBXBuildFile; productRef = 358358B72DE0E23200AA06FA /* DataPersistance */; };
 		35C0CC5B2DC16163005D71D8 /* ClasslyNetworking in Frameworks */ = {isa = PBXBuildFile; productRef = 35C0CC5A2DC16163005D71D8 /* ClasslyNetworking */; };
+		35D6700C2DE7A40200AFF560 /* ClassesStudent in Frameworks */ = {isa = PBXBuildFile; productRef = 35D6700B2DE7A40200AFF560 /* ClassesStudent */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 		35893BA82DA0504A00EEFE40 /* ClasslyUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ClasslyUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		35C76FFE2DCDA8120022227A /* DataPersistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataPersistance; sourceTree = "<group>"; };
 		35CC73A12DD525AB007FE590 /* ClassManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassManagement; sourceTree = "<group>"; };
+		35D6700A2DE7A3B800AFF560 /* ClassesStudent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassesStudent; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -85,6 +87,7 @@
 				358358B82DE0E23200AA06FA /* DataPersistance in Frameworks */,
 				356F76B52DC086FA000C0361 /* UIComponents in Frameworks */,
 				356F75EA2DB98FDB000C0361 /* Navigation in Frameworks */,
+				35D6700C2DE7A40200AFF560 /* ClassesStudent in Frameworks */,
 				358320BD2DE0263000D90C51 /* FirebaseCore in Frameworks */,
 				352FA1B12DDCEFA100853EAB /* ClassManagement in Frameworks */,
 				352FA1B32DDCEFAA00853EAB /* StudentManagement in Frameworks */,
@@ -127,6 +130,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				35D6700A2DE7A3B800AFF560 /* ClassesStudent */,
 				358320D82DE02AFD00D90C51 /* RemoteConfigClient */,
 				352FA1AD2DDCEE4F00853EAB /* PaymentsManagement */,
 				35CC73A12DD525AB007FE590 /* ClassManagement */,
@@ -191,6 +195,7 @@
 				358320C02DE0263000D90C51 /* FirebaseRemoteConfig */,
 				358320D92DE0310700D90C51 /* RemoteConfigClient */,
 				358358B72DE0E23200AA06FA /* DataPersistance */,
+				35D6700B2DE7A40200AFF560 /* ClassesStudent */,
 			);
 			productName = Classly;
 			productReference = 35893B8E2DA0504700EEFE40 /* Classly.app */;
@@ -737,6 +742,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 35C0CC592DC16163005D71D8 /* XCRemoteSwiftPackageReference "ClasslyNetworking" */;
 			productName = ClasslyNetworking;
+		};
+		35D6700B2DE7A40200AFF560 /* ClassesStudent */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = ClassesStudent;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
