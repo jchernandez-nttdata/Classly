@@ -24,7 +24,7 @@ public final class AppCoordinator: ObservableObject {
 
     public init() {
         setupAuthenticationCoordinator()
-        login(as: .student)
+//        login(as: .student)
     }
 
     public func login(as role: UserRole) {
@@ -38,7 +38,8 @@ public final class AppCoordinator: ObservableObject {
             paymentsManagementCoordinator = PaymentsManagementCoordinator(di: paymentsDI)
             state = .admin
         case .student:
-            classesStudentCoordinator = ClassesStudentCoordinator()
+            let classesDI = ClassesStudentDIContainer()
+            classesStudentCoordinator = ClassesStudentCoordinator(di: classesDI)
             state = .student
         }
     }

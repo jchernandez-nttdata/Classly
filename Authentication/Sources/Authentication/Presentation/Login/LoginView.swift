@@ -19,12 +19,17 @@ struct LoginView: View {
 
     public var body: some View {
         VStack(spacing: 20) {
+            Spacer()
             Image(uiImage: AssetImage.logoClassly)
                 .resizable()
                 .scaledToFit()
                 .frame(height: 120)
 
-            CustomTextField(placeholder: "Email", text: $viewModel.email)
+            CustomTextField(
+                placeholder: "Email",
+                text: $viewModel.email,
+                keyboardType: .emailAddress
+            )
 
             CustomTextField(placeholder: "Password", type: .secure, text: $viewModel.password)
 
@@ -41,6 +46,8 @@ struct LoginView: View {
                 .onTapGesture {
                     viewModel.authenticateWithBiometrics()
                 }
+
+            Spacer()
         }
         .padding()
         .background(AppColor.background)

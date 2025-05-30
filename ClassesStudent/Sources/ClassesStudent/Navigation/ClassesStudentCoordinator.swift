@@ -19,21 +19,20 @@ public final class ClassesStudentCoordinator: CoordinatorProtocol {
 
     @Published public var path = NavigationPath()
 
-//    private let di: PaymentsManagementDIContainer
+    private let di: ClassesStudentDIContainer
 
-//    public init(di: PaymentsManagementDIContainer) {
-    public init() {
-//        self.di = di
+    public init(di: ClassesStudentDIContainer) {
+        self.di = di
     }
 
     public func build(route: ClassesStudentRoute) -> AnyView {
         switch route {
         case .classList:
-//            let viewModel = PaymentsListViewModel(
-//                coordinator: self,
-//                loadPaymentsUseCase: di.loadPayments
-//            )
-            return AnyView(ClassListView())
+            let viewModel = ClassListViewModel(
+                coordinator: self,
+                loadStudentClassesUseCase: di.loadStudentClasses
+            )
+            return AnyView(ClassListView(viewModel: viewModel))
         }
     }
 

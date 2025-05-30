@@ -11,23 +11,11 @@ import Assets
 import Core
 
 struct ClassListView: View {
-//    @StateObject private var viewModel: PaymentsListViewModel
+    @StateObject private var viewModel: ClassListViewModel
+    @State private var didLoadStudentsClasses = false
 
-//    public init(viewModel: PaymentsListViewModel) {
-//        _viewModel = StateObject(wrappedValue: viewModel)
-//    }
-
-    let classes: [StudentClass] = [
-        StudentClass(userScheduleId: 1, className: "Marinera Norteña", locationName: "San Borja", dayOfWeek: .monday, startTime: "9:00", endTime: "10:00", attendanceRecorded: true, remainingClasses: 3),
-        StudentClass(userScheduleId: 2, className: "Marinera Norteña", locationName: "San Borja", dayOfWeek: .monday, startTime: "10:00", endTime: "11:00", attendanceRecorded: false, remainingClasses: 3),
-        StudentClass(userScheduleId: 3, className: "Danza", locationName: "San Borja", dayOfWeek: .monday, startTime: "20:00", endTime: "21:00", attendanceRecorded: false, remainingClasses: 3),
-        StudentClass(userScheduleId: 4, className: "Marinera Limeña", locationName: "San Borja", dayOfWeek: .friday, startTime: "9:00", endTime: "10:00", attendanceRecorded: false, remainingClasses: 3),
-        StudentClass(userScheduleId: 5, className: "Marinera Norteña", locationName: "San Borja", dayOfWeek: .saturday, startTime: "9:00", endTime: "10:00", attendanceRecorded: false, remainingClasses: 3),
-        StudentClass(userScheduleId: 6, className: "Marinera Limeña", locationName: "San Borja", dayOfWeek: .saturday, startTime: "19:00", endTime: "20:00", attendanceRecorded: true, remainingClasses: 3),
-    ]
-
-    var orderedClasses: [(key: DayOfWeek, value: [StudentClass])] {
-        classes.sortedGroupedByDay()
+    public init(viewModel: ClassListViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
     }
 
     var body: some View {
@@ -35,7 +23,7 @@ struct ClassListView: View {
             CustomAppBar(title: "Classes")
 
             List {
-                ForEach(orderedClasses, id: \.key) { dayGroup in
+                ForEach(viewModel.studentClasses.sortedGroupedByDay(), id: \.key) { dayGroup in
                     SectionTitle(title: dayGroup.key.description)
                         .padding(top: 15)
                     ForEach(dayGroup.value) { studentClass in
@@ -51,22 +39,22 @@ struct ClassListView: View {
             .listStyle(.plain)
             .scrollIndicators(.hidden)
             .refreshable {
-                //                viewModel.loadLocations()
+                viewModel.loadStudentsClasses()
             }
 
         }
         .padding()
         .navigationBarHidden(true)
-//        .loadingIndicator(viewModel.isLoading)
+        .loadingIndicator(viewModel.isLoading)
         .onAppear {
-//            if !didLoadPayments {
-//                viewModel.loadPayments()
-//                didLoadPayments = true
-//            }
+            if !didLoadStudentsClasses {
+                viewModel.loadStudentsClasses()
+                didLoadStudentsClasses = true
+            }
         }
     }
 }
 
 #Preview {
-    ClassListView()
+    ClassListView(viewModel: ClassListViewModel())
 }
