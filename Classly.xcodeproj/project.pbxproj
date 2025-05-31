@@ -61,9 +61,22 @@
 		35D6700A2DE7A3B800AFF560 /* ClassesStudent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassesStudent; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		35F62C512DEB70C2000BBE77 /* Exceptions for "Classly" folder in "Classly" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 35893B8D2DA0504700EEFE40 /* Classly */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		35893B902DA0504700EEFE40 /* Classly */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				35F62C512DEB70C2000BBE77 /* Exceptions for "Classly" folder in "Classly" target */,
+			);
 			path = Classly;
 			sourceTree = "<group>";
 		};
@@ -488,7 +501,9 @@
 				DEVELOPMENT_TEAM = G5H5524H6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Classly/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Classly;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access camera to scan QRs";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate with Biometrics";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -524,7 +539,9 @@
 				DEVELOPMENT_TEAM = G5H5524H6J;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Classly/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = Classly;
+				INFOPLIST_KEY_NSCameraUsageDescription = "We need to access camera to scan QRs";
 				INFOPLIST_KEY_NSFaceIDUsageDescription = "Authenticate with Biometrics";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

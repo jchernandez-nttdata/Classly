@@ -64,5 +64,9 @@ final class ClassListViewModel: ObservableObject {
 
 
     // MARK: - Coordinator methods
+    func toQRScan() {
+        guard let coordinator = coordinator as? ClassesStudentCoordinator else { return }
+        coordinator.push(.QRScan)
+    }
 
 }

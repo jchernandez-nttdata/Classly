@@ -29,7 +29,7 @@ struct ClassListView: View {
                     ForEach(dayGroup.value) { studentClass in
                         ScheduleClassCard(
                             studentClass: studentClass,
-                            onRegisterAttendance: {}
+                            onRegisterAttendance: viewModel.toQRScan
                         )
 
                     }
