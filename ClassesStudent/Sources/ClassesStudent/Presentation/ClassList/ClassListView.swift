@@ -12,7 +12,6 @@ import Core
 
 struct ClassListView: View {
     @StateObject private var viewModel: ClassListViewModel
-    @State private var didLoadStudentsClasses = false
 
     public init(viewModel: ClassListViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
@@ -49,10 +48,7 @@ struct ClassListView: View {
         .navigationBarHidden(true)
         .loadingIndicator(viewModel.isLoading)
         .onAppear {
-            if !didLoadStudentsClasses {
-                viewModel.loadStudentsClasses()
-                didLoadStudentsClasses = true
-            }
+            viewModel.loadStudentsClasses()
         }
     }
 }

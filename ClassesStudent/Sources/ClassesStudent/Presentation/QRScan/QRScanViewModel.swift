@@ -35,25 +35,25 @@ final class QRScanViewModel: ObservableObject {
 
     // MARK: - Public methods
     func handleScannedCode(_ code: String) async {
-         print("Scanned QR Code: \(code)")
+        print("Scanned QR Code: \(code)")
 
-         guard !isProcessingQR else {
-             print("Already processing QR code, ignoring...")
-             return
-         }
+        guard !isProcessingQR else {
+            print("Already processing QR code, ignoring...")
+            return
+        }
 
-         guard let intValue = Int(code) else {
-             toastManager.showToast(message: "Invalid QR Code", type: .error)
-             goBack()
-             return
-         }
+        guard let intValue = Int(code) else {
+            toastManager.showToast(message: "Invalid QR Code", type: .error)
+            goBack()
+            return
+        }
 
-         isProcessingQR = true
+        isProcessingQR = true
 
-         await addAttendance(locationId: intValue)
+        await addAttendance(locationId: intValue)
 
-         isProcessingQR = false
-     }
+        isProcessingQR = false
+    }
 
     // MARK: - Private methods
 
@@ -61,12 +61,13 @@ final class QRScanViewModel: ObservableObject {
         guard let addAttendanceUseCase else { return }
 
         isLoading = true
-        
+
         do throws(AddAssistanceError) {
             try await addAttendanceUseCase.execute(
                 userScheduleId: userSchedule.id,
                 QRLocationId: locationId
             )
+            toSuccessView()
         } catch {
             switch error {
             case .noRemainingClasses:
@@ -80,15 +81,19 @@ final class QRScanViewModel: ObservableObject {
             default:
                 toastManager.showToast(message: "Something went wrong", type: .error)
             }
+            goBack()
         }
-
-        goBack()
         isLoading = false
     }
 
     // MARK: - Coordinator methods
     func goBack() {
         coordinator?.pop()
+    }
+
+    private func toSuccessView() {
+        guard let coordinator = coordinator as? ClassesStudentCoordinator else { return }
+        coordinator.push(.successView(userSchedule))
     }
 
 }

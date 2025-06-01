@@ -11,13 +11,18 @@ import Assets
 public struct CircularButton: View {
 
     private let onTap: () -> Void
+    private let systemName: String
 
-    public init(onTap: @escaping () -> Void) {
+    public init(
+        onTap: @escaping () -> Void,
+        systemName: String = "plus"
+    ) {
         self.onTap = onTap
+        self.systemName = systemName
     }
 
     public var body: some View {
-        Image(systemName: "plus")
+        Image(systemName: systemName)
             .font(.title.weight(.semibold))
             .padding()
             .background(AppColor.brandPrimary)
