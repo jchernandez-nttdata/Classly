@@ -23,4 +23,5 @@ public final class ClassesStudentDIContainer {
 
     // MARK: - Use cases (public)
     lazy var loadStudentClasses: LoadStudentClasses = LoadStudentClassesImpl(repository: schedulesRepo)
+    lazy var addAttendance: AddAttendance = AddAttendanceImpl(repository: schedulesRepo)
 }

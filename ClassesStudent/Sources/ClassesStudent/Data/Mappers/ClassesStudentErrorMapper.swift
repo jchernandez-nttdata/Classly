@@ -24,4 +24,24 @@ struct ClassesStudentErrorMapper {
         default: return .serverError
         }
     }
+
+    static func toAddAttendanceError(_ error: Error) -> AddAssistanceError {
+        guard let networkError = error as? NetworkError else {
+            return .serverError
+        }
+
+        switch networkError {
+        case .invalidResponse(let code):
+            switch code {
+            case 400: return .locationMismatch
+            case 403: return .classNotToday
+            case 409: return .alreadyRegistered
+            case 422: return .noRemainingClasses
+            case 404: return .networkError
+            default: return .serverError
+            }
+        case .decodingFailed: return .requestError
+        default: return .serverError
+        }
+    }
 }

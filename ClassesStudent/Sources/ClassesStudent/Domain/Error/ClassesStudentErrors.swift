@@ -12,3 +12,13 @@ public enum ClassesStudentListError: Error, Sendable {
     case requestError
     case noDataFound
 }
+
+public enum AddAssistanceError: Error, Sendable {
+    case networkError
+    case serverError
+    case requestError
+    case noRemainingClasses
+    case locationMismatch
+    case classNotToday
+    case alreadyRegistered
+}

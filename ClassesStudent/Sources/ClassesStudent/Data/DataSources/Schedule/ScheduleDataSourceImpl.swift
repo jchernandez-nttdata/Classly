@@ -24,4 +24,17 @@ final class ScheduleDataSourceImpl: ScheduleDataSource {
             throw ClassesStudentErrorMapper.toClassStudentListError(error)
         }
     }
+
+    func addAttendance(userScheduleId: Int, locationId: Int) async throws {
+        do {
+            let request = AddAttendanceApiRequest(
+                userScheduleId: userScheduleId,
+                locationId: locationId
+            )
+            _ = try await networkingManager.performRequest(request)
+            return
+        } catch {
+            throw ClassesStudentErrorMapper.toAddAttendanceError(error)
+        }
+    }
 }

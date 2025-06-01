@@ -8,7 +8,7 @@
 import Foundation
 import Core
 
-struct StudentClass: Identifiable {
+public struct StudentClass: Identifiable, Sendable, Hashable{
     let userScheduleId: Int
     let className: String
     let locationName: String
@@ -18,7 +18,7 @@ struct StudentClass: Identifiable {
     let attendanceRecorded: Bool
     let remainingClasses: Int
 
-    var id: Int { userScheduleId }
+    public var id: Int { userScheduleId }
 }
 
 

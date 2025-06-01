@@ -11,7 +11,7 @@ import Core
 
 public enum ClassesStudentRoute: Hashable {
     case classList
-    case QRScan
+    case QRScan(StudentClass)
 }
 
 public final class ClassesStudentCoordinator: CoordinatorProtocol {
@@ -34,8 +34,12 @@ public final class ClassesStudentCoordinator: CoordinatorProtocol {
                 loadStudentClassesUseCase: di.loadStudentClasses
             )
             return AnyView(ClassListView(viewModel: viewModel))
-        case .QRScan:
-            let viewModel = QRScanViewModel(coordinator: self)
+        case .QRScan(let userSchedule):
+            let viewModel = QRScanViewModel(
+                userSchedule: userSchedule,
+                coordinator: self,
+                addAttendanceUseCase: di.addAttendance
+            )
             return AnyView(QRScanView(viewModel: viewModel))
         }
     }
