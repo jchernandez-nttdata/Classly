@@ -59,6 +59,7 @@
 		35C76FFE2DCDA8120022227A /* DataPersistance */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = DataPersistance; sourceTree = "<group>"; };
 		35CC73A12DD525AB007FE590 /* ClassManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassManagement; sourceTree = "<group>"; };
 		35D6700A2DE7A3B800AFF560 /* ClassesStudent */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = ClassesStudent; sourceTree = "<group>"; };
+		35F62C522DECEDC2000BBE77 /* AnalyticsService */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = AnalyticsService; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -143,6 +144,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				35F62C522DECEDC2000BBE77 /* AnalyticsService */,
 				35D6700A2DE7A3B800AFF560 /* ClassesStudent */,
 				358320D82DE02AFD00D90C51 /* RemoteConfigClient */,
 				352FA1AD2DDCEE4F00853EAB /* PaymentsManagement */,

@@ -7,6 +7,7 @@
 
 import Foundation
 import Core
+import AnalyticsService
 
 @MainActor
 final class LoginViewModel: ObservableObject {
@@ -19,19 +20,22 @@ final class LoginViewModel: ObservableObject {
     private let userSessionManager: (any UserSessionProtocol)?
     private let biometricManager: BiometricManagerProtocol
     private let toastManager: ToastManager
+    private let analyticsService: AnalyticsService
 
     init(
         coordinator: (any CoordinatorProtocol)? = nil,
         loginUseCase: LoginUseCase? = nil,
         userSessionManager: (any UserSessionProtocol)? = nil,
         biometricManagerProtocol: BiometricManagerProtocol = BiometricManager(),
-        toastManager: ToastManager = .shared
+        toastManager: ToastManager = .shared,
+        analyticsService: AnalyticsService = .shared
     ) {
         self.coordinator = coordinator
         self.loginUseCase = loginUseCase
         self.userSessionManager = userSessionManager
         self.biometricManager = biometricManagerProtocol
         self.toastManager = toastManager
+        self.analyticsService = analyticsService
     }
 
     func login() {
@@ -67,6 +71,8 @@ final class LoginViewModel: ObservableObject {
                     }
                 }
 
+                analyticsLogIn(user: user)
+
                 guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
                 authCoordinator.exitModule(role: user.role)
             case .failure(let error):
@@ -97,5 +103,19 @@ final class LoginViewModel: ObservableObject {
                 }
             }
         }
+    }
+
+    private func analyticsLogIn(user: User) {
+        analyticsService.setUser(id: user.id, type: user.role == .admin ? .admin : .student)
+        analyticsService.track(
+            .custom(
+                name: "login_success",
+                parameters: [
+                    "user_role": user.role.rawValue,
+                    "name": user.name,
+                    "id": user.id
+                ]
+            )
+        )
     }
 }

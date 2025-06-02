@@ -4,39 +4,28 @@
 import PackageDescription
 
 let package = Package(
-    name: "Authentication",
+    name: "AnalyticsService",
     platforms: [
         .iOS(.v16)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
-            name: "Authentication",
-            targets: ["Authentication"]),
+            name: "AnalyticsService",
+            targets: ["AnalyticsService"]),
     ],
     dependencies: [
-        .package(path: "../Assets"),
-        .package(path: "../Core"),
-        .package(path: "../UIComponents"),
-        .package(path: "../DataPersistance"),
-        .package(path: "../AnalyticsService")
+        .package(url: "https://github.com/firebase/firebase-ios-sdk", .upToNextMajor(from: "11.13.0")),
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "Authentication",
+            name: "AnalyticsService",
             dependencies: [
-                "Assets",
-                "Core",
-                "UIComponents",
-                "DataPersistance",
-                "AnalyticsService"
+                .product(name: "FirebaseAnalytics", package: "firebase-ios-sdk")
             ]
         ),
-        .testTarget(
-            name: "AuthenticationTests",
-            dependencies: ["Authentication"]
-        ),
+
     ]
 )
