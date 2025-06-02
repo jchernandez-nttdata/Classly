@@ -8,18 +8,15 @@
 import DataPersistance
 import LocalAuthentication
 
-final class BiometricManager: BiometricManagerProtocol {
+actor BiometricManager: BiometricManagerProtocol {
 
     private let keychain: KeychainProtocol
-    private let defaults: UserDefaultsProtocol
     private let context = LAContext()
 
     init(
-        keychain: KeychainProtocol = KeychainManager.shared,
-        defaults: UserDefaultsProtocol = UserDefaultsManager.shared
+        keychain: KeychainProtocol = KeychainManager.shared
     ) {
         self.keychain = keychain
-        self.defaults = defaults
     }
 
     func isBiometricAvailable() -> Bool {
@@ -28,10 +25,11 @@ final class BiometricManager: BiometricManagerProtocol {
     }
 
     func hasUsedBiometricsBefore() -> Bool {
-        defaults.get(key: .biometricUsedBefore) ?? false
+        return retrieveCredentials() != nil
     }
 
     func authenticate() async -> Bool {
+        let context = LAContext()
         do {
             return try await context.evaluatePolicy(
                 .deviceOwnerAuthenticationWithBiometrics,
@@ -55,8 +53,6 @@ final class BiometricManager: BiometricManagerProtocol {
         } catch {
             print("Error al guardar en Keychain: \(error)")
         }
-
-        defaults.set(value: true, key: .biometricUsedBefore)
     }
 
     func retrieveCredentials() -> (username: String, password: String)? {
@@ -79,6 +75,15 @@ final class BiometricManager: BiometricManagerProtocol {
         } catch {
             print("Error al recuperar las credenciales de Keychain: \(error)")
             return nil
+        }
+    }
+
+    func clearCredentials() {
+        do {
+            try keychain.delete(for: .biometricCredentials)
+            print("Credenciales biométricas eliminadas del Keychain.")
+        } catch {
+            print("Error al eliminar credenciales del Keychain: \(error)")
         }
     }
 

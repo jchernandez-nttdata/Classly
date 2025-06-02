@@ -7,10 +7,11 @@
 
 import Core
 
-protocol BiometricManagerProtocol {
+protocol BiometricManagerProtocol: Actor {
     func isBiometricAvailable() -> Bool
     func hasUsedBiometricsBefore() -> Bool
     func authenticate() async -> Bool
     func saveCredentials(username: String, password: String) throws
     func retrieveCredentials() -> (username: String, password: String)?
+    func clearCredentials()
 }

@@ -18,7 +18,7 @@ final class LoginViewModel: ObservableObject {
     private let coordinator: (any CoordinatorProtocol)?
     private let loginUseCase: LoginUseCase?
     private let userSessionManager: (any UserSessionProtocol)?
-    private let biometricManager: BiometricManagerProtocol
+    private let biometricManager: any BiometricManagerProtocol
     private let toastManager: ToastManager
     private let analyticsService: AnalyticsService
 
@@ -40,7 +40,6 @@ final class LoginViewModel: ObservableObject {
 
     func login() {
         guard let loginUseCase else { return }
-        let biometricManager = biometricManager
 
         Task {
             isLoading = true
@@ -62,19 +61,14 @@ final class LoginViewModel: ObservableObject {
                 )
                 await userSessionManager?.saveSession(session)
 
-                // faceID logic
-                //TODO: Validate when to clear data
-                if biometricManager.isBiometricAvailable() && !biometricManager.hasUsedBiometricsBefore()  {
-                    let biometricResult = await biometricManager.authenticate()
-                    if biometricResult {
-                        try biometricManager.saveCredentials(username: email, password: password)
-                    }
+                await handleBiometricCredentialsUpdate(currentEmail: email, currentPassword: password)
+
+                await MainActor.run {
+                    analyticsLogIn(user: user)
+
+                    guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
+                    authCoordinator.exitModule(role: user.role)
                 }
-
-                analyticsLogIn(user: user)
-
-                guard let authCoordinator = coordinator as? AuthenticationCoordinator else { return }
-                authCoordinator.exitModule(role: user.role)
             case .failure(let error):
                 switch error {
                 case .unauthorized:
@@ -88,17 +82,56 @@ final class LoginViewModel: ObservableObject {
         }
     }
 
+    private func handleBiometricCredentialsUpdate(currentEmail: String, currentPassword: String) async {
+        guard await biometricManager.isBiometricAvailable() else { return }
+
+        // Verificar si hay credenciales guardadas previamente
+        let existingCredentials = await biometricManager.retrieveCredentials()
+        let hasUsedBiometricsBefore = await biometricManager.hasUsedBiometricsBefore()
+
+        if let existingCredentials = existingCredentials {
+            // Si las credenciales son diferentes, actualizar automáticamente
+            if existingCredentials.username != currentEmail {
+                print("Detectadas credenciales diferentes. Actualizando automáticamente...")
+                await updateBiometricCredentials(email: currentEmail, password: currentPassword)
+            }
+        } else if !hasUsedBiometricsBefore {
+            print("No se ha utilizado biometría")
+            let biometricResult = await biometricManager.authenticate()
+            if biometricResult {
+                try? await biometricManager.saveCredentials(username: currentEmail, password: currentPassword)
+            }
+        } else {
+            print("else")
+        }
+    }
+
+    private func updateBiometricCredentials(email: String, password: String) async {
+        do {
+            await biometricManager.clearCredentials()
+            try await biometricManager.saveCredentials(username: email, password: password)
+            print("Credenciales biométricas actualizadas exitosamente")
+        } catch {
+            print("Error al actualizar credenciales biométricas: \(error)")
+        }
+    }
+
     func authenticateWithBiometrics() {
-        let biometricManager = biometricManager
         Task {
-            if biometricManager.isBiometricAvailable() && biometricManager.hasUsedBiometricsBefore()  {
+            let isBiometricAvailable = await biometricManager.isBiometricAvailable()
+            let hasUsedBiometricsBefore = await biometricManager.hasUsedBiometricsBefore()
+            if isBiometricAvailable && hasUsedBiometricsBefore {
                 let biometricResult = await biometricManager.authenticate()
                 if biometricResult {
-                    let credentials = biometricManager.retrieveCredentials()
+                    let credentials = await biometricManager.retrieveCredentials()
                     if let credentials = credentials {
-                        email = credentials.username
-                        password = credentials.password
-                        login()
+                        await MainActor.run {
+                            self.email = credentials.username
+                            self.password = credentials.password
+                        }
+                        await MainActor.run {
+                            self.login()
+                        }
                     }
                 }
             }
