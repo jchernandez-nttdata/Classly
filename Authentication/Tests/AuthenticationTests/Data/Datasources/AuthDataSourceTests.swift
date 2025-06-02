@@ -16,7 +16,7 @@ struct AuthRemoteDataSourceTests {
     func testLoginSuccess() async throws {
         // Arrange
         let mockManager = MockNetworkManager()
-        mockManager.customResponse = LoginResponse(
+        await mockManager.setCustomResponse(LoginResponse(
             id: 1,
             name: "Test",
             email: "test@email.com",
@@ -24,7 +24,7 @@ struct AuthRemoteDataSourceTests {
             password: "secret",
             phone: "999999999",
             role: "admin"
-        )
+        ))
         let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
         let tPasswordParam = "1234"
         let tEmailParam = "test@email.com"
@@ -34,8 +34,9 @@ struct AuthRemoteDataSourceTests {
 
         // Assert
         // Request
-        #expect((mockManager.receivedRequest as? LoginApiRequest)?.body.email == tEmailParam)
-        #expect((mockManager.receivedRequest as? LoginApiRequest)?.body.password == tPasswordParam)
+        let receivedRequest = await mockManager.getReceivedRequest(as: LoginApiRequest.self)
+        #expect(receivedRequest?.body.email == tEmailParam)
+        #expect(receivedRequest?.body.password == tPasswordParam)
 
         // Response
         #expect(userResponse.email == "test@email.com")
@@ -46,7 +47,7 @@ struct AuthRemoteDataSourceTests {
     func testLoginUnauthorized() async throws {
         // Arrange
         let mockManager = MockNetworkManager()
-        mockManager.customError = NetworkError.invalidResponse(statusCode: 401)
+        await mockManager.setCustomError(NetworkError.invalidResponse(statusCode: 401))
         let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
 
         do {
@@ -62,7 +63,7 @@ struct AuthRemoteDataSourceTests {
     func testLoginInvalidData() async throws {
         // Arrange
         let mockManager = MockNetworkManager()
-        mockManager.customError = NetworkError.invalidResponse(statusCode: 400)
+        await mockManager.setCustomError(NetworkError.invalidResponse(statusCode: 400))
         let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
 
         do {
@@ -78,7 +79,7 @@ struct AuthRemoteDataSourceTests {
     func testLoginUnknownError() async throws {
         // Arrange
         let mockManager = MockNetworkManager()
-        mockManager.customError = NetworkError.requestFailed(NSError(domain: "", code: 0))
+        await mockManager.setCustomError(NetworkError.requestFailed(NSError(domain: "", code: 0)))
         let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
 
         do {

@@ -24,7 +24,7 @@ struct LoginRequestBody: Codable {
     let password: String
 }
 
-struct LoginResponse: Decodable {
+struct LoginResponse: Decodable, Sendable {
     let id: Int
     let name: String
     let email: String

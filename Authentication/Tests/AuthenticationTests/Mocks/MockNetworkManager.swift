@@ -8,23 +8,34 @@
 @testable import Authentication
 @testable import ClasslyNetworking
 
-final class MockNetworkManager: NetworkManagerProtocol {
-    var customResponse: Any?
-    var customError: Error?
-    var receivedRequest: Any?
+actor MockNetworkManager: NetworkManagerProtocol {
+    private var _customResponse: Any?
+    private var _customError: Error?
+    private var _receivedRequest: Any?
+
+    func setCustomResponse(_ response: Any?) {
+        _customResponse = response
+    }
+
+    func setCustomError(_ error: Error?) {
+        _customError = error
+    }
+
+    func getReceivedRequest<T>(as type: T.Type) -> T? {
+        return _receivedRequest as? T
+    }
 
     func performRequest<T: Request>(_ request: T) async throws -> T.Response {
-        receivedRequest = request
+        _receivedRequest = request
 
-        if let error = customError {
+        if let error = _customError {
             throw error
         }
 
-        guard let typedResponse = customResponse as? T.Response else {
+        guard let typedResponse = _customResponse as? T.Response else {
             fatalError("Mock response type does not match expected response type \(T.Response.self)")
         }
 
         return typedResponse
     }
 }
-
