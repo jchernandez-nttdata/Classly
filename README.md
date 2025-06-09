@@ -7,7 +7,7 @@
 3. [Arquitectura del proyecto](#arquitectura-del-proyecto)
 4. [Consideraciones y funcionalidades](#consideraciones-y-funcionalidades)
    - [Nuevos módulos](#nuevos-módulos)
-
+   - [Testing](#testing)
 ---
 
 ## Descripción general
@@ -191,4 +191,138 @@ let package = Package(
 )
 
 ```
----
+
+### Testing
+
+Classly utiliza una estrategia de testing modular y orientada a capas, alineada con el principio de responsabilidad única. Las pruebas están implementadas usando [Swift Testing](https://github.com/pointfreeco/swift-testing)
+
+#### 📁 Estructura
+
+Cada módulo debe contar con su propio target de tests, organizado para mantener una separación clara entre lógica de negocio, datos y presentación (Ejemplo en el módulo de Authentication)
+```swift
+    targets: [
+        // Targets are the basic building blocks of a package, defining a module or a test suite.
+        // Targets can depend on other targets in this package and products from dependencies.
+        .target(
+            name: "Authentication",
+            dependencies: [
+                "Assets",
+                "Core",
+                "UIComponents",
+                "DataPersistance",
+                "AnalyticsService"
+            ]
+        ),
+        .testTarget(
+            name: "AuthenticationTests",
+            dependencies: ["Authentication"]
+        ),
+    ]
+```
+
+La carpeta de tests copia la estructura del código para que sea fácil encontrar el test de cada archivo. Así se conoce qué se está probando y todo está más mantenible.
+
+Para poder probar de forma efectiva los distintos componentes de la app (use cases, repositories, datasources, view models, etc.), se aplicaron los siguientes principios y consideraciones:
+
+- **Inversión de dependencias**  
+  Las clases dependen de abstracciones (protocolos) en lugar de implementaciones concretas. Esto permite reemplazar fácilmente las dependencias reales por mocks en los tests.
+
+- **Inyección de dependencias**  
+  Todas las dependencias necesarias para un componente (como un `repository` o `datasource`) se pasan mediante el inicializador, lo que facilita el control del entorno de prueba.
+
+- **Separación de responsabilidades (SRP)**  
+  Cada clase tiene una única responsabilidad. Por ejemplo, los repositorios orquestan la lógica entre capas, pero no contienen lógica de validación ni formateo.
+
+- **Estrategia de mocks/fakes**  
+  Para probar comportamiento, se implementan versiones falsas (`MockRepository`, `MockRemoteDataSource`, etc.) que simulan respuestas predecibles, incluyendo conteo de llamadas y datos recibidos.
+
+Ejemplo:
+```swift
+import Testing
+@testable import Authentication
+@testable import ClasslyNetworking
+import Foundation
+
+struct AuthRemoteDataSourceTests {
+
+    @Test
+    func testLoginSuccess() async throws {
+        // Arrange
+        let mockManager = MockNetworkManager()
+        await mockManager.setCustomResponse(LoginResponse(
+            id: 1,
+            name: "Test",
+            email: "test@email.com",
+            dni: "12345678",
+            password: "secret",
+            phone: "999999999",
+            role: "admin"
+        ))
+        let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
+        let tPasswordParam = "1234"
+        let tEmailParam = "test@email.com"
+
+        // Act
+        let userResponse = try await dataSource.login(email: tEmailParam, password: tPasswordParam)
+
+        // Assert
+        // Request
+        let receivedRequest = await mockManager.getReceivedRequest(as: LoginApiRequest.self)
+        #expect(receivedRequest?.body.email == tEmailParam)
+        #expect(receivedRequest?.body.password == tPasswordParam)
+
+        // Response
+        #expect(userResponse.email == "test@email.com")
+        #expect(userResponse.role == .admin)
+    }
+
+    @Test
+    func testLoginUnauthorized() async throws {
+        // Arrange
+        let mockManager = MockNetworkManager()
+        await mockManager.setCustomError(NetworkError.invalidResponse(statusCode: 401))
+        let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
+
+        do {
+            // Act
+            _ = try await dataSource.login(email: "wrong@email.com", password: "wrong")
+        } catch let error as LoginError {
+            // Assert
+            #expect(error == .unauthorized)
+        }
+    }
+
+    @Test
+    func testLoginInvalidData() async throws {
+        // Arrange
+        let mockManager = MockNetworkManager()
+        await mockManager.setCustomError(NetworkError.invalidResponse(statusCode: 400))
+        let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
+
+        do {
+            // Act
+            _ = try await dataSource.login(email: "wrong@email.com", password: "wrong")
+        } catch let error as LoginError {
+            // Assert
+            #expect(error == .invalidData)
+        }
+    }
+
+    @Test
+    func testLoginUnknownError() async throws {
+        // Arrange
+        let mockManager = MockNetworkManager()
+        await mockManager.setCustomError(NetworkError.requestFailed(NSError(domain: "", code: 0)))
+        let dataSource = AuthRemoteDataSourceImpl(networkingManager: mockManager)
+
+        do {
+            // Act
+            _ = try await dataSource.login(email: "test@email.com", password: "1234")
+        } catch let error as LoginError {
+            // Assert
+            #expect(error == .serverError)
+        }
+    }
+}
+
+```
