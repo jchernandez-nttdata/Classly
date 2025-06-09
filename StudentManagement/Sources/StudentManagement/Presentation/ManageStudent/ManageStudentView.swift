@@ -15,6 +15,7 @@ struct ManageStudentView: View {
     public init(viewModel: ManageStudentViewModel) {
         _viewModel = StateObject(wrappedValue: viewModel)
     }
+    
 
     var body: some View {
         VStack {

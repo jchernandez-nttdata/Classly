@@ -46,6 +46,7 @@
 /* Begin PBXFileReference section */
 		3502491E2DCB065600C5A036 /* StudentManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = StudentManagement; sourceTree = "<group>"; };
 		352FA1AD2DDCEE4F00853EAB /* PaymentsManagement */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = PaymentsManagement; sourceTree = "<group>"; };
+		355B1A672DF74D0700C235EE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		356F75E52DB98DD4000C0361 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		356F75E72DB98F95000C0361 /* Navigation */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Navigation; sourceTree = "<group>"; };
 		356F765F2DBBFB97000C0361 /* Authentication */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = Authentication; sourceTree = "<group>"; };
@@ -144,6 +145,7 @@
 		35893B852DA0504700EEFE40 = {
 			isa = PBXGroup;
 			children = (
+				355B1A672DF74D0700C235EE /* README.md */,
 				35F62C522DECEDC2000BBE77 /* AnalyticsService */,
 				35D6700A2DE7A3B800AFF560 /* ClassesStudent */,
 				358320D82DE02AFD00D90C51 /* RemoteConfigClient */,
