@@ -10,6 +10,7 @@
    - [Navegación](#navegación)
    - [Testing](#testing)
    - [FaceID](#faceid)
+   - [QRScanner](#qrscanner)
 ---
 
 ## Descripción general
@@ -481,3 +482,162 @@ func authenticateWithBiometrics() {
 > La implementación de almacenamiento de credenciales sensibles (usuario y contraseña) en Keychain se realizó **únicamente con fines didácticos**.  
 >  
 > En una aplicación de producción, se recomienda **no almacenar credenciales en texto plano**, incluso si están en Keychain. Es preferible utilizar **tokens de sesión, refresh tokens** u otros mecanismos más seguros y estandarizados.
+
+---
+
+### QRScanner
+Para la app se buscaba que el usuario escanee un código QR con la cámara del dispositivo para poder marcar su asistencia en la clase. Este flujo:
+
+- Solicita permisos de cámara.
+- Configura una sesión de captura con AVFoundation.
+- Muestra en tiempo real lo que capta la cámara.
+- Detecta automáticamente un código QR y lo procesa.
+
+#### 1. `CameraManager`: es el centro de control de la cámara. Se encarga de:
+
+- Pedir permisos.
+- Configurar la sesión de captura (input de cámara + output para QR).
+- Manejar el escaneo del código.
+- Iniciar y detener la sesión.
+
+Primero pedimos permisos de cámara
+```swift
+func requestCameraPermission() async {
+    let status = AVCaptureDevice.authorizationStatus(for: .video)
+
+    switch status {
+    case .authorized:
+        self.permissionGranted = true
+        await self.setupCamera() // Solo si ya está autorizado
+    case .notDetermined:
+        let granted = await AVCaptureDevice.requestAccess(for: .video)
+        if granted {
+            self.permissionGranted = true
+            await self.setupCamera()
+        } else {
+            self.permissionDenied = true
+        }
+    default:
+        self.permissionDenied = true
+    }
+}
+```
+
+Posteriormente configuramos la cámara
+```swift
+private func setupCamera() async {
+    let session = AVCaptureSession()
+
+    // 1. Seleccionamos la cámara trasera
+    guard let videoDevice = AVCaptureDevice.default(.builtInWideAngleCamera, for: .video, position: .back) else { return }
+    let videoInput = try AVCaptureDeviceInput(device: videoDevice)
+    session.addInput(videoInput)
+
+    // 2. Preparamos para detectar QR
+    let metadataOutput = AVCaptureMetadataOutput()
+    session.addOutput(metadataOutput)
+    metadataOutput.setMetadataObjectsDelegate(self, queue: .main)
+    metadataOutput.metadataObjectTypes = [.qr]
+
+    // 3. Iniciamos la sesión en un hilo de fondo
+    await withCheckedContinuation { continuation in
+        DispatchQueue.global(qos: .userInitiated).async {
+            session.startRunning()
+            Task { @MainActor in
+                self.isSessionRunning = true
+                continuation.resume()
+            }
+        }
+    }
+
+    self.captureSession = session
+}
+```
+**Conceptos importantes:**
+- AVCaptureSession = el motor que coordina la entrada (cámara) y salida (código QR).
+- AVCaptureMetadataOutput = permite detectar QR en tiempo real.
+- .startRunning() se lanza en un hilo de fondo para no bloquear la UI.
+
+Los datos del qr escaneado se reciben en el siguiente método del delegate:
+```swift
+extension CameraManager: AVCaptureMetadataOutputObjectsDelegate {
+    nonisolated func metadataOutput(_ output: AVCaptureMetadataOutput,
+                                    didOutput metadataObjects: [AVMetadataObject],
+                                    from connection: AVCaptureConnection) {
+
+        guard let metadataObject = metadataObjects.first,
+              let readableObject = metadataObject as? AVMetadataMachineReadableCodeObject,
+              let stringValue = readableObject.stringValue else { return }
+
+        handleScannedCode(stringValue)
+    }
+}
+```
+#### 2. `CameraPreviewView` y `CameraPreviewViewRepresentable`
+A continuación mostramos lo que está capturando la cámara. SwiftUI no tiene vistas nativas para mostrar la cámara, así que se hace un puente con UIKit.
+1. Creamos una vista puente con UIKit (UIView) para mostrar la cámara en SwiftUI:
+```swift
+final class CameraPreviewView: UIView {
+    func setupPreviewLayer(with session: AVCaptureSession) {
+        let newPreviewLayer = AVCaptureVideoPreviewLayer(session: session)
+        newPreviewLayer.videoGravity = .resizeAspectFill
+        layer.addSublayer(newPreviewLayer)
+        previewLayer = newPreviewLayer
+    }
+}
+```
+2. Y la usamos en SwiftUI con `UIViewRepresentable`:
+```swift
+struct CameraPreviewViewRepresentable: UIViewRepresentable {
+    func makeUIView(context: Context) -> CameraPreviewView {
+        let view = CameraPreviewView()
+        cameraManager.setupPreviewLayer(in: view)
+        return view
+    }
+}
+```
+#### 3. `QRScanView`
+QRScanView es la pantalla donde el usuario escanea el código QR. Se encarga de:
+
+- Mostrar la vista previa de la cámara si hay permiso.
+- Mostrar overlays, loading o errores.
+- Reaccionar al código escaneado.
+
+```swift
+var body: some View {
+    VStack {
+        CustomAppBar(title: "Scan QR", backAction: viewModel.goBack)
+
+        ZStack {
+            if cameraManager.permissionGranted {
+                CameraPreviewViewRepresentable(cameraManager: cameraManager)
+                    .onReceive(cameraManager.$scannedCode) { code in
+                        if let code = code {
+                            Task {
+                                await viewModel.handleScannedCode(code)
+                            }
+                        }
+                    }
+                QRScannerOverlay() // UI decorativo opcional
+            } else if cameraManager.permissionDenied {
+                PermissionDeniedView()
+            } else {
+                LoadingCameraView()
+            }
+        }
+        .task {
+            await cameraManager.requestCameraPermission()
+        }
+        .onDisappear {
+            Task {
+                await cameraManager.stopSession()
+            }
+        }
+
+        Image(uiImage: AssetImage.logoClassly)
+            .resizable()
+            .scaledToFit()
+            .frame(height: 40)
+    }
+}
+```
