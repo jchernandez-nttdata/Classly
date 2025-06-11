@@ -7,6 +7,7 @@
 3. [Arquitectura del proyecto](#arquitectura-del-proyecto)
 4. [Consideraciones y funcionalidades](#consideraciones-y-funcionalidades)
    - [Nuevos módulos](#nuevos-módulos)
+   - [Navegación](#navegación)
    - [Testing](#testing)
 ---
 
@@ -192,9 +193,102 @@ let package = Package(
 
 ```
 
+---
+
+### Navegación
+
+La app por su arquitectura basada en módulos, se decidió desacoplar al máximo en los distintos features. La navegación está centralizada en un módulo específico llamado **Navigation**, el cual se encarga de:
+
+- Controlar el flujo de navegación global.
+
+- Proveer coordinadores para cada feature.
+
+- Importar todos los módulos e inicializarlos
+  
+Este módulo contiene un objeto central llamado AppCoordinator, que se encarga de determinar y controlar en qué estado de navegación se encuentra la app: autenticación, vista de administrador o vista de estudiante.
+
+La raíz de la app es NavigationRootView, que actúa como un router declarativo: renderiza la vista correspondiente según el estado interno del AppCoordinator.
+
+1.  AppCoordinator.swift
+   
+Coordina toda la navegación global según el rol del usuario. Inicializa coordinadores según el UserRole (.admin o .student) y actualiza el estado.
+
+2. NavigationRootView.swift
+   
+Vista raíz de la app. Muestra una vista distinta según el state del AppCoordinator.
+```swift
+switch coordinator.state {
+case .authentication:
+    authCoordinator?.start()
+case .admin:
+    AdminTabView()
+case .student:
+    StudentTabView()
+}
+```
+
+3. Admin y Student TabView
+
+Vista principal para usuarios admin y student. Muestra un TabView con vistas, llamando al método `start()` que devuelve la vista 
+
+4. ClasslyApp.swift
+Punto de entrada de la app. Usa NavigationRootView como vista inicial.
+```swift
+@main
+struct ClasslyApp: App {
+
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
+
+    var body: some Scene {
+        WindowGroup {
+            NavigationRootView()
+        }
+    }
+}
+```
+
+Cada módulo (StudentManagement, ClassManagement, PaymentsManagement, ClassesStudent, etc.) sigue el mismo patrón de navegación. A continuación, se describen los componentes clave y su propósito:
+
+1. FeatureCoordinator (ej. StudentManagementCoordinator.swift)
+Controla la navegación dentro del módulo.
+```swift
+@Published var path = NavigationPath()
+
+func build(route: Route) -> AnyView
+func start() -> AnyView
+```
+* Usa un enum Route para definir los destinos posibles.
+* Crea vistas usando inyección de dependencias desde el DIContainer.
+* Expone start() que retorna la vista raíz del módulo.
+
+2. FeatureDIContainer (ej. StudentManagementDIContainer.swift)
+Se encarga de construir y proveer:
+
+- NetworkManager
+- DataSource
+- Repository
+- UseCases
+
+3. FeatureRootView (ej. StudentManagementRootView.swift)
+Vista contenedora que:
+
+* Usa NavigationStack enlazada a coordinator.path
+* Muestra la vista inicial
+* Usa .navigationDestination para renderizar las rutas
+```swift
+NavigationStack(path: $coordinator.path) {
+    coordinator.build(route: .studentsList)
+        .navigationDestination(for: StudentManagementRoute.self) { route in
+            coordinator.build(route: route)
+        }
+}
+```
+
+---
+
 ### Testing
 
-Classly utiliza una estrategia de testing modular y orientada a capas, alineada con el principio de responsabilidad única. Las pruebas están implementadas usando [Swift Testing](https://github.com/pointfreeco/swift-testing)
+Classly utiliza una estrategia de testing modular y orientada a capas, alineada con el principio de responsabilidad única. Las pruebas están implementadas usando Swift Testing
 
 #### 📁 Estructura
 
@@ -222,6 +316,9 @@ Cada módulo debe contar con su propio target de tests, organizado para mantener
 
 La carpeta de tests copia la estructura del código para que sea fácil encontrar el test de cada archivo. Así se conoce qué se está probando y todo está más mantenible.
 
+<img width="329" alt="image" src="https://github.com/user-attachments/assets/1a52cbdc-9202-46e1-8b0d-4afe0a21a296" />
+
+
 Para poder probar de forma efectiva los distintos componentes de la app (use cases, repositories, datasources, view models, etc.), se aplicaron los siguientes principios y consideraciones:
 
 - **Inversión de dependencias**  
@@ -236,7 +333,7 @@ Para poder probar de forma efectiva los distintos componentes de la app (use cas
 - **Estrategia de mocks/fakes**  
   Para probar comportamiento, se implementan versiones falsas (`MockRepository`, `MockRemoteDataSource`, etc.) que simulan respuestas predecibles, incluyendo conteo de llamadas y datos recibidos.
 
-Ejemplo:
+En cada test se prueban los posibles casos de éxito y de error. Ejemplo:
 ```swift
 import Testing
 @testable import Authentication
