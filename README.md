@@ -20,6 +20,12 @@
 
 > Classly es una aplicación móvil para academias de danza, diseñada para ayudar a administrar clases, estudiantes, horarios, asistencias y pagos. Existen dos tipos de usuarios: **administradores** y **estudiantes**, cada uno con flujos personalizados.
 
+Para levantar correctamente este proyecto y probar todas sus funcionalidades, es necesario contar con un backend en funcionamiento. Puedes encontrar el servidor en el siguiente repositorio:
+
+👉 [`classly-api`](https://github.com/jchernandez-nttdata/classly-api)
+
+Este backend expone los endpoints necesarios para el login, gestión de clases, asistencia y más. Asegúrate de seguir las instrucciones del repositorio para configurarlo localmente antes de correr la app.
+
 ---
 
 ## Características principales
