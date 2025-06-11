@@ -8,6 +8,7 @@
 4. [Consideraciones y funcionalidades](#consideraciones-y-funcionalidades)
    - [Nuevos módulos](#nuevos-módulos)
    - [Navegación](#navegación)
+   - [Networking](#networking)
    - [Testing](#testing)
    - [FaceID](#faceid)
    - [QRScanner](#qrscanner)
@@ -290,6 +291,16 @@ NavigationStack(path: $coordinator.path) {
 
 ---
 
+### Networking
+
+El módulo [`ClasslyNetworking`](https://github.com/jchernandez-nttdata/ClasslyNetworking) es un cliente de red asincrónico creado con fines didácticos para explorar el uso de **Swift Packages remotos** en proyectos modularizados.
+
+Este package define protocolos y estructuras reutilizables para realizar peticiones HTTP de forma segura y tipada usando `async/await`, separando completamente la lógica de red del resto de la app.
+
+> 📄 Para más detalles sobre su arquitectura, configuración y ejemplos de uso, revisa su [repositorio dedicado](https://github.com/jchernandez-nttdata/ClasslyNetworking).
+
+
+---
 ### Testing
 
 Classly utiliza una estrategia de testing modular y orientada a capas, alineada con el principio de responsabilidad única. Las pruebas están implementadas usando Swift Testing
