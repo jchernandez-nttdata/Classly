@@ -1,4 +1,4 @@
-# Classly – App de gestión para academias de danza
+# Classly – App de gestión para academias
 
 ## 📖 Tabla de contenidos
 
@@ -11,6 +11,7 @@
    - [Testing](#testing)
    - [FaceID](#faceid)
    - [QRScanner](#qrscanner)
+   - [Firebase Analytics](#firebase-analytics)
 ---
 
 ## Descripción general
@@ -641,3 +642,81 @@ var body: some View {
     }
 }
 ```
+---
+### Firebase analytics
+El módulo AnalyticsService centraliza el manejo de eventos analíticos en la aplicación. Su propósito principal es registrar interacciones del usuario, vistas de pantalla y flujos relevantes que puedan ser útiles para análisis o métricas de uso.
+
+Este módulo está diseñado para integrarse de forma sencilla en cualquier otro módulo funcional de la app (por ejemplo: Authentication, Student, Admin, etc.), a través de inyección de dependencias.
+
+Actualmente, este módulo utiliza Firebase Analytics como proveedor de servicios.
+
+#### Componentes
+1. AnalyticsEvent
+Es un enum que define todos los eventos disponibles en la app de forma estructurada y segura. Cada caso representa un tipo de evento, como vistas de pantalla, escaneo de QR, errores, o eventos personalizados.
+
+```swift
+public enum AnalyticsEvent {
+    case screenView(screenName: String)
+    case qrScanStarted
+    case qrScanSuccess(locationId: Int)
+    case qrScanFailed(reason: String)
+    case custom(name: String, parameters: [String: Any] = [:])
+}
+```
+
+Este enum también incluye una extensión interna para mapear cada caso a los datos esperados por Firebase:
+
+```swift
+extension AnalyticsEvent {
+    var firebaseData: (eventName: String, parameters: [String: Any]) {
+        // mapeo a Firebase
+    }
+}
+```
+
+2. AnalyticsService
+Clase singleton que representa el servicio de analíticas.
+Expone las siguientes funciones públicas:
+
+* track(_ event: AnalyticsEvent)
+* setUser(id:type:)
+* clearUser()
+
+Internamente, utiliza FirebaseAnalytics.logEvent, setUserID y setUserProperty para registrar los eventos.
+
+También incluye #if DEBUG para imprimir en consola los eventos cuando se ejecuta en modo desarrollo.
+
+
+Ejemplo custom:
+```swift
+analyticsService.setUser(id: user.id, type: user.role == .admin ? .admin : .student)
+
+analyticsService.track(
+    .custom(
+        name: "login_success",
+        parameters: [
+            "user_role": user.role.rawValue,
+            "name": user.name,
+            "id": user.id
+        ]
+    )
+)
+```
+
+Ejemplo evento no custom.
+```swift
+import SwiftUI
+import AnalyticsService
+
+struct ProfileView: View {
+    private let analyticsService = AnalyticsService.shared
+
+    var body: some View {
+        Text("Perfil del usuario")
+            .onAppear {
+                analyticsService.track(.screenView(screenName: "ProfileView"))
+            }
+    }
+}
+```
+> Documentación firebase: https://firebase.google.com/docs/analytics/events?platform=ios
