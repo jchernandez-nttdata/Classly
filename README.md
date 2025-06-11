@@ -9,6 +9,7 @@
    - [Nuevos módulos](#nuevos-módulos)
    - [Navegación](#navegación)
    - [Testing](#testing)
+   - [FaceID](#faceid)
 ---
 
 ## Descripción general
@@ -423,3 +424,60 @@ struct AuthRemoteDataSourceTests {
 }
 
 ```
+---
+### FaceID
+Se buscó que la app tenga el objetivo de permitir a los usuarios autenticar su inicio de sesión usando Face ID (o Touch ID) mediante un flujo seguro con Keychain y LocalAuthentication.
+
+#### Implementación
+1. Protocolo BiometricManagerProtocol
+Define las operaciones clave:
+```swift
+func isBiometricAvailable() -> Bool
+func hasUsedBiometricsBefore() -> Bool
+func authenticate() async -> Bool
+func saveCredentials(username: String, password: String) throws
+func retrieveCredentials() -> (username: String, password: String)?
+func clearCredentials()
+```
+
+2. Biometric manager
+
+Implementa el protocolo usando:
+* LAContext para autenticación biométrica.
+* KeychainManager para guardar credenciales seguras.
+
+Funciones clave:
+
+* authenticate(): Llama a Face ID.
+* saveCredentials(...): Guarda credenciales en Keychain.
+* retrieveCredentials(): Recupera usuario y contraseña si existen.
+* clearCredentials(): Elimina credenciales antiguas.
+
+Todo se maneja dentro de un actor para garantizar la seguridad y evitar posibles fallos de concurrencia de acuerdo con Swift6
+
+3. Integración con LoginViewModel
+* login():
+   - Si login es exitoso, guarda las credenciales si la biometría está habilitada y autorizada.
+* authenticateWithBiometrics():
+   - Verifica si hay credenciales biométricas válidas.
+   - Si se autentica correctamente, autocompleta email y password y ejecuta login() automáticamente.
+
+```swift
+func authenticateWithBiometrics() {
+    let biometricResult = await biometricManager.authenticate()
+    if biometricResult {
+        let credentials = await biometricManager.retrieveCredentials()
+        if let credentials = credentials {
+            self.email = credentials.username
+            self.password = credentials.password
+            self.login()
+        }
+    }
+}
+```
+
+> **Nota importante**  
+>  
+> La implementación de almacenamiento de credenciales sensibles (usuario y contraseña) en Keychain se realizó **únicamente con fines didácticos**.  
+>  
+> En una aplicación de producción, se recomienda **no almacenar credenciales en texto plano**, incluso si están en Keychain. Es preferible utilizar **tokens de sesión, refresh tokens** u otros mecanismos más seguros y estandarizados.
