@@ -12,6 +12,7 @@
    - [FaceID](#faceid)
    - [QRScanner](#qrscanner)
    - [Firebase Analytics](#firebase-analytics)
+   - [Firebase Remote Config](#firebase-remote-config)
 ---
 
 ## Descripción general
@@ -720,3 +721,41 @@ struct ProfileView: View {
 }
 ```
 > Documentación firebase: https://firebase.google.com/docs/analytics/events?platform=ios
+
+---
+
+### Firebase Remote Config
+
+El módulo RemoteConfigClient encapsula el uso de Firebase Remote Config para forzar a los usuarios a actualizar la app si la versión instalada es inferior a la mínima requerida.
+
+- Utiliza RemoteConfig.remoteConfig() de Firebase.
+- Carga valores por defecto desde un archivo RemoteConfigDefaults.plist incluido en el bundle del módulo.
+<img width="513" alt="image" src="https://github.com/user-attachments/assets/00daf453-ec26-4c46-9d0c-347c75b09040" />
+
+- Tiene un método principal `fetchAndActivate()` para obtener y activar los valores desde Firebase. Este método realiza una llamada a Firebase para obtener los valores más recientes de configuración y los activa. Es async, por lo que puede ser llamado desde tareas de Swift Concurrency (.task {}).
+
+#### Uso
+Este módulo se usa en la vista principal de navegación (NavigationRootView) para determinar si se debe forzar al usuario a actualizar la app:
+```swift
+.task {
+    await fetchRemoteConfig()
+}
+```
+```swift
+private func fetchRemoteConfig() async {
+    let success = await remoteConfigClient.fetchAndActivate()
+    if success {
+        let minVersion = remoteConfigClient.stringValue(forKey: .minimumRequiredVersion)
+        if isAppVersionOutdated(minVersion) {
+            showUpdateAlert = true
+        }
+    }
+}
+```
+
+Se debe configurar la variable en Firebase Console: Remote config
+<img width="1440" alt="image" src="https://github.com/user-attachments/assets/03e1f717-ff4f-41e4-8a9b-07330b6e7d60" />
+
+
+> Documentación firebase: https://firebase.google.com/docs/remote-config/get-started?platform=ios
+
